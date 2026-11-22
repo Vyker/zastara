@@ -526,6 +526,68 @@
   }
 
   /* newsletter, guides, misc toasts, express pay, tabs */
+  function wireStackStudio() {
+    if (PAGE !== 'stack-studio.html') return;
+    var C = $('#layers-container');
+    if (!C) return;
+    var MAP = [[/knife|flut/i, '4ab737a980d1962a.webp'], [/solitaire|brilliant/i, '6dd96a90f0605e5a.webp'], [/flat|comfort/i, '5a2779b762f2d5c6.webp'], [/classic|1\.8/i, '42602767331d91f4.webp'], [/prism|facet/i, 'b476d0721fcee814.webp'], [/pav/i, '4eb9b0615fd8debf.webp'], [/marquise|bloom/i, '60fdf730eee34d01.webp'], [/pear/i, 'ca30676073a93fec.webp'], [/baguette/i, 'ff34151e96c86cbd.webp'], [/chevron/i, '4eb9b0615fd8debf.webp']];
+    function imgFor(t) { for (var i = 0; i < MAP.length; i++) { if (MAP[i][0].test(t)) return MAP[i][1]; } return '42602767331d91f4.webp'; }
+    function layerName(r) { var m = r.querySelector('.font-body-md'); return m ? m.textContent.replace(/\s+/g, ' ').trim() : norm(r).slice(0, 40); }
+    var prev = null;
+    function mount() {
+      var hostImg = $all('main img').filter(function (im) { return /stacked|three rhodium/i.test(im.getAttribute('data-alt') || ''); })[0];
+      var host = hostImg && hostImg.parentElement;
+      if (!host) return false;
+      $all('img', host).forEach(function (im) { im.style.transition = 'opacity .35s'; im.style.opacity = '0'; });
+      host.style.background = 'linear-gradient(165deg,#f3eeea 0%,#faf8f5 55%,#efe7e0 100%)';
+      prev = document.createElement('div');
+      prev.id = 'za-stack-preview';
+      prev.style.cssText = 'position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;pointer-events:none;';
+      prev._cap = document.createElement('div');
+      prev._cap.style.cssText = 'position:absolute;bottom:12px;left:0;right:0;text-align:center;font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:#8a7580;';
+      prev.appendChild(prev._cap);
+      host.appendChild(prev);
+      return true;
+    }
+    function render() {
+      if (!prev && !mount()) return;
+      var rows = $all('.layer-item', C);
+      $all('img', prev).forEach(function (n) { n.remove(); });
+      rows.forEach(function (r, idx) {
+        var im = document.createElement('img');
+        im.src = 'assets/img/' + imgFor(layerName(r));
+        im.alt = im.title = layerName(r);
+        im.style.cssText = 'width:74px;height:74px;border-radius:9999px;object-fit:cover;background:#fff;border:2px solid #fff;box-shadow:0 8px 18px rgba(56,6,34,.16);' + (idx ? 'margin-top:-16px;' : '');
+        prev.insertBefore(im, prev._cap);
+      });
+      prev._cap.textContent = rows.length ? 'Top \u2192 Bottom \u00b7 ' + rows.map(layerName).join(' \u00b7 ') : 'Empty stack \u2014 add bands from the shelf';
+    }
+    function renumber() {
+      var rows = $all('.layer-item', C), n = rows.length;
+      rows.forEach(function (r, i) { var lab = r.querySelector('.font-label-caps'); if (lab && /^L\d/.test(lab.textContent.trim())) lab.textContent = 'L' + (n - i); });
+    }
+    new MutationObserver(function () {
+      var n = $all('.layer-item', C).length;
+      if (n > prevCount) toast('Added to stack \u2014 ' + layerName($all('.layer-item', C)[0]));
+      else if (n < prevCount) toast('Band removed from stack');
+      prevCount = n;
+      render(); renumber();
+    }).observe(C, { childList: true });
+    var prevCount = $all('.layer-item', C).length;
+    C.addEventListener('click', function (e) {
+      var up = e.target.closest && e.target.closest('.layer-up');
+      var dn = e.target.closest && e.target.closest('.layer-down');
+      var row = e.target.closest && e.target.closest('.layer-item');
+      if (!row || (!up && !dn)) return;
+      if (up) toast(row.previousElementSibling ? 'Moved up in stack' : 'Already at top of stack');
+      if (dn) toast(row.nextElementSibling ? 'Moved down in stack' : 'Already at bottom of stack');
+    }, true);
+    render(); renumber();
+    /* shelf ADD TO STACK adds a layer (page inline script) — keep it out of the cart */
+    $all('.add-band-btn').forEach(function (b) { b.classList.add('za-wired'); });
+    var q = $('#quick-add-slot-btn');
+    if (q) { q.classList.add('za-wired'); }
+  }
   function wireMisc() {
     $all('main button, form button').forEach(function (b) {
       if (b.classList.contains('za-wired')) return;
@@ -741,6 +803,7 @@
   /* ---------- boot ---------- */
   wireNav();
   updateBadges();
+  wireStackStudio();
   wireAddButtons();
   wireOverlays();
   wireHeader();

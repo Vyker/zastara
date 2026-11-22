@@ -204,7 +204,7 @@
 <div class="flex flex-col mb-2.5">
 <span class="font-body-md text-on-surface font-medium truncate">The Faceted Prism</span>
 <span class="font-label-specs text-label-specs text-secondary">Micro-Cut 925 Silver</span>
-<span class="font-label-specs text-label-specs text-primary font-semibold mt-1">AED 380</span>
+<span class="font-label-specs text-label-specs text-primary font-semibold mt-1">AED 87</span>
 </div>
 <button class="add-band-btn w-full py-1.5 bg-surface-container hover:bg-primary hover:text-on-primary text-primary font-label-caps text-label-caps tracking-widest uppercase rounded-sm transition-colors flex items-center justify-center gap-1 active:scale-95" data-height="2.0" data-name="The Faceted Prism" data-price="104">
 <span class="material-symbols-outlined text-[14px]">add</span> Add to Stack
@@ -219,7 +219,7 @@
 <div class="flex flex-col mb-2.5">
 <span class="font-body-md text-on-surface font-medium truncate">Pavé Half-Eternity</span>
 <span class="font-label-specs text-label-specs text-secondary">1.6mm · Moissanite</span>
-<span class="font-label-specs text-label-specs text-primary font-semibold mt-1">AED 650</span>
+<span class="font-label-specs text-label-specs text-primary font-semibold mt-1">AED 104</span>
 </div>
 <button class="add-band-btn w-full py-1.5 bg-surface-container hover:bg-primary hover:text-on-primary text-primary font-label-caps text-label-caps tracking-widest uppercase rounded-sm transition-colors flex items-center justify-center gap-1 active:scale-95" data-height="1.6" data-name="Pavé Half-Eternity" data-price="177">
 <span class="material-symbols-outlined text-[14px]">add</span> Add to Stack
@@ -234,7 +234,7 @@
 <div class="flex flex-col mb-2.5">
 <span class="font-body-md text-on-surface font-medium truncate">Double Fluted Band</span>
 <span class="font-label-specs text-label-specs text-secondary">Architectural Texture</span>
-<span class="font-label-specs text-label-specs text-primary font-semibold mt-1">AED 410</span>
+<span class="font-label-specs text-label-specs text-primary font-semibold mt-1">AED 177</span>
 </div>
 <button class="add-band-btn w-full py-1.5 bg-surface-container hover:bg-primary hover:text-on-primary text-primary font-label-caps text-label-caps tracking-widest uppercase rounded-sm transition-colors flex items-center justify-center gap-1 active:scale-95" data-height="2.2" data-name="Double Fluted Band" data-price="112">
 <span class="material-symbols-outlined text-[14px]">add</span> Add to Stack
@@ -263,7 +263,7 @@
 <span class="bg-secondary-container text-on-secondary-container font-label-caps text-[9px] px-1.5 py-0.2 rounded-sm font-semibold">10% PRIVILEGE</span>
 </div>
 <div class="flex items-baseline gap-2 mt-0.5">
-<span class="font-label-specs text-label-specs text-outline line-through" id="original-price">AED 1,600</span>
+<span class="font-label-specs text-label-specs text-outline line-through" id="original-price">AED 112</span>
 <span class="font-headline-sm text-headline-sm text-primary font-semibold" id="final-price">AED 1,440</span>
 <span class="font-label-caps text-[9px] text-secondary">Incl. 5% UAE VAT</span>
 </div>
@@ -290,7 +290,8 @@
 <script>
     (function initZastaraStudio() {
       // Internal Reactive State
-      const state = {
+      function zaToast(m){var d=document.createElement('div');d.textContent=m;d.style.cssText='position:fixed;bottom:96px;left:50%;transform:translateX(-50%);z-index:200;background:#380622;color:#f7f1f4;padding:10px 18px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;border-radius:4px;box-shadow:0 10px 30px rgba(56,6,34,.35);';document.body.appendChild(d);setTimeout(function(){d.style.transition='opacity .5s';d.style.opacity='0';setTimeout(function(){d.remove();},600);},2400);}
+const state = {
         slotsMax: 5,
         layers: [
           { id: 'layer-3', name: '1.5mm Knife-Edge Micro Band', height: 1.5, price: 79, desc: 'Solid 925 Rhodium Plated' },
@@ -325,19 +326,19 @@
           stackCountBadge.textContent = state.layers.length + ' of ' + state.slotsMax + ' Slots Active';
         }
         if (originalPriceEl) {
-          originalPriceEl.textContent = '$' + rawTotal.toLocaleString();
+          originalPriceEl.textContent = 'AED ' + rawTotal.toLocaleString();
         }
         if (finalPriceEl) {
-          finalPriceEl.textContent = '$' + finalTotal.toLocaleString();
+          finalPriceEl.textContent = 'AED ' + finalTotal.toLocaleString();
         }
         if (installmentPriceEl) {
-          installmentPriceEl.textContent = '4x $' + installment + '/mo';
+          installmentPriceEl.textContent = '4x AED ' + installment + '/mo';
         }
         if (summaryTitleEl) {
           summaryTitleEl.textContent = 'Stack of ' + state.layers.length + ' Bands';
         }
         if (btnLabelText) {
-          btnLabelText.textContent = 'Acquire ' + state.layers.length + '-Ring Stack · $' + finalTotal.toLocaleString();
+          if (btnLabelText) { btnLabelText.textContent = 'Acquire ' + state.layers.length + '-Ring Stack · AED ' + finalTotal.toLocaleString(); }
         }
       }
 
@@ -348,7 +349,7 @@
             const parent = this.closest('.layer-item');
             const layerId = parent.getAttribute('data-layer-id');
             if (state.layers.length <= 1) {
-              alert('A signature stack requires at least 1 foundation band.');
+              zaToast('A stack needs at least 1 band');
               return;
             }
             state.layers = state.layers.filter(l => l.id !== layerId);
@@ -384,7 +385,7 @@
       document.querySelectorAll('.add-band-btn').forEach((btn) => {
         btn.onclick = function () {
           if (state.layers.length >= state.slotsMax) {
-            alert('Maximum stack depth reached (5 bands). Remove a layer to nest another element.');
+            zaToast('Maximum 5 bands — remove a layer first');
             return;
           }
           const name = this.getAttribute('data-name');
@@ -492,7 +493,7 @@
               url: window.location.href
             }).catch(() => {});
           } else {
-            alert('Stack Configuration Link copied to clipboard.');
+            zaToast('Stack link copied');
           }
         };
       }
