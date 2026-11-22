@@ -1,0 +1,420 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><meta content="mobile_stack" name="shell-type"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#faf9f6;color:#1a1c1a;-webkit-font-smoothing:antialiased;}body{overscroll-behavior-y:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><link rel="stylesheet" href="assets/css/styles.css"><link rel="icon" href="favicon.svg" type="image/svg+xml"><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head><body class="bg-surface font-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 inset-x-0 z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(42,22,32,0.04)] pt-safe"><div class="h-16 px-margin flex items-center justify-between"><div class="flex items-center gap-space-xs"><button aria-label="Go back" class="w-11 h-11 flex items-center justify-center text-primary active:scale-95 transition-transform" onclick="history.back()"><span class="material-symbols-outlined text-[22px]">arrow_back_ios_new</span></button><img alt="Editorial luxury campaign photography for high-end jewellery brand ZASTARA. A manicured hand with warm olive skin tone layered and stacked with three sleek 925 sterling silver bands and a brilliant moissanite ring, resting against deep plum blackberry silk fabric and pale grey marble slab. Single soft natural window lighting from the left creating long gentle shadows and cool crisp rhodium metallic highlights. Ultra high resolution macro jewellery fashion photography, quiet luxury, minimal, refined." class="h-8 w-auto object-contain hidden sm:block" src="assets/img/0b3e36ef4f1dacd6.jpg"><h1 class="font-headline-sm text-headline-sm font-medium tracking-[0.18em] uppercase text-primary line-clamp-1">Piece Detail</h1></div><div class="flex items-center gap-space-xs"><button aria-label="Share piece" class="w-11 h-11 flex items-center justify-center text-primary active:scale-95 transition-transform"><span class="material-symbols-outlined text-[20px]">share</span></button><button aria-label="Acquire wishlist item" class="w-11 h-11 flex items-center justify-center text-primary active:scale-95 transition-transform"><span class="material-symbols-outlined text-[20px]">favorite_border</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center ml-1"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full pt-16 pb-safe bg-surface min-h-screen"><div class="flex flex-col w-full pb-32">
+<!-- Interactive Visual Stage / Gallery -->
+<section class="relative w-full bg-surface-container-lowest overflow-hidden">
+<!-- Image Switcher Canvas -->
+<div class="relative w-full aspect-[4/5] max-h-[500px] overflow-hidden bg-surface-container-low flex items-center justify-center">
+<!-- Solo View Image -->
+<img class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-out opacity-0 z-0" data-alt="Macro editorial luxury photograph of a single 1.2ct round brilliant cut moissanite solitaire ring set in four delicate prongs on a mirror-polished 925 sterling silver band with cool rhodium shine. The ring rests gracefully on pale grey veined statuario marble with deep plum blackberry silk fabric softly draped in the background. Crisp architectural studio lighting casting soft geometric silver reflections, quiet luxury aesthetics." id="view-solo" src="assets/img/7d4bba17e99ac5cf.jpg">
+<!-- Stack View Image (Active by default to echo editorial lookbook) -->
+<img class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-out opacity-100 z-10" data-alt="Close-up editorial macro photography of a manicured female hand with natural nude nails wearing a stack of three 925 sterling silver rings: the 1.2ct moissanite solitaire ring flanked tightly against a 1.8mm mirror-polish band and a delicate micro-textured silver accent band. Hand rests on sumptuous deep blackberry plum silk fabric draping over honed white marble with cold silver light reflections." id="view-stack" src="assets/img/979c88eb18c8d9d1.jpg">
+<!-- Hallmark Badges (Architectural Pill Overlays) -->
+<div class="absolute top-4 left-4 z-20 flex flex-col gap-1.5 pointer-events-none">
+<span class="inline-flex items-center px-2 py-0.5 bg-secondary-container/90 backdrop-blur-sm text-primary font-label-specs text-label-specs uppercase tracking-widest shadow-sm">
+          925 Hallmarked
+        </span>
+<span class="inline-flex items-center px-2 py-0.5 bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface-variant font-label-specs text-label-specs uppercase tracking-widest shadow-sm">
+          Moissanite D-F VVS1
+        </span>
+</div>
+<!-- View Perspective Toggle Pill -->
+<div class="absolute bottom-4 inset-x-0 mx-auto w-fit z-20 bg-surface-container-lowest/95 backdrop-blur-md p-1 shadow-sm flex items-center gap-1 rounded-full">
+<button class="px-3 py-1 font-label-caps text-label-caps uppercase transition-colors bg-primary text-on-primary rounded-full" id="btn-stack-view" type="button">
+          In Stack (Curated)
+        </button>
+<button class="px-3 py-1 font-label-caps text-label-caps uppercase transition-colors text-secondary hover:text-primary rounded-full" id="btn-solo-view" type="button">
+          Solo Ring
+        </button>
+</div>
+<!-- Counter Pill -->
+<div class="absolute bottom-4 right-4 z-20 bg-surface/80 backdrop-blur-sm px-2 py-0.5 text-on-surface font-label-caps text-label-caps tracking-wider rounded-sm shadow-sm">
+<span id="carousel-indicator">01</span> / 04
+      </div>
+</div>
+</section>
+<!-- Editorial Info & Commerce Container -->
+<section class="px-margin pt-6 flex flex-col gap-5">
+<!-- Breadcrumb & Architecture Reference -->
+<div class="flex items-center gap-1.5 text-secondary font-label-specs text-label-specs uppercase tracking-wider">
+<span>Rings</span>
+<span class="material-symbols-outlined text-[12px] text-outline">chevron_right</span>
+<span>Moissanite</span>
+<span class="material-symbols-outlined text-[12px] text-outline">chevron_right</span>
+<span class="text-primary font-medium">Solitaire 1.2ct</span>
+</div>
+<!-- Title & Pricing Block -->
+<div class="flex flex-col gap-1.5">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-wide font-light">
+        The 1.2ct Brilliant Moissanite Stacker
+      </h1>
+<div class="flex items-baseline gap-2 pt-1"><span class="font-headline-sm text-headline-sm text-on-surface tracking-wider font-medium">AED 890</span>
+<span class="font-label-specs text-label-specs text-secondary uppercase tracking-widest">Inc. 5% UAE VAT</span></div>
+</div>
+<!-- Buy Now Pay Later (Klarna / Afterpay) -->
+<div class="bg-surface-container-low p-3.5 flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+</div>
+<div class="flex flex-col"><p class="font-body-md text-body-md text-on-surface">
+            4 interest-free payments of <span class="font-semibold text-primary">AED 222.50</span>
+</p>
+<span class="font-body-sm text-body-sm text-secondary">Split via Tabby or Tamara. Zero interest, zero fees.</span></div>
+</div>
+<span class="material-symbols-outlined text-secondary text-[20px]">info</span>
+</div>
+<!-- Logistics Velocity Banner -->
+<div class="flex items-center gap-2 text-primary font-body-sm text-body-sm bg-secondary-container/40 p-2.5">
+<span class="w-2 h-2 rounded-full bg-surface-tint animate-pulse"></span>
+<p class="line-clamp-1">
+<strong class="font-medium text-primary">In Stock:</strong> Express insured concierge courier worldwide.
+      </p>
+</div>
+<!-- Ring Size Selector Module -->
+<div class="flex flex-col gap-3 pt-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-on-surface font-semibold">Select Ring Size</span>
+<span class="font-label-specs text-label-specs text-secondary">(EU / International Metric)</span>
+</div>
+<button class="font-label-caps text-label-caps uppercase text-primary tracking-wider flex items-center gap-1 hover:underline" type="button">
+<span class="material-symbols-outlined text-[14px]">straighten</span>
+          Sizing Guide
+        </button>
+</div>
+<!-- Size Matrix Grid -->
+<div class="grid grid-cols-6 gap-1.5" id="size-matrix">
+<button class="size-pill py-2.5 flex flex-col items-center justify-center bg-surface-container-low text-on-surface hover:bg-surface-container-high transition-colors" type="button">
+<span class="font-body-md text-body-md">48</span>
+<span class="font-label-specs text-[9px] text-secondary">US 4.5</span>
+</button>
+<button class="size-pill py-2.5 flex flex-col items-center justify-center bg-surface-container-low text-on-surface hover:bg-surface-container-high transition-colors" type="button">
+<span class="font-body-md text-body-md">50</span>
+<span class="font-label-specs text-[9px] text-secondary">US 5.25</span>
+</button>
+<!-- 52 active selected by default -->
+<button class="size-pill py-2.5 flex flex-col items-center justify-center bg-primary text-on-primary transition-colors ring-0 shadow-sm active-size" type="button">
+<span class="font-body-md text-body-md font-medium">52</span>
+<span class="font-label-specs text-[9px] text-primary-fixed-dim">US 6.0</span>
+</button>
+<button class="size-pill py-2.5 flex flex-col items-center justify-center bg-surface-container-low text-on-surface hover:bg-surface-container-high transition-colors" type="button">
+<span class="font-body-md text-body-md">54</span>
+<span class="font-label-specs text-[9px] text-secondary">US 7.0</span>
+</button>
+<button class="size-pill py-2.5 flex flex-col items-center justify-center bg-surface-container-low text-on-surface hover:bg-surface-container-high transition-colors" type="button">
+<span class="font-body-md text-body-md">56</span>
+<span class="font-label-specs text-[9px] text-secondary">US 7.75</span>
+</button>
+<button class="size-pill py-2.5 flex flex-col items-center justify-center bg-surface-container-low text-on-surface hover:bg-surface-container-high transition-colors" type="button">
+<span class="font-body-md text-body-md">58</span>
+<span class="font-label-specs text-[9px] text-secondary">US 8.5</span>
+</button>
+</div>
+<p class="font-body-sm text-body-sm text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-surface-tint">check_circle</span>
+        Complimentary laser resizing within 60 days included with all orders.
+      </p>
+</div>
+<!-- "Stack It With" Signature Studio Cross-Sell Module -->
+<div class="mt-4 p-4 bg-surface-container-low shadow-sm flex flex-col gap-4">
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-primary font-bold">Stack Atelier</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Curated Flush Companions</h2>
+</div>
+<span class="px-2 py-0.5 bg-primary-container text-on-primary font-label-specs text-label-specs uppercase tracking-wider">
+          Save 10% on Stack
+        </span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary -mt-2">
+        Engineered with a 1.8mm zero-gap flat shank to interlock seamlessly with these handcrafted rhodium bands.
+      </p>
+<!-- Stacking Items List -->
+<div class="flex flex-col gap-2.5">
+<!-- Companion Ring A (Checked by default) -->
+<label class="relative flex items-center gap-3 p-3 bg-surface-container-lowest cursor-pointer transition-shadow hover:shadow-sm">
+<input checked="" class="sr-only companion-checkbox" id="stack-item-1" type="checkbox" value="320">
+<div class="w-5 h-5 bg-primary flex items-center justify-center shrink-0 text-on-primary" id="check-icon-1">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<div class="w-12 h-12 bg-surface-container shrink-0 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Macro square studio photo of a sleek 1.8mm plain high-polish 925 sterling silver band with mirror rhodium finish on grey velvet pedestal." src="assets/img/eefb4d05c252bfb1.jpg">
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-medium truncate">1.8mm Plain High-Polish Band</span>
+<span class="font-label-specs text-label-specs text-secondary">Calibrated Spacer Band · 925 Silver</span>
+</div>
+<div class="text-right shrink-0"><span class="font-body-md text-body-md font-medium text-primary">+ AED 320</span></div>
+</label>
+<!-- Companion Ring B (Unchecked) -->
+<label class="relative flex items-center gap-3 p-3 bg-surface-container-lowest cursor-pointer transition-shadow hover:shadow-sm">
+<input class="sr-only companion-checkbox" id="stack-item-2" type="checkbox" value="390">
+<div class="w-5 h-5 bg-surface-container flex items-center justify-center shrink-0 text-transparent" id="check-icon-2">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<div class="w-12 h-12 bg-surface-container shrink-0 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Macro studio photograph of the Chevron Hugger contoured sterling silver band with pavé set moissanite stones gleaming against neutral soft backdrop." src="assets/img/c62852c69f4ef7cc.jpg">
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-medium truncate">The Chevron Hugger Band</span>
+<span class="font-label-specs text-label-specs text-secondary">Contoured Nesting Frame · Pavé Accent</span>
+</div>
+<div class="text-right shrink-0"><span class="font-body-md text-body-md font-medium text-primary">+ AED 390</span></div>
+</label>
+</div>
+</div>
+<!-- Editorial Specifications Accordions -->
+<div class="flex flex-col gap-2 pt-2">
+<!-- Accordion 1: Material & Specs (Expanded) -->
+<div class="bg-surface-container-lowest overflow-hidden shadow-sm">
+<button class="accordion-trigger w-full p-4 flex items-center justify-between text-left" data-target="accordion-specs" type="button">
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-primary font-semibold">Material &amp; Specifications</span>
+<span class="material-symbols-outlined text-[20px] text-secondary transform transition-transform rotate-180" id="icon-specs">expand_more</span>
+</button>
+<div class="px-4 pb-4 flex flex-col gap-3" id="accordion-specs">
+<div class="grid grid-cols-2 gap-y-3 gap-x-4 pt-1">
+<div class="flex flex-col">
+<span class="font-label-specs text-label-specs uppercase text-secondary">Primary Gemstone</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">1.20 Carat Moissanite</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-specs text-label-specs uppercase text-secondary">Stone Grade</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Color D-F (Colorless) / VVS1</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-specs text-label-specs uppercase text-secondary">Base Metal</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">Solid 925 Sterling Silver</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-specs text-label-specs uppercase text-secondary">Plating Layer</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">0.5μm Heavy Rhodium Plate</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-specs text-label-specs uppercase text-secondary">Band Shank Profile</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">1.8mm Flat Comfort-Fit</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-specs text-label-specs uppercase text-secondary">Piece Total Weight</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">2.40 grams</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-2.5 mt-1 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-surface-tint">verified</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">
+              Treated with proprietary hyper-humidity and seawater oxidation shielding.
+            </span>
+</div>
+</div>
+</div>
+<!-- Accordion 2: Stacking Geometry -->
+<div class="bg-surface-container-lowest overflow-hidden shadow-sm">
+<button class="accordion-trigger w-full p-4 flex items-center justify-between text-left" data-target="accordion-geometry" type="button">
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-primary font-semibold">Stacking Geometry &amp; Alignment</span>
+<span class="material-symbols-outlined text-[20px] text-secondary transform transition-transform" id="icon-geometry">expand_more</span>
+</button>
+<div class="hidden px-4 pb-4 flex flex-col gap-2" id="accordion-geometry">
+<p class="font-body-md text-body-md text-secondary">
+            Our atelier engineers the solitaire crown bridge with a deliberate 2.1mm vertical clearance. This allows classic 1.8mm and 2.0mm bands to slide flush under the center setting with <strong class="text-primary font-medium">zero mechanical pinch</strong> or surface friction.
+          </p>
+</div>
+</div>
+<!-- Accordion 3: Delivery & Returns -->
+<div class="bg-surface-container-lowest overflow-hidden shadow-sm">
+<button class="accordion-trigger w-full p-4 flex items-center justify-between text-left" data-target="accordion-delivery" type="button">
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-primary font-semibold">Concierge Delivery &amp; Guarantee</span>
+<span class="material-symbols-outlined text-[20px] text-secondary transform transition-transform" id="icon-delivery">expand_more</span>
+</button>
+<div class="hidden px-4 pb-4 flex flex-col gap-2.5" id="accordion-delivery">
+<div class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">local_shipping</span>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-medium text-on-surface">Complimentary Express Global Delivery</span>
+<span class="font-body-sm text-body-sm text-secondary">Dispatched directly from our flagship atelier.</span>
+</div>
+</div>
+<div class="flex items-start gap-2.5">
+<span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">replay</span>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-medium text-on-surface">14-Day Vault Return Policy</span>
+<span class="font-body-sm text-body-sm text-secondary">Complimentary home collection for unworn pieces with security tag attached.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Sticky Bottom High-Jewellery Checkout Tray -->
+<div class="fixed bottom-0 inset-x-0 z-40 bg-surface/95 backdrop-blur-xl shadow-[0_-4px_16px_rgba(42,22,32,0.06)] px-margin py-3 pb-safe">
+<div class="flex items-center gap-3">
+<!-- Price & Total Stack Indicator -->
+<div class="flex flex-col shrink-0">
+<span class="font-label-specs text-[10px] uppercase tracking-wider text-secondary">Total Stack</span>
+<div class="flex items-baseline gap-1">
+<span class="font-headline-sm text-headline-sm text-primary font-medium tracking-tight" id="tray-total-price">AED 1,089</span>
+</div>
+<span class="font-label-specs text-[9px] text-surface-tint uppercase font-semibold" id="tray-savings-pill" style="display: inline-block;">10% Stack Benefit Applied</span>
+</div>
+<!-- Action Button Group -->
+<div class="flex items-center gap-2 flex-1">
+<button class="flex-1 h-12 bg-primary text-on-primary hover:bg-primary-container active:scale-[0.99] transition-all flex items-center justify-center gap-2 shadow-sm" id="add-to-stack-btn" type="button">
+<span class="material-symbols-outlined text-[18px]">auto_fix_high</span>
+<span class="font-label-caps text-label-caps uppercase tracking-widest font-semibold" id="btn-text">Acquire Stack (2 Rings)</span>
+</button>
+<button aria-label="Save to Vault" class="w-12 h-12 bg-surface-container-high text-primary flex items-center justify-center hover:bg-secondary-container transition-colors shrink-0" type="button">
+<span class="material-symbols-outlined text-[20px]">favorite_border</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  (function initProductDetail() {
+    // 1. Perspective View Switcher
+    const btnSolo = document.getElementById('btn-solo-view');
+    const btnStack = document.getElementById('btn-stack-view');
+    const viewSolo = document.getElementById('view-solo');
+    const viewStack = document.getElementById('view-stack');
+    const carouselIndicator = document.getElementById('carousel-indicator');
+
+    if (btnSolo && btnStack && viewSolo && viewStack) {
+      btnSolo.addEventListener('click', () => {
+        viewSolo.classList.remove('opacity-0', 'z-0');
+        viewSolo.classList.add('opacity-100', 'z-10');
+        viewStack.classList.remove('opacity-100', 'z-10');
+        viewStack.classList.add('opacity-0', 'z-0');
+
+        btnSolo.classList.add('bg-primary', 'text-on-primary');
+        btnSolo.classList.remove('text-secondary');
+        btnStack.classList.remove('bg-primary', 'text-on-primary');
+        btnStack.classList.add('text-secondary');
+        if (carouselIndicator) carouselIndicator.textContent = '02';
+      });
+
+      btnStack.addEventListener('click', () => {
+        viewStack.classList.remove('opacity-0', 'z-0');
+        viewStack.classList.add('opacity-100', 'z-10');
+        viewSolo.classList.remove('opacity-100', 'z-10');
+        viewSolo.classList.add('opacity-0', 'z-0');
+
+        btnStack.classList.add('bg-primary', 'text-on-primary');
+        btnStack.classList.remove('text-secondary');
+        btnSolo.classList.remove('bg-primary', 'text-on-primary');
+        btnSolo.classList.add('text-secondary');
+        if (carouselIndicator) carouselIndicator.textContent = '01';
+      });
+    }
+
+    // 2. Ring Size Pill Matrix Selection
+    const sizePills = document.querySelectorAll('.size-pill');
+    sizePills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        sizePills.forEach(p => {
+          p.classList.remove('bg-primary', 'text-on-primary', 'active-size', 'shadow-sm');
+          p.classList.add('bg-surface-container-low', 'text-on-surface');
+          const subText = p.querySelector('span:last-child');
+          if (subText) subText.classList.remove('text-primary-fixed-dim');
+          if (subText) subText.classList.add('text-secondary');
+        });
+        pill.classList.add('bg-primary', 'text-on-primary', 'active-size', 'shadow-sm');
+        pill.classList.remove('bg-surface-container-low', 'text-on-surface');
+        const sub = pill.querySelector('span:last-child');
+        if (sub) {
+          sub.classList.add('text-primary-fixed-dim');
+          sub.classList.remove('text-secondary');
+        }
+      });
+    });
+
+    // 3. Stacking Dynamic Calculation & Checkbox UI
+    const baseSolitairePrice = 245;
+    const checkboxes = document.querySelectorAll('.companion-checkbox');
+    const trayPrice = document.getElementById('tray-total-price');
+    const traySavingsPill = document.getElementById('tray-savings-pill');
+    const btnText = document.getElementById('btn-text');
+
+    function updateStackCalculation() {
+      let extra = 0;
+      let companionCount = 0;
+
+      checkboxes.forEach((cb, idx) => {
+        const checkIcon = document.getElementById('check-icon-' + (idx + 1));
+        if (cb.checked) {
+          extra += parseFloat(cb.value);
+          companionCount++;
+          if (checkIcon) {
+            checkIcon.classList.remove('bg-surface-container', 'text-transparent');
+            checkIcon.classList.add('bg-primary', 'text-on-primary');
+          }
+        } else {
+          if (checkIcon) {
+            checkIcon.classList.remove('bg-primary', 'text-on-primary');
+            checkIcon.classList.add('bg-surface-container', 'text-transparent');
+          }
+        }
+      });
+
+      if (companionCount > 0) {
+        // 10% stack bundle promotion
+        const subtotal = baseSolitairePrice + extra;
+        const discounted = Math.round(subtotal * 0.9);
+        if (trayPrice) trayPrice.textContent = 'AED ' + discounted.toLocaleString();
+        if (traySavingsPill) traySavingsPill.style.display = 'inline-block';
+        if (btnText) btnText.textContent = `Acquire Stack (${1 + companionCount} Rings)`;
+      } else {
+        if (trayPrice) trayPrice.textContent = 'AED ' + baseSolitairePrice.toLocaleString();
+        if (traySavingsPill) traySavingsPill.style.display = 'none';
+        if (btnText) btnText.textContent = 'Acquire Solitaire';
+      }
+    }
+
+    checkboxes.forEach(cb => {
+      cb.addEventListener('change', updateStackCalculation);
+    });
+
+    // 4. Clean Accordion Toggles
+    const triggers = document.querySelectorAll('.accordion-trigger');
+    triggers.forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const targetId = trigger.getAttribute('data-target');
+        const targetEl = document.getElementById(targetId);
+        const icon = trigger.querySelector('.material-symbols-outlined');
+
+        if (targetEl) {
+          const isClosed = targetEl.classList.contains('hidden');
+          if (isClosed) {
+            targetEl.classList.remove('hidden');
+            if (icon) icon.classList.add('rotate-180');
+          } else {
+            targetEl.classList.add('hidden');
+            if (icon) icon.classList.remove('rotate-180');
+          }
+        }
+      });
+    });
+
+    // 5. Add to Stack Feedback Animation
+    const acquireBtn = document.getElementById('add-to-stack-btn');
+    if (acquireBtn) {
+      acquireBtn.addEventListener('click', () => {
+        const originalText = btnText ? btnText.textContent : 'Acquire Stack';
+        if (btnText) btnText.textContent = 'Added to Vault Bag';
+        acquireBtn.classList.add('bg-primary-container');
+        setTimeout(() => {
+          if (btnText) btnText.textContent = originalText;
+          acquireBtn.classList.remove('bg-primary-container');
+        }, 1600);
+      });
+    }
+
+    // Initialize calculation
+    updateStackCalculation();
+  })();
+</script></main>
+
+<script src="assets/js/site.js" defer></script>
+</body></html>

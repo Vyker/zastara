@@ -1,0 +1,484 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#faf9f6;color:#1a1c1a;-webkit-font-smoothing:antialiased;}body{overscroll-behavior-y:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><link rel="stylesheet" href="assets/css/styles.css"><link rel="icon" href="favicon.svg" type="image/svg+xml"><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head><body class="bg-surface font-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 inset-x-0 z-50 bg-primary-container text-on-primary shadow-[0_1px_8px_rgba(42,22,32,0.04)] pt-safe"><div class="h-16 px-margin flex items-center justify-between gap-space-xs"><div class="flex items-center gap-space-sm"><button aria-label="Navigation menu" class="w-11 h-11 flex items-center justify-center text-on-primary active:scale-95 transition-transform"><span class="material-symbols-outlined text-[22px]">menu</span></button></div><div class="flex flex-col items-center justify-center"><div class="flex items-center gap-space-xs"><span class="font-title-editorial text-title-editorial font-medium tracking-[0.25em] text-on-primary uppercase">ZASTARA</span></div></div><div class="flex items-center gap-1"><button aria-label="Switch language" class="h-11 px-2 flex items-center justify-center font-label-specs text-label-specs text-on-primary/80 hover:text-on-primary tracking-widest"><span class="font-medium text-on-primary">EN</span><span class="text-outline-variant mx-1">|</span><span>ع</span></button><button aria-label="Search boutique" class="w-11 h-11 flex items-center justify-center text-on-primary active:scale-95 transition-transform"><span class="material-symbols-outlined text-[20px]">search</span></button><button aria-label="Wishlist" class="w-11 h-11 flex items-center justify-center text-on-primary active:scale-95 transition-transform"><span class="material-symbols-outlined text-[20px]">favorite</span></button><button aria-label="Cart with items" class="w-11 h-11 flex items-center justify-center text-on-primary relative active:scale-95 transition-transform"><span class="material-symbols-outlined text-[21px]">shopping_bag</span><span class="absolute top-2 right-1.5 w-4 h-4 rounded-full bg-surface text-primary font-label-caps text-[9px] flex items-center justify-center font-semibold leading-none">3</span></button><div class="w-8 h-8 rounded-full bg-primary/40 border border-outline-variant/40 flex items-center justify-center ml-1"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full pt-16 pb-24 bg-surface min-h-screen"><div class="flex flex-col w-full text-on-surface">
+<!-- Category & Narrative Header -->
+<section class="relative px-margin pt-8 pb-7 flex flex-col justify-end overflow-hidden min-h-[200px]"><div class="absolute inset-0 z-0"><img class="w-full h-full object-cover object-center" src="assets/img/42c1476e3eba37e7.png" alt="Zastara Campaign Jewelry Stacking"><div class="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/75 to-primary/40"></div></div><div class="relative z-10 flex flex-col gap-2"><div class="flex items-center gap-1.5 font-label-specs text-label-specs text-surface-container uppercase tracking-widest text-[10px]"><a class="hover:text-on-primary transition-colors text-surface-container" href="#">Home</a><span class="text-outline-variant font-light">/</span><a class="hover:text-on-primary transition-colors text-surface-container" href="#">Rings</a><span class="text-outline-variant font-light">/</span><span class="text-on-primary font-semibold">Stacking Bands</span></div><div class="mt-1"><h1 class="font-headline-lg-mobile text-headline-lg-mobile font-light tracking-[0.22em] text-on-primary uppercase leading-tight">The Stacking Collection</h1><p class="font-body-sm text-body-sm text-surface-container-highest mt-1.5 leading-relaxed tracking-wide max-w-[95%]">38 rhodium-finished 925 sterling silver pieces designed to sit flush. Architectural precision, zero clearance gaps.</p></div></div></section>
+<!-- Horizontal Scroll Filter Pills -->
+<div class="w-full bg-surface pb-3">
+<div class="flex items-center gap-2 overflow-x-auto px-margin scrollbar-none py-1">
+<button class="shrink-0 h-8 px-3.5 bg-primary-container text-on-primary font-label-caps text-label-caps uppercase tracking-[0.18em] transition-all flex items-center justify-center">
+        All Pieces (38)
+      </button>
+<button class="shrink-0 h-8 px-3.5 bg-surface-container text-secondary hover:text-primary font-label-caps text-label-caps uppercase tracking-[0.18em] transition-colors flex items-center justify-center">
+        Plain Bands
+      </button>
+<button class="shrink-0 h-8 px-3.5 bg-surface-container text-secondary hover:text-primary font-label-caps text-label-caps uppercase tracking-[0.18em] transition-colors flex items-center justify-center">
+        Moissanite
+      </button>
+<button class="shrink-0 h-8 px-3.5 bg-surface-container text-secondary hover:text-primary font-label-caps text-label-caps uppercase tracking-[0.18em] transition-colors flex items-center justify-center">
+        Textured
+      </button>
+<button class="shrink-0 h-8 px-3.5 bg-surface-container text-secondary hover:text-primary font-label-caps text-label-caps uppercase tracking-[0.18em] transition-colors flex items-center justify-center">
+        Curated Sets
+      </button>
+<button class="shrink-0 h-8 px-3.5 bg-surface-container text-secondary hover:text-primary font-label-caps text-label-caps uppercase tracking-[0.18em] transition-colors flex items-center justify-center pr-4">
+        Ear Cuffs
+      </button>
+</div>
+</div>
+<!-- Quick Filter, Sort, & Layout Matrix Bar -->
+<div class="sticky top-16 z-40 bg-surface/95 backdrop-blur-md px-margin py-2.5 flex items-center justify-between bg-surface-container-low shadow-[0_1px_4px_rgba(42,22,32,0.03)]">
+<!-- Filter Trigger -->
+<button class="h-8 px-3 bg-surface-container-highest text-primary flex items-center gap-1.5 font-label-specs text-label-specs uppercase tracking-wider active:scale-95 transition-transform" id="openFilterBtn">
+<span class="material-symbols-outlined text-[15px]">tune</span>
+<span>Filter</span>
+<span class="w-4 h-4 bg-primary text-on-primary rounded-full text-[9px] flex items-center justify-center font-bold">3</span>
+</button>
+<div class="flex items-center gap-2">
+<!-- Sort Dropdown Emulator -->
+<div class="relative">
+<select aria-label="Sort Collection" class="appearance-none bg-surface-container-highest text-primary font-label-specs text-label-specs uppercase tracking-wider h-8 pl-3 pr-7 focus:outline-none cursor-pointer">
+<option>Sort: Best for Stacking</option>
+<option>Price: Low to High</option>
+<option>Price: High to Low</option>
+<option>New Arrivals</option>
+<option>Band Width: Narrow to Bold</option>
+</select>
+<span class="material-symbols-outlined pointer-events-none absolute right-2 top-2 text-[14px] text-secondary">expand_more</span>
+</div>
+<!-- View Switcher (2-col vs 1-col) -->
+<div class="flex bg-surface-container-highest p-0.5">
+<button aria-label="Two column view" class="w-7 h-7 flex items-center justify-center bg-surface-container-lowest text-primary shadow-sm transition-colors" id="viewGridBtn">
+<span class="material-symbols-outlined text-[16px]">grid_view</span>
+</button>
+<button aria-label="Single column editorial view" class="w-7 h-7 flex items-center justify-center text-secondary hover:text-primary transition-colors" id="viewListBtn">
+<span class="material-symbols-outlined text-[16px]">view_agenda</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Product Matrix (Planar Architectural Grid) -->
+<div class="grid grid-cols-2 gap-px bg-surface-container-highest w-full my-0" id="catalogGrid">
+<!-- PRODUCT 1 -->
+<article class="bg-surface-container-lowest flex flex-col p-3 relative group">
+<!-- Top Badges -->
+<div class="flex items-start justify-between z-10 min-h-[22px]">
+<span class="bg-secondary-fixed text-primary px-1.5 py-0.5 font-label-caps text-[9px] uppercase tracking-wider font-semibold">
+          925 Rhodium
+        </span>
+<button aria-label="Save to Wishlist" class="w-6 h-6 flex items-center justify-center text-secondary hover:text-primary active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[17px]">favorite</span>
+</button>
+</div>
+<!-- Vitrine Image with Stack Layering Preview -->
+<div class="relative aspect-square w-full my-2 bg-surface-container-low overflow-hidden flex items-center justify-center">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Macro studio product shot of a minimal 1.8mm round plain band in mirror-polished rhodium-plated 925 sterling silver resting on a cold pale grey marble surface. Clean dramatic directional lighting showing pristine metallic luster and razor-sharp reflection lines. Minimalist luxury jewellery, high fashion editorial tone." src="assets/img/f844496c1d4f1c2a.jpg">
+<!-- Mini Stack Thumbnail Hint -->
+<div class="absolute bottom-1.5 right-1.5 bg-surface/90 backdrop-blur-sm px-1.5 py-0.5 flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[11px] text-primary">layers</span>
+<span class="font-label-specs text-[8px] text-secondary tracking-tight">1.8MM BASE</span>
+</div>
+</div>
+<!-- Specs & Details -->
+<div class="flex flex-col flex-1 justify-between pt-1">
+<div>
+<div class="flex items-center gap-1 text-secondary font-label-caps text-[9px] uppercase tracking-widest">
+<span>Core Band</span>
+<span>•</span>
+<span>1.8mm Profile</span>
+</div>
+<h2 class="font-title-editorial text-title-editorial text-primary tracking-normal leading-snug mt-0.5">
+            The 1.8mm Plain Round Band
+          </h2>
+</div>
+<div class="mt-2.5 pt-2 bg-surface-container-low/50 -mx-3 px-3 pb-1">
+<div class="flex items-baseline justify-between">
+<span class="font-label-specs text-body-md font-medium text-primary">AED 88</span>
+<span class="font-label-specs text-[9px] text-on-surface-variant">or 4x AED 22</span>
+</div>
+<button class="mt-2 w-full h-8 bg-surface-container text-primary hover:bg-primary hover:text-on-primary font-label-caps text-label-caps tracking-[0.16em] uppercase flex items-center justify-center gap-1 transition-colors active:scale-[0.98]">
+<span class="material-symbols-outlined text-[14px]">add</span>
+<span>Add to Stack</span>
+</button>
+</div>
+</div>
+</article>
+<!-- PRODUCT 2 -->
+<article class="bg-surface-container-lowest flex flex-col p-3 relative group">
+<div class="flex items-start justify-between z-10 min-h-[22px]">
+<span class="bg-secondary-fixed text-primary px-1.5 py-0.5 font-label-caps text-[9px] uppercase tracking-wider font-semibold">
+          Best Seller
+        </span>
+<button aria-label="Save to Wishlist" class="w-6 h-6 flex items-center justify-center text-secondary hover:text-primary active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[17px]">favorite</span>
+</button>
+</div>
+<div class="relative aspect-square w-full my-2 bg-surface-container-low overflow-hidden flex items-center justify-center">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Exquisite macro macro photography of a round brilliant solitaire moissanite ring set in four claw prongs on cold polished rhodium 925 silver. 1.2 carat optical fire with ultra-sharp facet reflections, perched against soft folded dark blackberry silk fabric. Pure luxury craftsmanship." src="assets/img/bc8e6d6dd1c9063b.jpg">
+<div class="absolute bottom-1.5 right-1.5 bg-surface/90 backdrop-blur-sm px-1.5 py-0.5 flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[11px] text-primary">auto_awesome</span>
+<span class="font-label-specs text-[8px] text-secondary tracking-tight">1.2 CTW D-F</span>
+</div>
+</div>
+<div class="flex flex-col flex-1 justify-between pt-1">
+<div>
+<div class="flex items-center gap-1 text-secondary font-label-caps text-[9px] uppercase tracking-widest">
+<span>Solitaire Focal</span>
+<span>•</span>
+<span>VVS1</span>
+</div>
+<h2 class="font-title-editorial text-title-editorial text-primary tracking-normal leading-snug mt-0.5">
+            Moissanite Brilliant Solitaire
+          </h2>
+</div>
+<div class="mt-2.5 pt-2 bg-surface-container-low/50 -mx-3 px-3 pb-1">
+<div class="flex items-baseline justify-between">
+<span class="font-label-specs text-body-md font-medium text-primary">AED 242</span>
+<span class="font-label-specs text-[9px] text-on-surface-variant">or 4x AED 60.50</span>
+</div>
+<button class="mt-2 w-full h-8 bg-primary-container text-on-primary hover:bg-primary font-label-caps text-label-caps tracking-[0.16em] uppercase flex items-center justify-center gap-1 transition-colors active:scale-[0.98]">
+<span class="material-symbols-outlined text-[14px]">add</span>
+<span>Add to Stack</span>
+</button>
+</div>
+</div>
+</article>
+<!-- PRODUCT 3 -->
+<article class="bg-surface-container-lowest flex flex-col p-3 relative group">
+<div class="flex items-start justify-between z-10 min-h-[22px]">
+<span class="bg-surface-container-high text-on-surface-variant px-1.5 py-0.5 font-label-caps text-[9px] uppercase tracking-wider">
+          Fluted Ribs
+        </span>
+<button aria-label="Save to Wishlist" class="w-6 h-6 flex items-center justify-center text-secondary hover:text-primary active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[17px]">favorite</span>
+</button>
+</div>
+<div class="relative aspect-square w-full my-2 bg-surface-container-low overflow-hidden flex items-center justify-center">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Editorial product macro photo of an architectural fluted ribbed band in solid 925 sterling silver with mirror rhodium finish. Vertical micro-grooves capture crisp highlights under cold gallery spotlighting. Clean minimalist aesthetic resting alongside pale stone." src="assets/img/26804cb3c49571d8.jpg">
+<div class="absolute bottom-1.5 right-1.5 bg-surface/90 backdrop-blur-sm px-1.5 py-0.5 flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[11px] text-primary">layers</span>
+<span class="font-label-specs text-[8px] text-secondary tracking-tight">2.4MM FLUTED</span>
+</div>
+</div>
+<div class="flex flex-col flex-1 justify-between pt-1">
+<div>
+<div class="flex items-center gap-1 text-secondary font-label-caps text-[9px] uppercase tracking-widest">
+<span>Texture Band</span>
+<span>•</span>
+<span>2.4mm</span>
+</div>
+<h2 class="font-title-editorial text-title-editorial text-primary tracking-normal leading-snug mt-0.5">
+            The Fluted Architectural Band
+          </h2>
+</div>
+<div class="mt-2.5 pt-2 bg-surface-container-low/50 -mx-3 px-3 pb-1">
+<div class="flex items-baseline justify-between">
+<span class="font-label-specs text-body-md font-medium text-primary">AED 118</span>
+<span class="font-label-specs text-[9px] text-on-surface-variant">or 4x AED 29.50</span>
+</div>
+<button class="mt-2 w-full h-8 bg-surface-container text-primary hover:bg-primary hover:text-on-primary font-label-caps text-label-caps tracking-[0.16em] uppercase flex items-center justify-center gap-1 transition-colors active:scale-[0.98]">
+<span class="material-symbols-outlined text-[14px]">add</span>
+<span>Add to Stack</span>
+</button>
+</div>
+</div>
+</article>
+<!-- PRODUCT 4 -->
+<article class="bg-surface-container-lowest flex flex-col p-3 relative group">
+<div class="flex items-start justify-between z-10 min-h-[22px]">
+<span class="bg-surface-container-high text-on-surface-variant px-1.5 py-0.5 font-label-caps text-[9px] uppercase tracking-wider">
+          Flush Fit
+        </span>
+<button aria-label="Save to Wishlist" class="w-6 h-6 flex items-center justify-center text-secondary hover:text-primary active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[17px]">favorite</span>
+</button>
+</div>
+<div class="relative aspect-square w-full my-2 bg-surface-container-low overflow-hidden flex items-center justify-center">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Top down macro angle of a silver chevron wishbone band crafted in polished rhodium plating. Specially engineered sharp V-angle curvature designed to contour around solitaire gemstones. Soft cool silver gradients on neutral warm sand backdrop." src="assets/img/05072562ad32085c.jpg">
+<div class="absolute bottom-1.5 right-1.5 bg-surface/90 backdrop-blur-sm px-1.5 py-0.5 flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[11px] text-primary">design_services</span>
+<span class="font-label-specs text-[8px] text-secondary tracking-tight">SOLITAIRE HUG</span>
+</div>
+</div>
+<div class="flex flex-col flex-1 justify-between pt-1">
+<div>
+<div class="flex items-center gap-1 text-secondary font-label-caps text-[9px] uppercase tracking-widest">
+<span>Contour Band</span>
+<span>•</span>
+<span>V-Crest</span>
+</div>
+<h2 class="font-title-editorial text-title-editorial text-primary tracking-normal leading-snug mt-0.5">
+            Chevron Wishbone Stacker
+          </h2>
+</div>
+<div class="mt-2.5 pt-2 bg-surface-container-low/50 -mx-3 px-3 pb-1">
+<div class="flex items-baseline justify-between">
+<span class="font-label-specs text-body-md font-medium text-primary">AED 106</span>
+<span class="font-label-specs text-[9px] text-on-surface-variant">or 4x AED 26.50</span>
+</div>
+<button class="mt-2 w-full h-8 bg-surface-container text-primary hover:bg-primary hover:text-on-primary font-label-caps text-label-caps tracking-[0.16em] uppercase flex items-center justify-center gap-1 transition-colors active:scale-[0.98]">
+<span class="material-symbols-outlined text-[14px]">add</span>
+<span>Add to Stack</span>
+</button>
+</div>
+</div>
+</article>
+<!-- IN-GRID EDITORIAL PROMO BREAK (Spans full width across 2 columns) -->
+<div class="col-span-2 bg-primary text-on-primary p-margin relative overflow-hidden flex flex-col justify-between">
+<div class="relative z-10 flex flex-col gap-1.5 max-w-[85%]">
+<span class="font-label-caps text-[9px] tracking-[0.25em] text-primary-fixed uppercase">
+          Stacking Incentive • Fine Atelier
+        </span>
+<h3 class="font-headline-sm text-headline-sm font-light tracking-[0.12em] text-on-primary leading-tight">
+          The Rule of Three: 15% Off
+        </h3>
+<p class="font-body-sm text-body-sm text-surface-container-highest/90 leading-snug">
+          Acquire any three bands or solitaires and enjoy automatic tiered savings at checkout.
+        </p>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between relative z-10 bg-primary-container/60 -mx-margin -mb-margin px-margin py-2.5">
+<div class="flex items-center gap-2">
+<span class="font-label-caps text-[10px] text-surface-variant uppercase tracking-widest">Code Applied:</span>
+<span class="font-label-specs text-[11px] font-semibold text-primary-fixed tracking-wider bg-primary px-2 py-0.5">STACKTHREE</span>
+</div>
+<span class="font-label-specs text-label-specs text-surface-dim uppercase tracking-wider flex items-center gap-1">
+          Explore Sets <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</span>
+</div>
+<!-- Architectural subtle geometric motif in corner -->
+<div class="absolute -right-6 -bottom-6 w-32 h-32 rounded-full bg-primary-container/30 pointer-events-none blur-sm"></div>
+</div>
+<!-- PRODUCT 5 -->
+<article class="bg-surface-container-lowest flex flex-col p-3 relative group">
+<div class="flex items-start justify-between z-10 min-h-[22px]">
+<span class="bg-secondary-fixed text-primary px-1.5 py-0.5 font-label-caps text-[9px] uppercase tracking-wider font-semibold">
+          Pavé Line
+        </span>
+<button aria-label="Save to Wishlist" class="w-6 h-6 flex items-center justify-center text-secondary hover:text-primary active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[17px]">favorite</span>
+</button>
+</div>
+<div class="relative aspect-square w-full my-2 bg-surface-container-low overflow-hidden flex items-center justify-center">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Micro macro detail of a delicate 1.6mm half eternity ring set with French pavé round moissanite gemstones on cold rhodium 925 sterling silver. Intense white sparkle, razor sharp micro beads, pristine craftsmanship for effortless multi-ring finger stacking." src="assets/img/74d8694b3df62260.jpg">
+<div class="absolute bottom-1.5 right-1.5 bg-surface/90 backdrop-blur-sm px-1.5 py-0.5 flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[11px] text-primary">diamond</span>
+<span class="font-label-specs text-[8px] text-secondary tracking-tight">1.6MM PAVÉ</span>
+</div>
+</div>
+<div class="flex flex-col flex-1 justify-between pt-1">
+<div>
+<div class="flex items-center gap-1 text-secondary font-label-caps text-[9px] uppercase tracking-widest">
+<span>Eternity Accent</span>
+<span>•</span>
+<span>French Micro</span>
+</div>
+<h2 class="font-title-editorial text-title-editorial text-primary tracking-normal leading-snug mt-0.5">
+            Moissanite Pavé Half-Eternity
+          </h2>
+</div>
+<div class="mt-2.5 pt-2 bg-surface-container-low/50 -mx-3 px-3 pb-1">
+<div class="flex items-baseline justify-between">
+<span class="font-label-specs text-body-md font-medium text-primary">AED 174</span>
+<span class="font-label-specs text-[9px] text-on-surface-variant">or 4x AED 43.50</span>
+</div>
+<button class="mt-2 w-full h-8 bg-surface-container text-primary hover:bg-primary hover:text-on-primary font-label-caps text-label-caps tracking-[0.16em] uppercase flex items-center justify-center gap-1 transition-colors active:scale-[0.98]">
+<span class="material-symbols-outlined text-[14px]">add</span>
+<span>Add to Stack</span>
+</button>
+</div>
+</div>
+</article>
+<!-- PRODUCT 6 -->
+<article class="bg-surface-container-lowest flex flex-col p-3 relative group">
+<div class="flex items-start justify-between z-10 min-h-[22px]">
+<span class="bg-surface-container-high text-on-surface-variant px-1.5 py-0.5 font-label-caps text-[9px] uppercase tracking-wider">
+          Sculptural
+        </span>
+<button aria-label="Save to Wishlist" class="w-6 h-6 flex items-center justify-center text-secondary hover:text-primary active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[17px]">favorite</span>
+</button>
+</div>
+<div class="relative aspect-square w-full my-2 bg-surface-container-low overflow-hidden flex items-center justify-center">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Photographic close up of a bold 3.0mm knife-edge silver band with an acute angular center ridge, finished in ultra-reflective mirror rhodium over 925 silver. Stark architectural shadows along the faceted spine, minimalist high-end jewellery still life." src="assets/img/8e0b1f89bb84bb5f.jpg">
+<div class="absolute bottom-1.5 right-1.5 bg-surface/90 backdrop-blur-sm px-1.5 py-0.5 flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[11px] text-primary">layers</span>
+<span class="font-label-specs text-[8px] text-secondary tracking-tight">3.0MM KNIFE</span>
+</div>
+</div>
+<div class="flex flex-col flex-1 justify-between pt-1">
+<div>
+<div class="flex items-center gap-1 text-secondary font-label-caps text-[9px] uppercase tracking-widest">
+<span>Statement Edge</span>
+<span>•</span>
+<span>3.0mm Bold</span>
+</div>
+<h2 class="font-title-editorial text-title-editorial text-primary tracking-normal leading-snug mt-0.5">
+            The Heavy Knife-Edge Band
+          </h2>
+</div>
+<div class="mt-2.5 pt-2 bg-surface-container-low/50 -mx-3 px-3 pb-1">
+<div class="flex items-baseline justify-between">
+<span class="font-label-specs text-body-md font-medium text-primary">AED 130</span>
+<span class="font-label-specs text-[9px] text-on-surface-variant">or 4x AED 32.50</span>
+</div>
+<button class="mt-2 w-full h-8 bg-surface-container text-primary hover:bg-primary hover:text-on-primary font-label-caps text-label-caps tracking-[0.16em] uppercase flex items-center justify-center gap-1 transition-colors active:scale-[0.98]">
+<span class="material-symbols-outlined text-[14px]">add</span>
+<span>Add to Stack</span>
+</button>
+</div>
+</div>
+</article>
+</div>
+<!-- Bottom Spec Counter & Fast International Delivery Callout -->
+<section class="p-margin bg-surface flex flex-col items-center gap-3 text-center">
+<div class="flex items-center gap-2 text-secondary font-label-specs text-label-specs">
+<span class="w-1.5 h-1.5 rounded-full bg-surface-tint"></span>
+<span>Showing 6 of 38 pieces · Complimentary express concierge delivery</span>
+</div>
+<!-- Progress indicator for collection depth -->
+<div class="w-48 h-1 bg-surface-container-highest overflow-hidden">
+<div class="w-1/6 h-full bg-primary"></div>
+</div>
+<button class="h-11 px-8 bg-transparent text-primary hover:bg-surface-container-highest transition-colors font-label-caps text-label-caps uppercase tracking-[0.2em] flex items-center justify-center gap-2 mt-1">
+<span>Load Next 6 Designs</span>
+<span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+</section>
+<!-- Interactive Filter Modal / Drawer -->
+<div class="fixed inset-0 z-50 pointer-events-none opacity-0 transition-opacity duration-300" id="filterDrawer">
+<!-- Backdrop scrim -->
+<div class="absolute inset-0 bg-inverse-surface/40 backdrop-blur-xs" id="filterBackdrop"></div>
+<!-- Drawer Sheet -->
+<div class="absolute bottom-0 inset-x-0 bg-surface-container-lowest flex flex-col max-h-[724px] transform translate-y-full transition-transform duration-300 ease-out shadow-2xl" id="filterSheet">
+<!-- Handle and Header -->
+<div class="p-margin pb-3 bg-surface-container-lowest flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm font-light text-primary uppercase tracking-widest">Refine Collection</span>
+<span class="font-label-specs text-label-specs text-secondary mt-0.5">38 Rhodium Stackable Bands</span>
+</div>
+<button class="w-9 h-9 flex items-center justify-center text-secondary hover:text-primary active:scale-95" id="closeFilterBtn">
+<span class="material-symbols-outlined text-[22px]">close</span>
+</button>
+</div>
+<!-- Scrollable Filter Content -->
+<div class="overflow-y-auto px-margin py-3 flex flex-col gap-6 divide-y divide-surface-container">
+<!-- Band Width Filter -->
+<div class="flex flex-col gap-2.5">
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-primary font-semibold">Band Profile Width</span>
+<div class="grid grid-cols-4 gap-2">
+<button class="h-9 bg-primary text-on-primary font-label-specs text-label-specs uppercase flex items-center justify-center">1.5 - 2mm</button>
+<button class="h-9 bg-surface-container text-secondary font-label-specs text-label-specs uppercase flex items-center justify-center">2.4mm</button>
+<button class="h-9 bg-surface-container text-secondary font-label-specs text-label-specs uppercase flex items-center justify-center">3.0mm+</button>
+<button class="h-9 bg-surface-container text-secondary font-label-specs text-label-specs uppercase flex items-center justify-center">Contoured</button>
+</div>
+</div>
+<!-- Ring Size Selector Matrix -->
+<div class="pt-4 flex flex-col gap-2.5">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-primary font-semibold">Bespoke Ring Size (EU / US)</span>
+<a class="font-label-specs text-[10px] text-surface-tint underline uppercase tracking-wider" href="#">Size Guide</a>
+</div>
+<div class="grid grid-cols-6 gap-1.5">
+<button class="h-9 bg-surface-container text-secondary font-label-specs text-[11px] flex items-center justify-center">48</button>
+<button class="h-9 bg-surface-container text-secondary font-label-specs text-[11px] flex items-center justify-center">50</button>
+<button class="h-9 bg-primary text-on-primary font-label-specs text-[11px] flex items-center justify-center">52</button>
+<button class="h-9 bg-surface-container text-secondary font-label-specs text-[11px] flex items-center justify-center">54</button>
+<button class="h-9 bg-surface-container text-secondary font-label-specs text-[11px] flex items-center justify-center">56</button>
+<button class="h-9 bg-surface-container-highest text-outline font-label-specs text-[11px] flex items-center justify-center line-through cursor-not-allowed">58</button>
+</div>
+</div>
+<!-- Stone & Hallmarks -->
+<div class="pt-4 flex flex-col gap-2.5">
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-primary font-semibold">Gemstone Setting</span>
+<div class="flex flex-wrap gap-2">
+<label class="flex items-center gap-2 bg-surface-container px-3 py-2 cursor-pointer">
+<input checked="" class="accent-primary w-4 h-4 rounded-none" type="checkbox">
+<span class="font-body-sm text-body-sm text-primary">Moissanite VVS1</span>
+</label>
+<label class="flex items-center gap-2 bg-surface-container px-3 py-2 cursor-pointer">
+<input checked="" class="accent-primary w-4 h-4 rounded-none" type="checkbox">
+<span class="font-body-sm text-body-sm text-primary">Solid Plain Rhodium</span>
+</label>
+<label class="flex items-center gap-2 bg-surface-container px-3 py-2 cursor-pointer">
+<input class="accent-primary w-4 h-4 rounded-none" type="checkbox">
+<span class="font-body-sm text-body-sm text-primary">French Micro-Pavé</span>
+</label>
+</div>
+</div>
+</div>
+<!-- Drawer Action CTA -->
+<div class="p-margin bg-surface-container-lowest flex items-center gap-3">
+<button class="h-12 px-4 bg-surface-container text-secondary font-label-caps text-label-caps uppercase tracking-widest" id="resetFilterBtn">
+          Reset
+        </button>
+<button class="flex-1 h-12 bg-primary text-on-primary font-label-caps text-label-caps uppercase tracking-[0.2em] flex items-center justify-center gap-2" id="applyFilterBtn">
+<span>Apply Filters (38)</span>
+<span class="material-symbols-outlined text-[16px]">check</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Simple interactive filter toggle & layout grid switch behavior
+  (function initCatalogueInteractions() {
+    const openBtn = document.getElementById('openFilterBtn');
+    const closeBtn = document.getElementById('closeFilterBtn');
+    const applyBtn = document.getElementById('applyFilterBtn');
+    const backdrop = document.getElementById('filterBackdrop');
+    const drawer = document.getElementById('filterDrawer');
+    const sheet = document.getElementById('filterSheet');
+
+    const viewGrid = document.getElementById('viewGridBtn');
+    const viewList = document.getElementById('viewListBtn');
+    const catalogGrid = document.getElementById('catalogGrid');
+
+    function openDrawer() {
+      drawer.classList.remove('pointer-events-none', 'opacity-0');
+      drawer.classList.add('opacity-100');
+      sheet.classList.remove('translate-y-full');
+      sheet.classList.add('translate-y-0');
+    }
+
+    function closeDrawer() {
+      sheet.classList.remove('translate-y-0');
+      sheet.classList.add('translate-y-full');
+      drawer.classList.remove('opacity-100');
+      drawer.classList.add('opacity-0');
+      setTimeout(() => {
+        drawer.classList.add('pointer-events-none');
+      }, 300);
+    }
+
+    if (openBtn) openBtn.addEventListener('click', openDrawer);
+    if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+    if (backdrop) backdrop.addEventListener('click', closeDrawer);
+    if (applyBtn) applyBtn.addEventListener('click', closeDrawer);
+
+    // Switch between 2-col matrix and 1-col editorial view
+    if (viewList && viewGrid && catalogGrid) {
+      viewList.addEventListener('click', () => {
+        catalogGrid.classList.remove('grid-cols-2');
+        catalogGrid.classList.add('grid-cols-1');
+        viewList.classList.add('bg-surface-container-lowest', 'text-primary', 'shadow-sm');
+        viewGrid.classList.remove('bg-surface-container-lowest', 'text-primary', 'shadow-sm');
+        viewGrid.classList.add('text-secondary');
+      });
+
+      viewGrid.addEventListener('click', () => {
+        catalogGrid.classList.remove('grid-cols-1');
+        catalogGrid.classList.add('grid-cols-2');
+        viewGrid.classList.add('bg-surface-container-lowest', 'text-primary', 'shadow-sm');
+        viewList.classList.remove('bg-surface-container-lowest', 'text-primary', 'shadow-sm');
+        viewList.classList.add('text-secondary');
+      });
+    }
+  })();
+</script></main><nav class="fixed bottom-0 inset-x-0 z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-2px_8px_rgba(42,22,32,0.04)]" data-active-classes="text-primary-container font-semibold"><div class="flex justify-around items-center h-16 px-margin"><a class="flex flex-col items-center justify-center gap-1 w-14 h-14 text-secondary active:scale-95 transition-all" data-path="home" href="#"><span class="material-symbols-outlined text-[22px]">storefront</span><span class="font-label-caps text-label-caps tracking-widest uppercase">Home</span></a><a class="flex flex-col items-center justify-center gap-1 w-14 h-14 text-secondary active:scale-95 transition-all" data-path="stack-studio" href="#"><span class="material-symbols-outlined text-[22px]">layers</span><span class="font-label-caps text-label-caps tracking-widest uppercase">Stacks</span></a><a aria-current="page" class="flex flex-col items-center justify-center gap-1 w-14 h-14 active:scale-95 transition-all text-primary-container font-semibold" data-path="collection-catalogue" href="#"><span class="material-symbols-outlined text-[22px]">diamond</span><span class="font-label-caps text-label-caps tracking-widest uppercase">Collection</span></a><a class="flex flex-col items-center justify-center gap-1 w-14 h-14 text-secondary active:scale-95 transition-all relative" data-path="shopping-bag" href="#"><div class="relative flex items-center justify-center"><span class="material-symbols-outlined text-[22px]">shopping_bag</span><span class="absolute -top-1 -right-2.5 w-3.5 h-3.5 rounded-full bg-primary-container text-on-primary font-label-caps text-[8px] flex items-center justify-center font-bold leading-none">3</span></div><span class="font-label-caps text-label-caps tracking-widest uppercase">Bag</span></a><a class="flex flex-col items-center justify-center gap-1 w-14 h-14 text-secondary active:scale-95 transition-all" data-path="client-account" href="#"><span class="material-symbols-outlined text-[22px]">account_circle</span><span class="font-label-caps text-label-caps tracking-widest uppercase">Account</span></a></div></nav>
+
+<script src="assets/js/site.js" defer></script>
+</body></html>

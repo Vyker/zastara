@@ -1,0 +1,329 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><meta content="mobile_stack" name="shell-type"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#faf9f6;color:#1a1c1a;-webkit-font-smoothing:antialiased;}body{overscroll-behavior-y:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><link rel="stylesheet" href="assets/css/styles.css"><link rel="icon" href="favicon.svg" type="image/svg+xml"><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head><body class="bg-surface font-body-md text-on-surface flex flex-col min-h-screen" data-__gcrweb-annotatedpagecontent-processed="8ECD9D88130433D7D512F85140E20EC9"><header class="fixed top-0 inset-x-0 z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(42,22,32,0.04)] pt-safe" style="background-color: rgb(82, 28, 56); color: rgb(248, 247, 244);"><div class="h-16 px-margin flex items-center justify-between"><div class="flex items-center"><button aria-label="Go back" class="w-11 h-11 flex items-center justify-center text-primary active:scale-95 transition-transform" onclick="history.back()" style="color: rgb(248, 247, 244);"><span class="material-symbols-outlined text-[22px]">arrow_back_ios_new</span></button></div><div class="flex-1 flex justify-center items-center"><h1 class="font-title-editorial text-[20px] tracking-[0.24em] uppercase text-center font-medium" style="color: rgb(248, 247, 244); font-family: 'EB Garamond', serif;">ZASTARA</h1></div><div class="flex items-center gap-space-xs"><button aria-label="Share piece" class="w-11 h-11 flex items-center justify-center text-primary active:scale-95 transition-transform" style="color: rgb(248, 247, 244);"><span class="material-symbols-outlined text-[20px]">share</span></button><button aria-label="Acquire wishlist item" class="w-11 h-11 flex items-center justify-center text-primary active:scale-95 transition-transform" style="color: rgb(248, 247, 244);"><span class="material-symbols-outlined text-[20px]">favorite_border</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center ml-1" style="background-color: rgba(248, 247, 244, 0.18); color: rgb(248, 247, 244);"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full pt-16 pb-safe bg-surface min-h-screen"><div class="flex flex-col w-full pb-32">
+<!-- Progress Stepper Tracker -->
+<section class="bg-surface-container-low px-margin py-space-md shadow-sm">
+<div class="flex items-center justify-between max-w-md mx-auto">
+<!-- Step 1: Active -->
+<div class="flex items-center gap-space-xs">
+<span class="w-6 h-6 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-label-specs text-[10px] font-semibold">1</span>
+<span class="font-label-caps uppercase text-primary font-medium tracking-wider">Delivery</span>
+</div>
+<div class="flex-1 h-[1px] bg-secondary-container mx-space-sm"></div>
+<!-- Step 2: Next -->
+<div class="flex items-center gap-space-xs opacity-50">
+<span class="w-6 h-6 rounded-full bg-surface-container-highest text-secondary flex items-center justify-center font-label-specs text-[10px]">2</span>
+<span class="font-label-caps uppercase text-secondary tracking-wider">Payment</span>
+</div>
+<div class="flex-1 h-[1px] bg-secondary-container mx-space-sm"></div>
+<!-- Step 3: Confirmation -->
+<div class="flex items-center gap-space-xs opacity-35">
+<span class="w-6 h-6 rounded-full bg-surface-container-highest text-secondary flex items-center justify-center font-label-specs text-[10px]">3</span>
+<span class="font-label-caps uppercase text-secondary tracking-wider">Receipt</span>
+</div>
+</div>
+</section>
+<!-- Express Vault & Fast Pass -->
+<section class="px-margin pt-space-lg flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-secondary tracking-widest uppercase">Express Digital Pass</span>
+<div class="flex items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+<span class="font-label-specs text-[10px] tracking-wider uppercase">AES-256 Encrypted</span>
+</div>
+</div>
+<!-- Apple Pay & GPay row -->
+<div class="grid grid-cols-2 gap-space-sm">
+<button class="h-12 bg-on-surface text-surface flex items-center justify-center gap-1.5 active:opacity-90 transition-opacity">
+<span class="text-sm font-medium tracking-tight">Pay</span>
+</button>
+<button class="h-12 bg-surface-container-lowest text-on-surface shadow-sm flex items-center justify-center gap-1.5 active:opacity-90 transition-opacity">
+<span class="font-semibold text-sm tracking-tight text-[#4285F4]">G</span>
+<span class="font-medium text-sm tracking-tight">Pay</span>
+</button>
+</div>
+<!-- Architectural Separator -->
+<div class="relative py-space-sm flex items-center justify-center">
+<div class="w-full h-[1px] bg-surface-container-highest"></div>
+<span class="absolute px-3 bg-surface font-label-caps text-secondary text-[9px] uppercase tracking-widest">
+        Or Complete Bespoke Details
+      </span>
+</div>
+</section>
+<!-- Editorial Stack Summary Micro-Accordion -->
+<section class="px-margin pt-space-xs">
+<div class="bg-surface-container-lowest p-space-md shadow-sm">
+<details class="group select-none" open="">
+<summary class="list-none flex items-center justify-between cursor-pointer"><div class="flex items-center gap-space-sm flex-1 min-w-0 pr-3"><span class="w-2 h-2 rounded-full bg-primary-container flex-shrink-0"></span><div class="flex flex-col min-w-0"><span class="font-title-editorial text-primary tracking-wide truncate">The Solitaire Triad Stack</span><span class="font-label-specs text-secondary text-[10px]">3 Pieces · Platinum Rhodium 925</span></div></div><div class="flex items-center gap-2 flex-shrink-0"><span class="font-headline-sm text-primary font-light text-[20px]">AED 1,360</span><span class="material-symbols-outlined text-[18px] text-secondary transition-transform group-open:rotate-180">expand_more</span></div></summary>
+<div class="mt-space-md pt-space-sm flex flex-col gap-space-sm">
+<!-- Stack Thumbnail Strip -->
+<div class="flex gap-space-sm overflow-x-auto pb-1">
+<div class="w-16 h-16 bg-surface-container-low flex-shrink-0 relative overflow-hidden flex items-center justify-center">
+<img class="object-cover w-full h-full" data-alt="Close up shot of rhodium-plated sterling silver solitaire moissanite ring set against soft plum fabric" src="assets/img/d0bf5482276a0d13.jpg">
+<span class="absolute bottom-0 right-0 bg-primary-container text-on-primary font-label-specs text-[8px] px-1">2.4 CTW</span>
+</div>
+<div class="w-16 h-16 bg-surface-container-low flex-shrink-0 relative overflow-hidden flex items-center justify-center">
+<img class="object-cover w-full h-full" data-alt="Minimalist polished 925 sterling silver stacking band with architectural flat planar profile on pale grey marble" src="assets/img/a37a340e6c3419b0.jpg">
+<span class="absolute bottom-0 right-0 bg-secondary text-on-secondary font-label-specs text-[8px] px-1">Flat 3mm</span>
+</div>
+<div class="w-16 h-16 bg-surface-container-low flex-shrink-0 relative overflow-hidden flex items-center justify-center">
+<img class="object-cover w-full h-full" data-alt="Micro pave moissanite eternity ring band in crisp rhodium finish lying over cool marble slab" src="assets/img/89d63cc081a5daa0.jpg">
+<span class="absolute bottom-0 right-0 bg-secondary text-on-secondary font-label-specs text-[8px] px-1">Micro Pavé</span>
+</div>
+</div>
+<!-- Price breakdown table -->
+<div class="bg-surface-container-low p-space-sm flex flex-col gap-1.5 mt-space-xs"><div class="flex justify-between items-center font-body-sm text-secondary"><span>Stack Atelier Subtotal</span><span>AED 1,600</span></div><div class="flex justify-between items-center font-body-sm text-primary-container"><span>Triad Privilege (–15%)</span><span>–AED 240</span></div><div class="flex justify-between items-center font-body-sm text-secondary gap-2"><span class="line-clamp-1">Complimentary Express Courier</span><span class="uppercase tracking-wider font-label-specs text-primary text-[10px] flex-shrink-0 px-1 py-0.5 bg-surface-container rounded-sm">Complimentary</span></div><div class="flex justify-between items-center font-label-specs text-secondary pt-1"><span>Taxes included</span><span>Included</span></div></div>
+</div>
+</details>
+</div>
+</section>
+<!-- Checkout Step Form Matrix -->
+<form class="flex flex-col gap-space-lg px-margin pt-space-lg">
+<!-- Contact Information Matrix -->
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-baseline justify-between">
+<h2 class="font-title-editorial text-primary tracking-wide text-lg">01. Recipient Dossier</h2>
+<span class="font-label-specs text-secondary uppercase text-[10px]">Client Verification</span>
+</div>
+<div class="bg-surface-container-lowest p-space-md shadow-sm flex flex-col gap-space-md">
+<!-- Email field -->
+<div class="flex flex-col gap-1">
+<label class="font-label-caps text-secondary uppercase text-[10px]">Private Order Dispatch Email</label>
+<input class="h-11 bg-surface px-3 font-body-md text-primary outline-none focus:bg-surface-container-low transition-colors" placeholder="client@zastara.com" required="" type="email" value="elena.vance@zastara.com">
+</div>
+<!-- Phone input with International prefix selector -->
+<div class="flex flex-col gap-1">
+<label class="font-label-caps text-secondary uppercase text-[10px]">International Phone (Courier SMS &amp; Delivery)</label>
+<div class="flex gap-space-xs">
+<div class="h-11 bg-surface px-3 flex items-center gap-1.5 flex-shrink-0 text-primary">
+<span class="text-sm">🌐</span>
+<span class="font-label-specs text-xs">+1</span>
+<span class="material-symbols-outlined text-[14px] text-secondary">arrow_drop_down</span>
+</div>
+<input class="h-11 flex-1 bg-surface px-3 font-body-md text-primary outline-none focus:bg-surface-container-low transition-colors" placeholder="555 019 2834" required="" type="tel" value="555 019 2834">
+</div>
+<span class="font-body-sm text-secondary text-[11px] mt-0.5">
+            Personal courier coordinates via SMS 30 mins before arrival.
+          </span>
+</div>
+</div>
+</div>
+<!-- International Delivery Address Matrix -->
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-baseline justify-between">
+<h2 class="font-title-editorial text-primary tracking-wide text-lg">02. International Delivery Destination</h2>
+<span class="bg-secondary-container text-on-secondary-fixed font-label-specs text-[10px] px-2 py-0.5 uppercase tracking-wider">
+          Global Express
+        </span>
+</div>
+<div class="bg-surface-container-lowest p-space-md shadow-sm flex flex-col gap-space-md">
+<!-- Recipient Full Name -->
+<div class="flex flex-col gap-1">
+<label class="font-label-caps text-secondary uppercase text-[10px]">Full Legal Recipient Name</label>
+<input class="h-11 bg-surface px-3 font-body-md text-primary outline-none focus:bg-surface-container-low transition-colors" placeholder="Elena Vance" required="" type="text" value="Elena Vance">
+</div>
+<!-- Country / Region -->
+<div class="flex flex-col gap-1">
+<label class="font-label-caps text-secondary uppercase text-[10px]">Country / Region</label>
+<input class="h-11 bg-surface px-3 font-body-md text-primary outline-none focus:bg-surface-container-low transition-colors" placeholder="e.g. United States, United Kingdom, France" required="" type="text" value="United States">
+</div>
+<!-- Street Address -->
+<div class="flex flex-col gap-1">
+<label class="font-label-caps text-secondary uppercase text-[10px]">Street Address</label>
+<input class="h-11 bg-surface px-3 font-body-md text-primary outline-none focus:bg-surface-container-low transition-colors" placeholder="e.g. 742 Fifth Avenue, Suite 4B" required="" type="text" value="742 Fifth Avenue, Suite 4B">
+</div>
+<!-- City & Postal Code -->
+<div class="grid grid-cols-2 gap-space-sm">
+<div class="flex flex-col gap-1">
+<label class="font-label-caps text-secondary uppercase text-[10px]">City</label>
+<input class="h-11 bg-surface px-3 font-body-md text-primary outline-none focus:bg-surface-container-low transition-colors" placeholder="New York" required="" type="text" value="New York">
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-caps text-secondary uppercase text-[10px]">Postal Code</label>
+<input class="h-11 bg-surface px-3 font-body-md text-primary outline-none focus:bg-surface-container-low transition-colors" placeholder="10019" required="" type="text" value="10019">
+</div>
+</div>
+<!-- Delivery Instructions -->
+<div class="flex flex-col gap-1">
+<label class="font-label-caps text-secondary uppercase text-[10px]">Delivery Instructions / Landmark (Optional)</label>
+<input class="h-11 bg-surface px-3 font-body-md text-primary outline-none focus:bg-surface-container-low transition-colors" placeholder="Concierge desk, gate code, or signature instructions" type="text" value="Concierge Desk · Signature Required">
+</div>
+</div>
+</div>
+<!-- Logistics Cadence Options -->
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-baseline justify-between">
+<h2 class="font-title-editorial text-primary tracking-wide text-lg">03. Transit Protocol</h2>
+<span class="font-label-specs text-secondary uppercase text-[10px]">White-Glove Discretion</span>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Option A: Selected Express -->
+<label class="bg-surface-container-lowest p-space-md shadow-sm flex items-start gap-space-sm cursor-pointer relative overflow-hidden">
+<div class="w-1 bg-primary-container absolute left-0 inset-y-0"></div>
+<input checked="" class="mt-1 accent-[#521c38]" name="dispatch_tier" type="radio">
+<div class="flex-1 flex flex-col gap-0.5">
+<div class="flex justify-between items-center">
+<span class="font-body-lg text-primary font-medium">Complimentary International Express Courier</span>
+<span class="font-label-specs text-primary-container uppercase font-semibold text-xs">Complimentary</span>
+</div>
+<p class="font-body-sm text-secondary">
+              Insured priority air transit in tamper-sealed velvet vault pouch with dedicated tracking and signature delivery.
+            </p>
+</div>
+</label>
+<!-- Option B: Scheduled Morning Priority -->
+<label class="bg-surface-container-lowest p-space-md shadow-sm flex items-start gap-space-sm cursor-pointer opacity-75"><input class="mt-1 accent-[#521c38]" name="dispatch_tier" type="radio"><div class="flex-1 flex flex-col gap-0.5 min-w-0"><div class="flex justify-between items-center gap-2"><span class="font-body-lg text-primary">Scheduled Morning Priority</span><span class="font-label-specs text-secondary uppercase text-[10px] px-2 py-0.5 bg-surface-container rounded-sm flex-shrink-0">FREE</span></div><p class="font-body-sm text-secondary">Morning arrival between 9:00 AM – 1:00 PM. Signature &amp; government ID confirmation required.</p></div></label>
+</div>
+</div>
+<!-- BNPL & Payment Architecture -->
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-baseline justify-between">
+<h2 class="font-title-editorial text-primary tracking-wide text-lg">04. Settlement &amp; Acquisition</h2>
+<span class="font-label-specs text-secondary uppercase text-[10px]">Encrypted &amp; Certified</span>
+</div>
+<!-- Klarna / Afterpay BNPL Priority Panels -->
+<div class="flex flex-col gap-space-sm">
+<!-- Klarna Card -->
+<div class="bg-surface-container-lowest p-space-md shadow-sm flex flex-col gap-space-xs cursor-pointer">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<input checked="" class="accent-[#521c38]" name="payment_choice" type="radio">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 bg-[#FFB3C7] text-tertiary font-bold text-xs tracking-tight rounded-sm">Klarna</span>
+<span class="font-body-md text-primary font-medium">4 interest-free payments</span>
+</div>
+</div>
+<span class="font-label-specs text-primary font-semibold">AED 340.00 / mo</span>
+</div>
+<div class="pl-7 pr-2 flex items-center justify-between font-body-sm text-secondary">
+<span>Pay AED 340.00 now · Remaining over 3 months · 0% fees</span>
+<span class="font-label-specs text-xs underline text-primary">Instant Approval</span>
+</div>
+</div>
+<!-- Afterpay Card -->
+<div class="bg-surface-container-lowest p-space-md shadow-sm flex flex-col gap-space-xs cursor-pointer opacity-90">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<input class="accent-[#521c38]" name="payment_choice" type="radio">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 bg-[#B2FCE4] text-tertiary font-bold text-xs tracking-tight rounded-sm">Afterpay</span>
+<span class="font-body-md text-primary font-medium">4 interest-free payments</span>
+</div>
+</div>
+<span class="font-label-specs text-secondary font-medium">AED 340.00 / mo</span>
+</div>
+<div class="pl-7 font-body-sm text-secondary">
+<span>No late fees when you pay on time. 4 bi-weekly installments.</span>
+</div>
+</div>
+<!-- Card Payment Collapsible Option -->
+<div class="bg-surface-container-lowest p-space-md shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<input class="accent-[#521c38]" name="payment_choice" type="radio">
+<span class="font-body-md text-primary font-medium">Credit / Debit Card (International)</span>
+</div>
+<div class="flex gap-1.5 text-secondary">
+<span class="font-label-specs text-[10px] bg-surface-container px-1 py-0.5">VISA</span>
+<span class="font-label-specs text-[10px] bg-surface-container px-1 py-0.5">MC</span>
+<span class="font-label-specs text-[10px] bg-surface-container px-1 py-0.5">AMEX</span>
+</div>
+</div>
+<!-- Minimal Card Form Matrix -->
+<div class="flex flex-col gap-space-sm pt-space-xs">
+<div class="flex flex-col gap-1">
+<label class="font-label-caps text-secondary uppercase text-[10px]">Card Number</label>
+<div class="relative flex items-center">
+<input class="h-11 w-full bg-surface px-3 font-body-md text-primary outline-none focus:bg-surface-container-low" placeholder="4000 1234 5678 9010" type="text">
+<span class="material-symbols-outlined text-[18px] text-secondary absolute right-3">credit_card</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-sm">
+<div class="flex flex-col gap-1">
+<label class="font-label-caps text-secondary uppercase text-[10px]">Expires (MM/YY)</label>
+<input class="h-11 bg-surface px-3 font-body-md text-primary outline-none focus:bg-surface-container-low" placeholder="08/28" type="text">
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-caps text-secondary uppercase text-[10px]">Security CVV</label>
+<div class="relative flex items-center">
+<input class="h-11 w-full bg-surface px-3 font-body-md text-primary outline-none focus:bg-surface-container-low" maxlength="4" placeholder="•••" type="password">
+<span class="material-symbols-outlined text-[16px] text-secondary absolute right-3">lock</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Cash / Card on White-Glove Delivery -->
+<div class="bg-surface-container-lowest p-space-md shadow-sm flex items-center justify-between cursor-pointer opacity-80">
+<div class="flex items-center gap-space-sm">
+<input class="accent-[#521c38]" name="payment_choice" type="radio">
+<div class="flex flex-col">
+<span class="font-body-md text-primary font-medium">Card or Cash on Chauffeur Arrival</span>
+<span class="font-body-sm text-secondary text-[11px]">Courier carries contactless wireless POS terminal</span>
+</div>
+</div>
+<span class="font-label-specs text-[10px] text-secondary uppercase">Under AED 5,000</span>
+</div>
+</div>
+</div>
+<!-- Assurance & Atelier Guarantee -->
+<div class="bg-surface-container-low p-space-md shadow-sm flex flex-col gap-space-sm my-space-xs">
+<div class="flex items-center gap-space-sm text-primary">
+<span class="material-symbols-outlined text-[20px]">verified</span>
+<span class="font-label-caps uppercase tracking-wider text-xs">ZASTARA Promise</span>
+</div>
+<div class="grid grid-cols-2 gap-space-sm font-body-sm text-secondary text-[11px]">
+<div class="flex items-start gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-primary mt-0.5">diamond</span>
+<span>GRA-Certified D-Color VVS1 Moissanite</span>
+</div>
+<div class="flex items-start gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-primary mt-0.5">published_with_changes</span>
+<span>14-Day Complimentary Resizing</span>
+</div>
+</div>
+</div>
+</form>
+<!-- Sticky Bottom Acquisition Bar -->
+<div class="fixed bottom-0 inset-x-0 z-40 bg-surface/95 backdrop-blur-md shadow-[0_-4px_16px_rgba(42,22,32,0.06)] pb-safe">
+<div class="px-margin py-3 max-w-lg mx-auto flex flex-col gap-1.5">
+<div class="flex items-center justify-between px-1">
+<div class="flex items-baseline gap-1.5">
+<span class="font-label-specs text-secondary uppercase text-[10px]">Due At Confirmation:</span>
+<span class="font-headline-sm text-primary font-light">AED 340.00</span>
+</div>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[12px]">security</span>
+<span class="font-label-specs text-[10px]">Central Vault Security</span>
+</div>
+</div>
+<!-- Action Button -->
+<button class="w-full h-12 bg-primary-container text-on-primary font-label-caps tracking-widest uppercase flex items-center justify-center gap-2 active:bg-primary transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+<span>Confirm &amp; Dispatch Stack · AED 1,360</span>
+</button>
+<!-- Terms Disclaimer -->
+<p class="font-body-sm text-secondary text-[10px] text-center px-2">
+        By placing your order, you accept ZASTARA's Concierge Charter. 100% insured delivery.
+      </p>
+</div>
+</div>
+</div>
+</main>
+
+
+
+
+
+<script src="assets/js/site.js" defer></script>
+</body></html>

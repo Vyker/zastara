@@ -1,0 +1,38 @@
+{
+ "index.html": {
+  "images": 8,
+  "bytes": 30422
+ },
+ "collection.html": {
+  "images": 7,
+  "bytes": 35739
+ },
+ "piece.html": {
+  "images": 5,
+  "bytes": 27260
+ },
+ "stack-studio.html": {
+  "images": 6,
+  "bytes": 36967
+ },
+ "ear-studio.html": {
+  "images": 6,
+  "bytes": 30455
+ },
+ "bag.html": {
+  "images": 4,
+  "bytes": 22058
+ },
+ "checkout.html": {
+  "images": 3,
+  "bytes": 23022
+ },
+ "confirmation.html": {
+  "images": 3,
+  "bytes": 16657
+ },
+ "account.html": {
+  "images": 6,
+  "bytes": 31339
+ }
+}
