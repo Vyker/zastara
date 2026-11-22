@@ -712,8 +712,30 @@
     'box-shadow:0 8px 24px rgba(56,6,34,.35);opacity:0;transition:opacity .3s,transform .3s;z-index:9999;pointer-events:none;}' +
     '.za-toast--show{opacity:1;transform:translate(-50%,0);}' +
     '.za-chip--on{outline:2px solid #380622;outline-offset:-2px;background-color:#380622 !important;color:#faf9f6 !important;}' +
-    '.za-tab-on{outline:2px solid #380622;outline-offset:2px;}';
+    '.za-tab-on{outline:2px solid #380622;outline-offset:2px;}' +
+    '.za-ann{position:fixed;top:0;left:0;right:0;z-index:60;height:36px;display:flex;align-items:center;justify-content:center;background:#1c0412;color:#f2e9ee;font-size:9px;letter-spacing:.28em;text-transform:uppercase;font-family:Inter,system-ui,sans-serif;padding:0 12px;text-align:center;}' +
+    'body>main{padding-top:6.75rem !important;}' +
+    '.za-pay{display:inline-flex;align-items:center;justify-content:center;min-width:44px;height:26px;padding:0 8px;border:1px solid #d8d0cc;border-radius:4px;font-size:10px;letter-spacing:.08em;color:#380622;background:#fff;}';
   document.head.appendChild(css);
+
+  function wireFooter() {
+    $all('footer button').forEach(function (b) {
+      if (b.classList.contains('za-wired')) return;
+      var t = norm(b);
+      b.classList.add('za-wired');
+      if (/sign me up|subscribe/.test(t)) {
+        b.addEventListener('click', function () {
+          var i = document.querySelector('.za-news-email');
+          if (i && i.value && /.+@.+\..+/.test(i.value)) { toast('Welcome to the Atelier Circle'); i.value = ''; }
+          else toast('Please enter a valid email address');
+        });
+        return;
+      }
+      b.addEventListener('click', function () {
+        toast('Concierge — ' + t.replace(/\s+/g, ' '));
+      });
+    });
+  }
 
   /* ---------- boot ---------- */
   wireNav();
@@ -728,6 +750,7 @@
   wireMisc();
   wireTabs();
   wirePieceView();
+  wireFooter();
   if (PAGE === 'bag.html') renderBag();
   if (PAGE === 'checkout.html') wireCheckout();
   if (PAGE === 'confirmation.html') fillConfirmation();
