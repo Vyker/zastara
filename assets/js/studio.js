@@ -15,28 +15,28 @@
   }
 
   var RINGS = [
-    { id: 'flat',    name: 'The Flat Edge Band',       sub: '2.4mm · Comfort-Fit',        price: 88,  cut: 'ring-5a2779b762f2d5c6.png', thumb: '5a2779b762f2d5c6.webp' },
-    { id: 'marquise',name: 'The Marquise Eternity',    sub: 'Marquise Moissanite',        price: 242, cut: 'ring-6dd96a90f0605e5a.png', thumb: '6dd96a90f0605e5a.webp' },
-    { id: 'bloom',   name: 'Marquise Bloom Eternity',  sub: 'Open Marquise Set',          price: 280, cut: 'ring-60fdf730eee34d01.png', thumb: '60fdf730eee34d01.webp' },
-    { id: 'baguette',name: 'Emerald Baguette Eternity',sub: 'Baguette Moissanite',        price: 280, cut: 'ring-ff34151e96c86cbd.png', thumb: 'ff34151e96c86cbd.webp' },
-    { id: 'pear',    name: 'Pear Cluster Eternity',    sub: 'Pear & Round Cluster',       price: 340, cut: 'ring-ca30676073a93fec.png', thumb: 'ca30676073a93fec.webp' }
+    { id: 'flat',    name: 'The Flat Edge Band',       sub: '2.4mm · Comfort-Fit',        price: 88,  cut: 'ring-5a2779b762f2d5c6.png', thumb: '5a2779b762f2d5c6.webp', ar: 0.604 },
+    { id: 'marquise',name: 'The Marquise Eternity',    sub: 'Marquise Moissanite',        price: 242, cut: 'ring-6dd96a90f0605e5a.png', thumb: '6dd96a90f0605e5a.webp', ar: 0.987 },
+    { id: 'bloom',   name: 'Marquise Bloom Eternity',  sub: 'Open Marquise Set',          price: 280, cut: 'ring-60fdf730eee34d01.png', thumb: '60fdf730eee34d01.webp', ar: 0.812 },
+    { id: 'baguette',name: 'Emerald Baguette Eternity',sub: 'Baguette Moissanite',        price: 280, cut: 'ring-ff34151e96c86cbd.png', thumb: 'ff34151e96c86cbd.webp', ar: 0.899 },
+    { id: 'pear',    name: 'Pear Cluster Eternity',    sub: 'Pear & Round Cluster',       price: 340, cut: 'ring-ca30676073a93fec.png', thumb: 'ca30676073a93fec.webp', ar: 0.878 }
   ];
   var NECKLACES = [ /* awaiting product photography — transparent PNGs, see ASSETS NEEDED */ ];
   var NECK_PLACE = ['The Petit Tennis 40cm', 'The Station Necklace 45cm', 'The Ravenna Pendant 50cm', 'The Rivière 40cm'];
   var EARRINGS = [
-    { id: 'stud',    name: 'Solstice Ball Stud',       price: 120, cut: 'cut-ballstud.png',    w: 0.045, slot: 'lobe1' },
-    { id: 'trio',    name: 'Stellar Trio Huggie',      price: 240, cut: 'cut-triohuggie.png',  w: 0.062, slot: 'lobe1' },
-    { id: 'star',    name: 'Star Cascade Drop Huggie', price: 260, cut: 'cut-starhuggie.png',  w: 0.05,  slot: 'lobe1' },
-    { id: 'crawler', name: 'Marquise Illusion Crawler',price: 380, cut: 'cut-crawler.png',     w: 0.105, slot: 'helix' }
+    { id: 'stud',    name: 'Solstice Ball Stud',       price: 120, cut: 'cut-ballstud.png',    w: 0.045, slot: 'lobe1', rot: 0,  dy: 0 },
+    { id: 'trio',    name: 'Stellar Trio Huggie',      price: 240, cut: 'cut-triohuggie.png',  w: 0.062, slot: 'lobe1', rot: 0,  dy: 0.012 },
+    { id: 'star',    name: 'Star Cascade Drop Huggie', price: 260, cut: 'cut-starhuggie.png',  w: 0.05,  slot: 'lobe1', rot: 0,  dy: 0.055 },
+    { id: 'crawler', name: 'Marquise Illusion Crawler',price: 380, cut: 'cut-crawler.png',     w: 0.105, slot: 'helix', rot: 12, dy: 0.01 }
   ];
   var GEO = {
-    ring:      { base: 'assets/img/studio-finger-clean.webp', alt: 'Index finger preview', cx: 0.50,  cy: 0.46,  kx: 0.025, ky: 0.055, rot: -25, rw: 0.13,  max: 5, ratio: '4 / 3' },
+    ring:      { base: 'assets/img/studio-finger-clean.webp', alt: 'Index finger preview', cx: 0.515, cy: 0.47,  kx: 0.042, ky: 0.085, rot: -56, rw: 0.115,  max: 5, ratio: '4 / 3' },
     necklace:  { base: 'assets/img/studio-neck-clean.webp',   alt: 'Neck preview',         cx: 0.475, cy: 0.715, kx: 0.004, ky: 0.075, rot: 0,   rw: 0.52,  max: 4, ratio: '4 / 5' },
     ear:       { base: 'assets/img/studio-ear-clean.webp',    alt: 'Ear preview',          slots: {
-        lobe1:   { x: 0.658, y: 0.812, rot: 0,   w: 0.05,  label: 'First Lobe' },
-        lobe2:   { x: 0.632, y: 0.702, rot: -6,  w: 0.05,  label: 'Second Lobe' },
-        lobe3:   { x: 0.604, y: 0.596, rot: -12, w: 0.05,  label: 'Third Lobe' },
-        helix:   { x: 0.545, y: 0.30,  rot: 14,  w: 0.105, label: 'Helix / Crawler' }
+        lobe1:   { x: 0.632, y: 0.78,  rot: 0,   w: 0.05,  label: 'First Lobe' },
+        lobe2:   { x: 0.617, y: 0.665, rot: -6,  w: 0.05,  label: 'Second Lobe' },
+        lobe3:   { x: 0.601, y: 0.555, rot: -12, w: 0.05,  label: 'Third Lobe' },
+        helix:   { x: 0.548, y: 0.44,  rot: 10,  w: 0.105, label: 'Helix / Crawler' }
       }, max: 4, ratio: '16 / 9' }
   };
   var SIZES = [5, 6, 7, 8, 9];
@@ -74,10 +74,10 @@
   function mirrorX(x) { return cat().mirrored ? 1 - x : x; }
 
   /* ---------- renderers ---------- */
-  function itemHtml(p, px, py, wpx, rot, zi) {
+  function itemHtml(p, px, py, wpx, rot, zi, extra) {
     return '<img src="assets/img/' + p.cut + '" alt="' + p.name + '" style="position:absolute;left:' +
       px.toFixed(1) + 'px;top:' + py.toFixed(1) + 'px;width:' + wpx.toFixed(1) +
-      'px;transform:translate(-50%,-50%) rotate(' + rot + 'deg);filter:drop-shadow(0 8px 12px rgba(30,4,20,.4));z-index:' +
+      'px;transform:translate(-50%,-50%) rotate(' + rot.toFixed(1) + 'deg)' + (extra || '') + ';filter:drop-shadow(0 8px 12px rgba(30,4,20,.4));z-index:' +
       zi + ';transition:left .35s ease,top .35s ease;" draggable="false">';
   }
   function renderStacked() {
@@ -89,8 +89,14 @@
       var cy = c.cy - k * c.ky;
       var wFrac = c.rw;
       if (state.cat === 'necklace') wFrac = c.rw * (1 + (half - i) * 0.14);
-      var rot = state.cat === 'ring' ? c.rot : 0;
-      html += itemHtml(p, g.x + cx * g.w, g.y + cy * g.h, wFrac * g.w, rot, 10 + i);
+      var rot = 0, extra = '';
+      if (state.cat === 'ring') {
+        rot = c.rot - k * 3;                /* finger curves: band angle follows it */
+        var sc = 1 + 0.045 * k;             /* knuckle side slightly larger */
+        wFrac = c.rw * (p.ar || 0.95);      /* normalize so band spans ~finger width */
+        extra = ' scale(' + sc.toFixed(3) + ') scaleX(0.52)'; /* flatten along finger = wraps around */
+      }
+      html += itemHtml(p, g.x + cx * g.w, g.y + cy * g.h, wFrac * g.w, rot, 10 + i, extra);
     });
     itemsLayer.innerHTML = html;
   }
@@ -101,12 +107,15 @@
       var hx = g.x + mirrorX(d.x) * g.w, hy = g.y + d.y * g.h;
       if (it) {
         var p = find(it);
-        if (p) html += itemHtml(p, hx, hy, p.w * g.w, cat().mirrored ? -d.rot : d.rot, 10);
+        if (p) {
+          var irot = (p.rot || 0) * (cat().mirrored ? -1 : 1);
+          html += itemHtml(p, hx, hy + (p.dy || 0) * g.h, p.w * g.w, irot, 10);
+        }
       }
       html += '<button class="za-hot" data-slot="' + slot + '" aria-label="Piercing: ' + d.label + '" title="' + d.label + '" style="position:absolute;left:' +
         hx.toFixed(1) + 'px;top:' + hy.toFixed(1) +
         'px;width:30px;height:30px;transform:translate(-50%,-50%);border-radius:9999px;border:1.5px dashed ' +
-        (it ? 'transparent' : 'rgba(56,6,34,.55)') + ';background:' + (it ? 'transparent' : 'rgba(215,227,239,.25)') +
+        (it ? 'transparent' : 'rgba(56,6,34,.35)') + ';background:rgba(255,255,255,.12);backdrop-filter:blur(1px);' +
         ';cursor:pointer;z-index:20;"></button>';
     });
     itemsLayer.innerHTML = html;
