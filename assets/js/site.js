@@ -530,42 +530,51 @@
     if (PAGE !== 'stack-studio.html') return;
     var C = $('#layers-container');
     if (!C) return;
-    var MAP = [[/knife|flut/i, '4ab737a980d1962a.webp'], [/solitaire|brilliant/i, '6dd96a90f0605e5a.webp'], [/flat|comfort/i, '5a2779b762f2d5c6.webp'], [/classic|1\.8/i, '42602767331d91f4.webp'], [/prism|facet/i, 'b476d0721fcee814.webp'], [/pav/i, '4eb9b0615fd8debf.webp'], [/marquise|bloom/i, '60fdf730eee34d01.webp'], [/pear/i, 'ca30676073a93fec.webp'], [/baguette/i, 'ff34151e96c86cbd.webp'], [/chevron/i, '4eb9b0615fd8debf.webp']];
-    function imgFor(t) { for (var i = 0; i < MAP.length; i++) { if (MAP[i][0].test(t)) return MAP[i][1]; } return '42602767331d91f4.webp'; }
+    var OV = { knife: '5a2779b762f2d5c6', solitaire: '6dd96a90f0605e5a', flat: '5a2779b762f2d5c6', comfort: '5a2779b762f2d5c6', classic: '5a2779b762f2d5c6', prism: 'ff34151e96c86cbd', facet: 'ff34151e96c86cbd', pave: '6dd96a90f0605e5a', flut: '60fdf730eee34d01', marquise: '6dd96a90f0605e5a', bloom: '60fdf730eee34d01', pear: 'ca30676073a93fec', baguette: 'ff34151e96c86cbd', chevron: '6dd96a90f0605e5a' };
+    var KEY = ['knife','solitaire','comfort','flat','classic','prism','facet','pav','flut','marquise','bloom','pear','baguette','chevron'];
+    function ringFor(name) {
+      var n = name.toLowerCase();
+      for (var i = 0; i < KEY.length; i++) { if (n.indexOf(KEY[i]) > -1) return 'assets/img/ring-' + OV[KEY[i]] + '.png'; }
+      return 'assets/img/ring-5a2779b762f2d5c6.png';
+    }
     function layerName(r) { var m = r.querySelector('.font-body-md'); return m ? m.textContent.replace(/\s+/g, ' ').trim() : norm(r).slice(0, 40); }
-    var prev = null;
+    /* finger geometry in fractions of the source photo (studio-finger-clean.webp, 2816x1404) */
+    var CX = 0.50, CY = 0.46;                  /* ring cluster center */
+    var KX = 0.025, KY = 0.055;                /* per-step offset toward knuckle (width/height fracs) */
+    var ROT = -25, RW = 0.13;                  /* ring rotation (deg), ring width (frac of rendered width) */
+    var heroImg = null, layer = null;
     function mount() {
-      var hostImg = $all('main img').filter(function (im) { return /stacked|three rhodium/i.test(im.getAttribute('data-alt') || ''); })[0];
-      var host = hostImg && hostImg.parentElement;
-      if (!host) return false;
-      $all('img', host).forEach(function (im) { im.style.transition = 'opacity .35s'; im.style.opacity = '0'; });
-      host.style.background = 'linear-gradient(165deg,#f3eeea 0%,#faf8f5 55%,#efe7e0 100%)';
-      prev = document.createElement('div');
-      prev.id = 'za-stack-preview';
-      prev.style.cssText = 'position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;pointer-events:none;';
-      prev._cap = document.createElement('div');
-      prev._cap.style.cssText = 'position:absolute;bottom:12px;left:0;right:0;text-align:center;font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:#8a7580;';
-      prev.appendChild(prev._cap);
-      host.appendChild(prev);
+      heroImg = $all('main img').filter(function (im) { return /stacked|three rhodium/i.test(im.getAttribute('data-alt') || ''); })[0];
+      if (!heroImg) return false;
+      heroImg.src = 'assets/img/studio-finger-clean.webp';
+      heroImg.setAttribute('alt', 'ZASTARA finger preview');
+      layer = document.createElement('div');
+      layer.id = 'za-finger-rings';
+      layer.style.cssText = 'position:absolute;inset:0;pointer-events:none;z-index:6;';
+      heroImg.parentElement.appendChild(layer);
       return true;
     }
-    function render() {
-      if (!prev && !mount()) return;
-      var rows = $all('.layer-item', C);
-      $all('img', prev).forEach(function (n) { n.remove(); });
-      rows.forEach(function (r, idx) {
-        var im = document.createElement('img');
-        im.src = 'assets/img/' + imgFor(layerName(r));
-        im.alt = im.title = layerName(r);
-        im.style.cssText = 'width:74px;height:74px;border-radius:9999px;object-fit:cover;background:#fff;border:2px solid #fff;box-shadow:0 8px 18px rgba(56,6,34,.16);' + (idx ? 'margin-top:-16px;' : '');
-        prev.insertBefore(im, prev._cap);
-      });
-      prev._cap.textContent = rows.length ? 'Top \u2192 Bottom \u00b7 ' + rows.map(layerName).join(' \u00b7 ') : 'Empty stack \u2014 add bands from the shelf';
+    function geom() {
+      var rw = heroImg.clientWidth, rh = heroImg.clientHeight;
+      var nw = heroImg.naturalWidth || 2816, nh = heroImg.naturalHeight || 1404;
+      var s = Math.max(rw / nw, rh / nh), dw = nw * s, dh = nh * s;
+      return { x: (rw - dw) / 2, y: (rh - dh) / 2, w: dw, h: dh };
     }
     function renumber() {
       var rows = $all('.layer-item', C), n = rows.length;
       rows.forEach(function (r, i) { var lab = r.querySelector('.font-label-caps'); if (lab && /^L\d/.test(lab.textContent.trim())) lab.textContent = 'L' + (n - i); });
     }
+    function render() {
+      if (!layer && !mount()) return;
+      var g = geom(), rows = $all('.layer-item', C), n = rows.length, html = '';
+      rows.forEach(function (r, i) {
+        var cx = CX + ((n - 1) / 2 - i) * KX, cy = CY - ((n - 1) / 2 - i) * KY;
+        var px = g.x + cx * g.w, py = g.y + cy * g.h;
+        html += '<img src="' + ringFor(layerName(r)) + '" alt="" style="position:absolute;left:' + px.toFixed(1) + 'px;top:' + py.toFixed(1) + 'px;width:' + (RW * g.w).toFixed(1) + 'px;transform:translate(-50%,-50%) rotate(' + ROT + 'deg);filter:drop-shadow(0 10px 14px rgba(30,4,20,.45));z-index:' + (10 + i) + ';transition:left .35s ease, top .35s ease;">';
+      });
+      layer.innerHTML = html;
+    }
+    var prevCount = $all('.layer-item', C).length;
     new MutationObserver(function () {
       var n = $all('.layer-item', C).length;
       if (n > prevCount) toast('Added to stack \u2014 ' + layerName($all('.layer-item', C)[0]));
@@ -573,7 +582,6 @@
       prevCount = n;
       render(); renumber();
     }).observe(C, { childList: true });
-    var prevCount = $all('.layer-item', C).length;
     C.addEventListener('click', function (e) {
       var up = e.target.closest && e.target.closest('.layer-up');
       var dn = e.target.closest && e.target.closest('.layer-down');
@@ -582,8 +590,9 @@
       if (up) toast(row.previousElementSibling ? 'Moved up in stack' : 'Already at top of stack');
       if (dn) toast(row.nextElementSibling ? 'Moved down in stack' : 'Already at bottom of stack');
     }, true);
+    window.addEventListener('resize', render);
+    if (heroImg && !heroImg.complete) heroImg.addEventListener('load', render);
     render(); renumber();
-    /* shelf ADD TO STACK adds a layer (page inline script) — keep it out of the cart */
     $all('.add-band-btn').forEach(function (b) { b.classList.add('za-wired'); });
     var q = $('#quick-add-slot-btn');
     if (q) { q.classList.add('za-wired'); }
