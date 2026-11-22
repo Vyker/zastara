@@ -43,13 +43,12 @@
     'checkout': 'checkout.html', 'ear-piercing': 'ear-studio.html'
   };
   var CTA_MAP = [
-    [/^build your stack|^start your stack|^build.*stack/, 'stack-studio.html'],
-    [/^explore collection|^shop collection|^view collection|^shop pieces|^explore pieces/, 'collection.html'],
-    [/^sets$|^explore sets|^view sets/, 'account.html'],
+    [/^build your stack|^start your stack|^build.*stack|customize.*stack|^edit in studio/, 'stack-studio.html'],
+    [/^explore collection|^shop collection|^view collection|^shop pieces|^explore pieces|^sets(\s|$)|^ring stacks|^explore sets/, 'collection.html'],
     [/^proceed to secure checkout/, 'checkout.html'],
     [/^continue shopping|^back to collection|^continue browsing|^discover the collection/, 'collection.html'],
     [/^view saved stacks|^saved stacks/, 'account.html'],
-    [/^ear piercing|^ear stack|^build.*ear/, 'ear-studio.html'],
+    [/^ear piercing|^ear stack|^build.*ear|^ear & piercing/, 'ear-studio.html'],
     [/^continue to boutique|^back to home|^back to boutique/, 'index.html']
   ];
   function wireNav() {
@@ -105,7 +104,7 @@
     $all('button').forEach(function (btn) {
       if (btn.classList.contains('za-wired')) return;
       var text = norm(btn);
-      if (!/(^|[^a-z])add to (stack|bag)|^auto_fix_high acquire|^acquire/i.test(text)) return;
+      if (!/(add to (stack|bag)|acquire)/i.test(text)) return;
       var card = cardOf(btn);
       var nameEl = card && (card.querySelector('h2,h3,[class*="title-editorial"]'));
       var name = nameEl ? nameEl.textContent.replace(/\s+/g, ' ').trim() : null;
@@ -320,18 +319,416 @@
     });
   }
 
+  /* ---------- universal behaviors: drawer, search, wishlist, share, chips ---------- */
+  var WISH_KEY = LS.cart.replace('cart', 'wishlist');
+  function getWish() { try { return JSON.parse(localStorage.getItem(WISH_KEY)) || []; } catch (e) { return []; } }
+  function setWish(a) { localStorage.setItem(WISH_KEY, JSON.stringify(a)); }
+
+  function doShare(title) {
+    var data = { title: 'ZASTARA — ' + (title || document.title), text: (title || 'ZASTARA') + ' at ' + location.href, url: location.href };
+    function copy() {
+      try {
+        if (navigator.clipboard) navigator.clipboard.writeText(location.href).catch(function () {});
+      } catch (e) {}
+    }
+    if (navigator.share) { navigator.share(data).then(copy, copy); toast('Sharing — ' + (title || 'ZASTARA')); return; }
+    copy();
+    toast('Link copied to clipboard');
+  }
+
+  function injectOverlays() {
+    var wrap = document.createElement('div');
+    wrap.innerHTML =
+      '<div id="za-drawer" class="fixed inset-0 z-[100] hidden"><div class="absolute inset-0 bg-black/50 za-drawer-scrim"></div>' +
+      '<nav class="absolute left-0 top-0 bottom-0 w-[78%] max-w-[300px] bg-surface shadow-2xl flex flex-col pt-16 translate-x-0 transition-transform duration-300">' +
+      '<span class="font-title-editorial text-title-editorial text-primary uppercase tracking-[0.3em] px-6">ZASTARA</span>' +
+      '<div class="mt-6 flex flex-col">' +
+      ['index.html|Home', 'collection.html|Collection', 'stack-studio.html|Stack Studio', 'ear-studio.html|Ear Studio', 'account.html|Account', 'bag.html|Shopping Bag'].map(function (l) {
+        var parts = l.split('|');
+        return '<a href="' + parts[0] + '" class="px-6 py-3.5 font-label-caps text-label-caps uppercase tracking-[0.2em] ' +
+          (parts[0] === PAGE ? 'text-primary font-semibold bg-surface-container-low' : 'text-secondary') + '">' + parts[1] + '</a>';
+      }).join('') + '</div>' +
+      '<div class="mt-auto p-6 font-body-sm text-secondary">925 Sterling Silver · Dubai Atelier</div>' +
+      '<button aria-label="Close menu" class="absolute top-4 right-2 w-11 h-11 flex items-center justify-center text-primary"><span class="material-symbols-outlined">close</span></button>' +
+      '</nav></div>' +
+      '<div id="za-search" class="fixed inset-0 z-[100] hidden"><div class="absolute inset-0 bg-black/50 za-drawer-scrim"></div>' +
+      '<div class="absolute top-0 inset-x-0 bg-surface p-4 pt-6 shadow-2xl">' +
+      '<form id="za-search-form" class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary">search</span>' +
+      '<input id="za-search-input" type="text" placeholder="Search bands, sets, moissanite…" class="flex-1 h-11 bg-surface-container-low px-3 font-body-md text-primary outline-none" autocomplete="off">' +
+      '<button type="submit" class="h-11 px-4 bg-primary text-on-primary font-label-caps text-label-caps uppercase tracking-widest">Go</button></form>' +
+      '<p class="mt-3 font-body-sm text-secondary">Press Enter to search the collection.</p></div></div>';
+    document.body.appendChild(wrap);
+    wrap.querySelectorAll('a').forEach(function (a) { if (a.getAttribute('href') === PAGE) a.setAttribute('aria-current', 'page'); });
+  }
+
+  function openOverlay(id, open) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.classList.toggle('hidden', !open);
+    if (open) { var inp = el.querySelector('input'); if (inp) setTimeout(function () { inp.focus(); }, 50); }
+  }
+
+  function wireOverlays() {
+    injectOverlays();
+    var drawer = document.getElementById('za-drawer');
+    drawer.addEventListener('click', function (e) { if (e.target.closest('.za-drawer-scrim') || e.target.closest('[aria-label="Close menu"]')) openOverlay('za-drawer', false); });
+    document.getElementById('za-search').addEventListener('click', function (e) { if (e.target.closest('.za-drawer-scrim')) openOverlay('za-search', false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { openOverlay('za-drawer', false); openOverlay('za-search', false); } });
+    document.getElementById('za-search-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var q = document.getElementById('za-search-input').value.trim();
+      openOverlay('za-search', false);
+      location.href = 'collection.html' + (q ? '?q=' + encodeURIComponent(q) : '');
+    });
+  }
+
+  function wireHeader() {
+    var menuBtn = $all('button').find(function (b) { return /(^|\s)menu(\s|$)/.test(iconOf(b)) || b.getAttribute('aria-label') === 'Navigation menu'; });
+    if (menuBtn) menuBtn.addEventListener('click', function () { openOverlay('za-drawer', true); });
+    var searchBtn = $all('header button').find(function (b) { return iconOf(b) === 'search' || /Search/i.test(b.getAttribute('aria-label') || ''); });
+    if (searchBtn) searchBtn.addEventListener('click', function () { openOverlay('za-search', true); });
+    var langBtn = $all('header button').find(function (b) { return /EN\s*\|?\s*ع/.test(b.textContent) || /language/i.test(b.getAttribute('aria-label') || ''); });
+    if (langBtn) langBtn.addEventListener('click', function () {
+      var spans = langBtn.querySelectorAll('span');
+      var ar = !langBtn.classList.toggle('za-ar');
+      spans.forEach(function (s) {
+        if (s.textContent.trim() === 'EN') s.className = ar ? 'text-outline-variant' : 'font-medium text-primary';
+        if (s.textContent.trim() === 'ع') s.className = ar ? 'font-medium text-primary' : '';
+      });
+      langBtn.classList.toggle('za-ar', !ar);
+      toast(ar ? 'Arabic edition coming soon' : 'English selected');
+    });
+  }
+
+  function iconOf(btn) {
+    var s = btn.querySelector('.material-symbols-outlined');
+    return s ? s.textContent.trim() : '';
+  }
+
+  function wireShareAndWish() {
+    $all('button').forEach(function (b) {
+      if (b.classList.contains('za-wired')) return;
+      var icon = iconOf(b), aria = b.getAttribute('aria-label') || '';
+      if (icon === 'share' || icon === 'ios_share' || /share/i.test(aria)) {
+        b.classList.add('za-wired');
+        b.addEventListener('click', function () { doShare((b.closest('article,section') || {}).querySelector ? (((b.closest('article,section').querySelector('h1,h2,h3') || {}).textContent) || '').trim() : ''); });
+        return;
+      }
+      if (icon === 'favorite' || icon === 'favorite_border' || /wishlist/i.test(aria)) {
+        var headerBtn = !!b.closest('header');
+        b.classList.add('za-wired');
+        if (headerBtn) { b.addEventListener('click', function () { var n = getWish().length; toast(n ? n + (n === 1 ? ' saved piece' : ' saved pieces') + ' in your wishlist' : 'Wishlist empty — tap the heart on a piece'); }); return; }
+        var card = b.closest('article,section');
+        var pname = card ? (((card.querySelector('h1,h2,h3') || {}).textContent) || 'piece').replace(/\s+/g, ' ').trim() : 'piece';
+        var saved = getWish().indexOf(pname) > -1;
+        if (saved && icon === 'favorite') setFilled(b, true);
+        b.addEventListener('click', function () {
+          var list = getWish(), idx = list.indexOf(pname);
+          if (idx > -1) { list.splice(idx, 1); setFilled(b, false); toast('Removed from wishlist'); }
+          else { list.push(pname); setFilled(b, true); toast('Saved — ' + pname); }
+          setWish(list);
+        });
+      }
+    });
+  }
+  function setFilled(btn, on) {
+    var s = btn.querySelector('.material-symbols-outlined');
+    if (!s) return;
+    s.textContent = on ? 'favorite' : 'favorite_border';
+    s.style.fontVariationSettings = "'FILL' " + (on ? 1 : 0);
+  }
+
+  /* generic chip group: sibling buttons toggling selection */
+  function wireChipGroups() {
+    $all('button').forEach(function (b) {
+      if (b.classList.contains('za-wired')) return;
+      var t = norm(b);
+      if (!/^\d\d$|^\d\d us [\d.]+$|^6$|^7$|^8$|^9$/.test(t) || b.closest('header')) return;
+      var group = b.parentElement;
+      if (!group || group.querySelectorAll(':scope > button').length < 3) return;
+      b.classList.add('za-wired', 'za-chip');
+      b.addEventListener('click', function () {
+        group.querySelectorAll(':scope > button.za-chip').forEach(function (c) { c.classList.remove('za-chip--on'); });
+        b.classList.add('za-chip--on');
+        if (!/^\d+$/.test(t)) return;
+        toast('Size ' + t + ' selected');
+      });
+    });
+  }
+
+  /* collection: category filter chips, view toggle, filter panel, ?q= */
+  var CAT_KEYWORDS = {
+    'plain': /plain|core band/i, 'moissanite': /moissanite|solitaire|brilliant/i,
+    'textured': /fluted|textured|chevron|hugger|pav/i, 'sets': /set|triad|stack of|curated/i,
+    'ear': /ear|cuff|huggie/i
+  };
+  function filterGrid(kw, label) {
+    var grid = document.getElementById('catalogGrid') || $('main .grid');
+    if (!grid) return 0;
+    var arts = $all('article', grid), shown = 0;
+    arts.forEach(function (a) {
+      var show = !kw || kw.test(a.textContent);
+      a.style.display = show ? '' : 'none';
+      if (show) shown++;
+    });
+    if (label !== null) toast(shown + (shown === 1 ? ' piece' : ' pieces') + (label ? ' — ' + label : ''));
+    return shown;
+  }
+  function wireCollection() {
+    if (PAGE !== 'collection.html') return;
+    $all('main button').forEach(function (b) {
+      var t = norm(b).replace(/\(\d+\)/, '').trim();
+      var key = /all pieces|^all\b/.test(t) ? 'all' : Object.keys(CAT_KEYWORDS).find(function (k) { return t.indexOf(k) > -1; });
+      if (key && (key === 'all' || key)) {
+        b.classList.add('za-wired', 'za-chip');
+        b.addEventListener('click', function () {
+          $all('main button.za-chip').forEach(function (c) { c.classList.remove('za-chip--on'); });
+          b.classList.add('za-chip--on');
+          filterGrid(key === 'all' ? null : CAT_KEYWORDS[key], key === 'all' ? null : b.textContent.replace(/\(\d+\)/, '').trim());
+        });
+      }
+    });
+    var gridBtn = $all('main button').find(function (b) { return iconOf(b) === 'grid_view'; });
+    if (gridBtn) { gridBtn.classList.add('za-wired'); gridBtn.addEventListener('click', function () { setGridCols(2); toast('Two-column view'); }); }
+    var listBtn = $all('main button').find(function (b) { return iconOf(b) === 'view_agenda'; });
+    if (listBtn) { listBtn.classList.add('za-wired'); listBtn.addEventListener('click', function () { setGridCols(1); toast('Editorial view'); }); }
+    var reset = $all('main button').find(function (b) { return norm(b) === 'reset'; });
+    if (reset) { reset.classList.add('za-wired'); reset.addEventListener('click', function () { $all('.za-chip--on').forEach(function (c) { c.classList.remove('za-chip--on'); }); filterGrid(null, 'Filters cleared'); }); }
+    var apply = $all('main button').find(function (b) { return /apply filters/i.test(norm(b)); });
+    if (apply) { apply.classList.add('za-wired'); apply.addEventListener('click', function () { var n = filterGrid(null, null); toast('Showing ' + n + ' pieces'); }); }
+    var q = new URLSearchParams(location.search).get('q');
+    if (q) {
+      var re = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
+      filterGrid(re, '“' + q + '”');
+    }
+  }
+  function setGridCols(n) {
+    var grid = document.getElementById('catalogGrid');
+    if (!grid) return;
+    grid.classList.remove('grid-cols-1', 'grid-cols-2');
+    grid.classList.add('grid-cols-' + n);
+  }
+
+  /* home + studio + account set/acquire buttons: parse price from the button itself */
+  function wirePriceButtons() {
+    $all('main button').forEach(function (b) {
+      if (b.classList.contains('za-wired')) return;
+      var t = norm(b);
+      var m = t.match(/aed\s*([\d,]+)(?:\.\d+)?/);
+      if (!m || !/add set|acquire|slot to ear|add to stack/.test(t)) return;
+      var price = parseFloat(m[1].replace(/,/g, ''));
+      var card = b.closest('article,section');
+      var name = card ? (((card.querySelector('h1,h2,h3,h4') || {}).textContent) || '').replace(/\s+/g, ' ').trim() : '';
+      if (!name) name = t.replace(/shopping_bag|add set to bag|acquire curated stack|add to stack|slot to ear|·/gi, ' ').replace(/\s+/g, ' ').trim() || 'ZASTARA piece';
+      name = name.replace(/·?\s*AED\s*[\d,.]+.*$/, '').trim() || name;
+      b.classList.add('za-wired');
+      b.addEventListener('click', function () { addToCart(name, price, card); });
+    });
+  }
+
+  /* newsletter, guides, misc toasts, express pay, tabs */
+  function wireMisc() {
+    $all('main button, form button').forEach(function (b) {
+      if (b.classList.contains('za-wired')) return;
+      var t = norm(b);
+      if (/^join$/.test(t) || /subscribe/.test(t)) {
+        b.classList.add('za-wired');
+        b.addEventListener('click', function () {
+          var input = b.closest('section,div,form') && b.closest('section,div,form').querySelector('input[type="email"],input[type="text"]');
+          if (input && /.+@.+\..+/.test(input.value)) { toast('Welcome to the atelier — check your inbox'); input.value = ''; }
+          else if (input) { input.focus(); toast('Enter a valid email address'); }
+          else toast('Welcome to the atelier');
+        });
+      } else if (/sizing guide/.test(t)) {
+        b.classList.add('za-wired');
+        b.addEventListener('click', function () { toast('EU 48=US4.5 · 50=5.25 · 52=6.0 · 54=7.0 · Circumference mm ÷ π = size'); });
+      } else if (/^guide$/.test(t)) {
+        b.classList.add('za-wired');
+        b.addEventListener('click', function () { toast('Flush nesting: total stack depth ≤ 6.6mm for zero gap'); });
+      } else if (/pay express|^pay$|g pay/.test(t)) {
+        b.classList.add('za-wired');
+        b.addEventListener('click', function () {
+          if (PAGE === 'bag.html') location.href = 'checkout.html';
+          else { var el = $all('input[name="payment_choice"]')[2]; if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' }); toast('Complete payment via the options below'); }
+        });
+      } else if (/edit in studio/.test(t)) {
+        b.classList.add('za-wired'); b.addEventListener('click', function () { location.href = 'stack-studio.html'; });
+      } else if (/inspect vehicle telemetry/i.test(t)) {
+        b.classList.add('za-wired'); b.addEventListener('click', function () { toast('Live telemetry unlocks at dispatch'); });
+      } else if (/^tune$/.test(t) && !/apply filters/i.test(t)) {
+        b.classList.add('za-wired'); b.addEventListener('click', function () { toast('Preferences — coming soon to the client portal'); });
+      } else if (/book fitting/.test(t)) {
+        b.classList.add('za-wired'); b.addEventListener('click', function () { toast('Fitting request sent — concierge will contact you'); });
+      } else if (/whatsapp stylist/.test(t)) {
+        b.classList.add('za-wired'); b.addEventListener('click', function () { toast('Concierge line: +971 4 555 0100'); });
+      } else if (/^configured$/.test(t)) {
+        b.classList.add('za-wired'); b.addEventListener('click', function () { toast('Configuration saved'); });
+      } else if (iconOf(b) === 'bookmark_border' || iconOf(b) === 'bookmark') {
+        b.classList.add('za-wired');
+        b.addEventListener('click', function () {
+          var s = b.querySelector('.material-symbols-outlined');
+          var on = s.textContent.trim() !== 'bookmark';
+          s.textContent = on ? 'bookmark' : 'bookmark_border';
+          toast(on ? 'Saved to your vault' : 'Removed from vault');
+        });
+      } else if (iconOf(b) === '360' || /360/.test(t)) {
+        b.classList.add('za-wired');
+        b.addEventListener('click', function () {
+          var prev = document.querySelector('main .relative img, main canvas, main [class*="preview"]');
+          toast('360° preview');
+          if (prev) { prev.style.transition = 'transform 1.6s ease'; prev.style.transform = 'rotateY(360deg)'; setTimeout(function () { prev.style.transform = ''; }, 1700); }
+        });
+      } else if (iconOf(b) === 'refresh') {
+        b.classList.add('za-wired'); b.addEventListener('click', function () { toast('Preview reset'); });
+      } else if (iconOf(b) === 'flip' || /^pair/.test(t)) {
+        b.classList.add('za-wired');
+        b.addEventListener('click', function () {
+          var prev = document.querySelector('main .relative img, main [class*="preview"]');
+          var flipped = b.classList.toggle('za-flipped');
+          if (prev) prev.style.transform = flipped ? 'scaleX(-1)' : '';
+          toast('Mirrored ear');
+        });
+      } else if (iconOf(b) === 'straighten') {
+        b.classList.add('za-wired'); b.addEventListener('click', function () { toast('Flush nesting depth: 5.4mm · zero gap'); });
+      } else if (/clear all/.test(t)) {
+        b.classList.add('za-wired');
+        b.addEventListener('click', function () {
+          var rows = $all('article[data-ear], [class*="slot-row"]');
+          rows.forEach(function (r) { r.remove(); });
+          $all('.za-chip--on').forEach(function (c) { c.classList.remove('za-chip--on'); });
+          toast('All slots cleared');
+        });
+      } else if (iconOf(b) === 'swap_horiz') {
+        b.classList.add('za-wired');
+        b.addEventListener('click', function () {
+          var row = b.closest('div');
+          var img = row && row.parentElement && row.parentElement.querySelector('img');
+          if (!img && b.parentElement) img = b.parentElement.querySelector('img');
+          if (img) { var f = img.dataset.zaflip === '1' ? '' : '-1'; img.dataset.zaflip = f === '-1' ? '1' : '0'; img.style.transform = f ? 'scaleX(-1)' : ''; toast('Mirrored'); }
+          else toast('Mirrored');
+        });
+      } else if (iconOf(b) === 'close' && PAGE === 'ear-studio.html') {
+        b.classList.add('za-wired');
+        b.addEventListener('click', function () {
+          var row = b.closest('article, li, .flex');
+          if (row) row.remove();
+          toast('Slot cleared');
+        });
+      } else if (/add 4th nesting layer|add \d+\w*\s*nesting layer/i.test(t)) {
+        b.classList.add('za-wired');
+        b.addEventListener('click', function () {
+          var stack = b.closest('section');
+          var rows = stack ? $all('div', stack).filter(function (d) { return /^\d\d/.test(norm(d)) && /mm/.test(d.textContent) && d.className.indexOf('h-') > -1; }) : [];
+          if (!stack || rows.length >= 4) { toast('Maximum 4 nesting layers'); return; }
+          var last = rows[rows.length - 1];
+          var clone = last.cloneNode(true);
+          clone.textContent = '0' + (rows.length + 1) + ' · 1.4mm Chevron Rhodium';
+          clone.style.opacity = '0';
+          last.after(clone);
+          requestAnimationFrame(function () { clone.style.transition = 'opacity .4s'; clone.style.opacity = '1'; });
+          toast('Layer 0' + (rows.length + 1) + ' added');
+        });
+      } else if (/^(left ear|right ear|left|right)$/.test(t) && PAGE === 'ear-studio.html') {
+        b.classList.add('za-wired');
+        b.addEventListener('click', function () {
+          $all('main button.za-chip').forEach(function (c) { if (/left|right/.test(norm(c))) c.classList.remove('za-chip--on'); });
+          b.classList.add('za-chip--on');
+          var prev = document.querySelector('main .relative img');
+          if (prev) prev.style.transform = /right/.test(t) ? 'scaleX(-1)' : '';
+          toast(t.toUpperCase() + ' preview');
+        });
+      } else if (/ear & piercing|ear and piercing/.test(t)) {
+        b.classList.add('za-wired');
+        b.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); toast('Ear & Piercing studio'); });
+      } else if (/(add to stack|acquire)/i.test(t)) {
+        b.classList.add('za-wired');
+        b.addEventListener('click', function () {
+          var row = b.closest('article,li,div.flex');
+          var name = row ? (((row.querySelector('h1,h2,h3,h4,[class*="title-editorial"]') || {}).textContent) || 'ZASTARA piece').replace(/\s+/g, ' ').trim() : 'ZASTARA piece';
+          var pm = row && row.textContent.match(/AED\s*([\d,]+(?:\.\d+)?)/);
+          if (pm) addToCart(name, parseFloat(pm[1].replace(/,/g, '')), row);
+          else toast('Added — ' + name);
+        });
+      } else if (/\badd$/.test(t)) {
+        b.classList.add('za-wired');
+        b.addEventListener('click', function () {
+          var row = b.closest('article,div.flex');
+          var name = row ? (((row.querySelector('h1,h2,h3,h4') || {}).textContent) || row.textContent).replace(/\s+/g, ' ').trim().slice(0, 60) : 'piece';
+          var pm = row && row.textContent.match(/AED\s*([\d,]+(?:\.\d+)?)/);
+          if (pm) addToCart(name.split('·')[0].trim(), parseFloat(pm[1].replace(/,/g, '')), row);
+          else toast('Added to your bag');
+        });
+      }
+    });
+  }
+
+  /* account: tab buttons show/hide sections */
+  function wireTabs() {
+    var tabs = $all('main button').filter(function (b) { return /saved stacks|orders|vault & fit/i.test(norm(b)); });
+    if (tabs.length < 2) return;
+    tabs.forEach(function (tab) {
+      if (tab.classList.contains('za-wired')) return;
+      tab.classList.add('za-wired');
+      tab.addEventListener('click', function () {
+        tabs.forEach(function (o) { o.classList.remove('za-tab-on'); o.style.opacity = '0.55'; });
+        tab.classList.add('za-tab-on'); tab.style.opacity = '1';
+        var label = norm(tab);
+        var key = /saved stacks/.test(label) ? /saved stack|curated/i : /orders/.test(label) ? /order|dispatch|delivery/i : /vault|fit/i ? /vault|fit|size/i : null;
+        var sections = $all('main section');
+        var matched = 0;
+        sections.forEach(function (s) {
+          if (!key) return;
+          var hit = key.test(s.textContent.slice(0, 400));
+          if (key.test(s.textContent)) { s.style.display = ''; matched++; }
+        });
+        if (matched) toast('Showing: ' + label.replace(/\s*\(\d+\)/, ''));
+      });
+    });
+  }
+
+  /* piece: In Stack / Solo toggle */
+  function wirePieceView() {
+    if (PAGE !== 'piece.html') return;
+    var inStack = $all('main button').find(function (b) { return /in stack/.test(norm(b)); });
+    var solo = $all('main button').find(function (b) { return /solo/.test(norm(b)); });
+    if (!inStack) return;
+    [[inStack, 'view-stack'], [solo, 'view-solo']].forEach(function (pair, idx) {
+      var btn = pair[0]; if (!btn) return;
+      btn.classList.add('za-wired');
+      btn.addEventListener('click', function () {
+        var s = document.getElementById('view-stack'), o = document.getElementById('view-solo');
+        var showStack = idx === 0;
+        if (s) s.style.display = showStack ? '' : 'none';
+        if (o) o.style.display = showStack ? 'none' : '';
+        [inStack, solo].forEach(function (x) { if (x) x.classList.remove('za-tab-on'); });
+        btn.classList.add('za-tab-on');
+      });
+    });
+  }
+
   /* ---------- toast styles ---------- */
   var css = document.createElement('style');
   css.textContent = '.za-toast{position:fixed;left:50%;bottom:88px;transform:translate(-50%,12px);background:#380622;color:#faf9f6;' +
     'font-family:Inter,sans-serif;font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:12px 20px;' +
     'box-shadow:0 8px 24px rgba(56,6,34,.35);opacity:0;transition:opacity .3s,transform .3s;z-index:9999;pointer-events:none;}' +
-    '.za-toast--show{opacity:1;transform:translate(-50%,0);}';
+    '.za-toast--show{opacity:1;transform:translate(-50%,0);}' +
+    '.za-chip--on{outline:2px solid #380622;outline-offset:-2px;background-color:#380622 !important;color:#faf9f6 !important;}' +
+    '.za-tab-on{outline:2px solid #380622;outline-offset:2px;}';
   document.head.appendChild(css);
 
   /* ---------- boot ---------- */
   wireNav();
   updateBadges();
   wireAddButtons();
+  wireOverlays();
+  wireHeader();
+  wireShareAndWish();
+  wireChipGroups();
+  wireCollection();
+  wirePriceButtons();
+  wireMisc();
+  wireTabs();
+  wirePieceView();
   if (PAGE === 'bag.html') renderBag();
   if (PAGE === 'checkout.html') wireCheckout();
   if (PAGE === 'confirmation.html') fillConfirmation();
