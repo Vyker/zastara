@@ -348,7 +348,6 @@
         return '<a href="' + parts[0] + '" class="px-6 py-3.5 font-label-caps text-label-caps uppercase tracking-[0.2em] ' +
           (parts[0] === PAGE ? 'text-primary font-semibold bg-surface-container-low' : 'text-secondary') + '">' + parts[1] + '</a>';
       }).join('') + '</div>' +
-      '<div class="mt-auto p-6 font-body-sm text-secondary">925 Sterling Silver · Dubai Atelier</div>' +
       '<button aria-label="Close menu" class="absolute top-4 right-2 w-11 h-11 flex items-center justify-center text-primary"><span class="material-symbols-outlined">close</span></button>' +
       '</nav></div>' +
       '<div id="za-search" class="fixed inset-0 z-[100] hidden"><div class="absolute inset-0 bg-black/50 za-drawer-scrim"></div>' +
