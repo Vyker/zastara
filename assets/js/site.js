@@ -262,6 +262,41 @@
   }
 
   /* ---------- confirmation page: inject real order ---------- */
+  function renderOrderItems(order) {
+    var h3 = $all('h3').find(function (h) { return /curated stack summary/i.test(h.textContent); });
+    if (!h3 || !order.items || !order.items.length) return;
+    var section = h3.closest('section');
+    if (!section) return;
+    var count = order.items.reduce(function (s, i) { return s + i.qty; }, 0);
+    // header count: "3 PIECES · SIZE 52 / US 6.0"
+    $all('span', section).forEach(function (el) {
+      if (/^\s*\d+\s*PIECES\b/i.test(el.textContent))
+        el.textContent = el.textContent.replace(/^\s*\d+\s*PIECES\b/i, count + ' PIECE' + (count === 1 ? '' : 'S'));
+    });
+    // find item rows: divs with an img and an AED price, keep packaging row
+    var rows = $all('div', section).filter(function (d) {
+      return d.querySelector(':scope > img') && /AED [\d,.]+/.test(d.textContent);
+    });
+    var list = rows.length ? rows[0].parentElement : null;
+    if (!list) return;
+    function esc(s) { return (s || '').replace(/[&<"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+    var html = order.items.map(function (it) {
+      return '<div class="flex items-center gap-space-sm bg-surface-container-low p-space-sm">' +
+        (it.img ? '<img alt="' + esc(it.name) + '" class="w-14 h-14 object-cover bg-surface-container-lowest shrink-0" src="' + esc(it.img) + '">' :
+          '<div class="w-14 h-14 bg-surface-container-lowest shrink-0 flex items-center justify-center"><span class="material-symbols-outlined text-primary">radio_button_checked</span></div>') +
+        '<div class="flex flex-col min-w-0 flex-1">' +
+        '<span class="font-body-md text-body-md text-primary truncate">' + esc(it.name) + (it.qty > 1 ? ' ×' + it.qty : '') + '</span>' +
+        '<span class="font-label-specs text-label-specs text-on-surface-variant">925 Sterling Silver</span>' +
+        '</div>' +
+        '<span class="font-label-specs text-label-specs text-primary shrink-0">' + money(it.price * it.qty) + '</span></div>';
+    }).join('');
+    rows.forEach(function (r) { r.remove(); });
+    // insert before packaging row (the div with inventory_2 icon), else append
+    var packaging = $all('div', list).find(function (d) { return /inventory_2/.test(d.innerHTML); });
+    var frag = document.createElement('div');
+    frag.innerHTML = html;
+    while (frag.firstChild) list.insertBefore(frag.firstChild, packaging || null);
+  }
   function fillConfirmation() {
     var order;
     try { order = JSON.parse(localStorage.getItem(LS.order)); } catch (e) {}
@@ -275,7 +310,8 @@
       if (/AED\s*1[,.]600\.00/.test(t)) node.nodeValue = t.replace(/AED\s*1[,.]600\.00/g, money(order.total / 0.85));
       if (/AED\s*240\.00/.test(t)) node.nodeValue = t.replace(/AED\s*240\.00/g, money(order.total / 0.85 * 0.15));
       if (/elena\.vance@zastara\.com/i.test(t)) node.nodeValue = t.replace(/elena\.vance@zastara\.com/ig, order.email);
-    }
+      }
+      renderOrderItems(order);
     // continue-shopping style CTAs back home
     $all('main a[href="#"], main button').forEach(function (el) {
       if (/continue shopping|back to boutique|back to home|explore collection/i.test(norm(el))) {
