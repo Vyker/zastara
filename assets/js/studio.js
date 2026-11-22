@@ -54,6 +54,72 @@
   };
 
   var stage = document.getElementById('za-stage');
+  /* My Stack drawer (A&M-style summary panel) */
+  var drawer = document.createElement('div');
+  drawer.id = 'za-drawer';
+  drawer.setAttribute('aria-hidden', 'true');
+  drawer.style.cssText = 'position:fixed;top:0;right:0;bottom:0;width:min(380px,92vw);background:#fff;z-index:9990;box-shadow:-12px 0 40px rgba(42,22,32,.18);transform:translateX(102%);transition:transform .35s cubic-bezier(.2,.7,.3,1);display:flex;flex-direction:column;font-family:Inter,sans-serif;';
+  drawer.innerHTML =
+    '<div style="display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid #efe9e5">' +
+    '<p style="font-family:&quot;EB Garamond&quot;,serif;font-size:20px;color:#380622;letter-spacing:.04em">My Stack</p>' +
+    '<button id="za-drawer-x" aria-label="Close stack panel" style="width:32px;height:32px;border:none;background:#f4efec;color:#380622;border-radius:2px;cursor:pointer"><span class="material-symbols-outlined" style="font-size:18px">close</span></button></div>' +
+    '<div id="za-drawer-body" style="flex:1;overflow:auto;padding:8px 20px"></div>' +
+    '<div style="border-top:1px solid #efe9e5;padding:16px 20px">' +
+    '<div style="display:flex;justify-content:space-between;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#7c6a72;margin-bottom:2px"><span>Total</span><span id="za-drawer-total">AED 0</span></div>' +
+    '<p style="font-size:10px;color:#a09a97;margin-bottom:10px">Incl. 5% VAT · updates live as you edit</p>' +
+    '<button id="za-drawer-bag" style="width:100%;padding:13px 0;background:#380622;color:#fff;border:none;font-size:11px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;border-radius:2px">Add to bag</button>' +
+    '<button id="za-drawer-save" style="width:100%;margin-top:8px;padding:11px 0;background:transparent;color:#380622;border:1px solid rgba(56,6,34,.4);font-size:11px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;border-radius:2px">Save for later</button></div>';
+  document.body.appendChild(drawer);
+  var scrim = document.createElement('div');
+  scrim.style.cssText = 'position:fixed;inset:0;background:rgba(26,28,26,.35);z-index:9989;opacity:0;pointer-events:none;transition:opacity .3s';
+  document.body.appendChild(scrim);
+  function drawerOpen(on) {
+    drawer.style.transform = on ? 'translateX(0)' : 'translateX(102%)';
+    drawer.setAttribute('aria-hidden', on ? 'false' : 'true');
+    scrim.style.opacity = on ? '1' : '0';
+    scrim.style.pointerEvents = on ? 'auto' : 'none';
+    if (on) renderDrawer();
+  }
+  scrim.addEventListener('click', function () { drawerOpen(false); });
+  document.getElementById('za-drawer-x').addEventListener('click', function () { drawerOpen(false); });
+  function renderDrawer() {
+    var list = currentList().filter(Boolean), html = '';
+    if (!list.length) html = '<p style="font-size:12px;color:#a09a97;font-style:italic;padding:18px 0">Nothing yet — tap a position on the photo to curate your stack.</p>';
+    list.forEach(function (l, i) {
+      html += '<div style="display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid #f4efec">' +
+        '<img src="assets/img/' + (l.p.thumb || l.p.cut) + '" style="width:52px;height:52px;object-fit:contain;background:#eef3f9;border-radius:2px" alt="">' +
+        '<div style="flex:1;min-width:0"><p style="font-size:13px;color:#211d1f;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + l.p.name + '</p>' +
+        '<p style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#7c6a72;margin:2px 0">' + (l.variant || '') + '</p>' +
+        '<p style="font-size:12px;color:#380622;margin:0;font-weight:600">' + AED(l.p.price) + '</p></div>' +
+        '<button class="za-drawermv" data-i="' + i + '" data-dir="-1" title="Move up" style="width:28px;height:28px;border:none;background:#f4efec;color:#380622;cursor:pointer;border-radius:2px' + ((state.cat === 'ear' || i === 0) ? ';visibility:hidden' : '') + '"><span class="material-symbols-outlined" style="font-size:15px">keyboard_arrow_up</span></button>' +
+        '<button class="za-drawermv" data-i="' + i + '" data-dir="1" title="Move down" style="width:28px;height:28px;border:none;background:#f4efec;color:#380622;cursor:pointer;border-radius:2px' + ((state.cat === 'ear' || i === list.length - 1) ? ';visibility:hidden' : '') + '"><span class="material-symbols-outlined" style="font-size:15px">keyboard_arrow_down</span></button>' +
+        '<button class="za-drawerx" data-i="' + i + '" title="Remove" style="width:28px;height:28px;border:none;background:#fff;color:#b0453d;cursor:pointer;border-radius:2px"><span class="material-symbols-outlined" style="font-size:15px">delete</span></button></div>';
+    });
+    document.getElementById('za-drawer-body').innerHTML = html;
+    var tot = list.reduce(function (a, l) { return a + l.p.price; }, 0);
+    if (state.cat === 'ring' && list.length >= 3) tot = Math.round(tot * 0.9);
+    document.getElementById('za-drawer-total').textContent = AED(tot);
+    document.getElementById('za-drawer-bag').textContent = list.length ? 'Add to bag — ' + AED(tot) : 'Add to bag';
+  }
+  drawer.addEventListener('click', function (e) {
+    var mv = e.target.closest && e.target.closest('.za-drawermv');
+    var rm = e.target.closest && e.target.closest('.za-drawerx');
+    if (mv) {
+      var i = +mv.getAttribute('data-i'), d = +mv.getAttribute('data-dir');
+      var a = cat().items, j = i + d;
+      if (j < 0 || j >= a.length) return;
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+      render(); renderDrawer();
+      toast(d === -1 ? 'Moved up in stack' : 'Moved down in stack');
+    } else if (rm) {
+      var k = +rm.getAttribute('data-i');
+      if (state.cat === 'ear') { var slots = Object.keys(cat().items); delete cat().items[slots[k]]; }
+      else cat().items.splice(k, 1);
+      toast('Removed from stack');
+      render(); renderDrawer();
+    } else if (e.target.closest && e.target.closest('#za-drawer-bag')) { addToBag(); renderDrawer(); }
+    else if (e.target.closest && e.target.closest('#za-drawer-save')) { saveStack(); }
+  });
   var baseImg = document.getElementById('za-base');
   var itemsLayer = document.getElementById('za-items');
   var slotsLayer = document.getElementById('za-slots-ui');
@@ -78,7 +144,7 @@
     return '<img src="assets/img/' + p.cut + '" alt="' + p.name + '" style="position:absolute;left:' +
       px.toFixed(1) + 'px;top:' + py.toFixed(1) + 'px;width:' + wpx.toFixed(1) +
       'px;transform:translate(-50%,-50%) rotate(' + rot.toFixed(1) + 'deg)' + (extra || '') + ';filter:drop-shadow(0 8px 12px rgba(30,4,20,.4));z-index:' +
-      zi + ';transition:left .35s ease,top .35s ease;" draggable="false">';
+      zi + ';transition:left .35s ease,top .35s ease;cursor:pointer" title="' + p.name + '" draggable="false">';
   }
   function renderStacked() {
     var g = geom(), c = cfg(), n = cat().items.length, html = '', half = (n - 1) / 2;
@@ -150,6 +216,8 @@
       if (state.cat === 'ear') renderEars(); else renderStacked();
     }
     renderSlots(); renderShelf(); renderSummary();
+    var hint = document.getElementById('za-hint');
+    if (hint) hint.style.display = (currentList().filter(Boolean).length ? 'none' : 'flex');
     document.querySelectorAll('#za-sizes [data-size]').forEach(function (o) {
       var on = +o.getAttribute('data-size') === cat().size;
       o.classList.toggle('bg-primary', on); o.classList.toggle('text-on-primary', on);
@@ -202,6 +270,12 @@
       }).join('') + '<p class="col-span-2 font-body-sm text-[12px] text-outline pt-1">Necklace product photography is being prepared. The stacking system is live — transparent PNGs dropped at <span class="font-medium">assets/img/necklace-*.png</span> appear here automatically.</p>';
       return;
     }
+    var ttl = document.getElementById('za-shelf-title');
+    if (ttl) {
+      var nSel = state.cat === 'ear' ? Object.keys(cat().items).length : cat().items.length;
+      var nMax = cfg().max;
+      ttl.textContent = 'Add Pieces \u00b7 ' + nSel + '/' + nMax;
+    }
     var src = state.cat === 'ring' ? RINGS : EARRINGS;
     el.innerHTML = src.map(function (p) {
       var inStack = state.cat === 'ear' ? Object.keys(cat().items).some(function (k) { return cat().items[k] === p.id; }) : cat().items.some(function (it) { return it.id === p.id; });
@@ -236,8 +310,8 @@
       cart.push({ id: l.p.id + '-' + (l.variant || 'std'), name: l.p.name, price: l.p.price, qty: 1, variant: l.variant, stack: state.cat, img: 'assets/img/' + (l.p.thumb || l.p.cut) });
     });
     localStorage.setItem(CART, JSON.stringify(cart));
-    var badges = document.querySelectorAll('[data-cart-count]');
-    badges.forEach(function (b) { b.textContent = cart.length; });
+    var badges = document.querySelectorAll('header button[aria-label*="Cart" i] span.absolute, nav .absolute.rounded-full, [data-cart-count]');
+    badges.forEach(function (b) { b.textContent = cart.length > 9 ? '9+' : cart.length; });
     toast('Stack added to your bag — ' + list.length + ' pieces');
   }
   function saveStack() {
@@ -269,6 +343,8 @@
 
   /* ---------- events ---------- */
   function bind() {
+    var od = document.getElementById('za-open-drawer');
+    if (od) od.addEventListener('click', function () { drawerOpen(true); });
     ['za-mirror', 'za-view-model', 'za-view-product', 'za-save', 'za-share', 'add-stack-to-bag'].forEach(function (id) {
       var el = document.getElementById(id); if (el) el.classList.add('za-wired');
     });
@@ -344,7 +420,9 @@
   function closePicker() { if (picker) { picker.remove(); picker = null; } }
   document.getElementById('za-items').addEventListener('click', function (e) {
     var h = e.target.closest && e.target.closest('.za-hot');
-    if (h) openPicker(h.getAttribute('data-slot'));
+    if (h) { openPicker(h.getAttribute('data-slot')); return; }
+    var im = e.target.closest && e.target.closest('img');
+    if (im) { drawerOpen(true); toast('Editing: ' + (im.alt || 'piece')); }
   });
   document.getElementById('za-shelf').addEventListener('click', function (e) {
     var b = e.target.closest && e.target.closest('.za-add');

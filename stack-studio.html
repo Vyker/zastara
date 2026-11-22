@@ -29,13 +29,14 @@
 <div id="za-stage" class="relative overflow-hidden rounded-sm bg-[#d7e3ef]/30 shadow-[0_2px_24px_rgba(56,6,34,0.10)]" style="aspect-ratio:4/3">
 <img id="za-base" src="assets/img/studio-finger-clean.webp" alt="Live styling preview" class="absolute inset-0 w-full h-full object-cover select-none" draggable="false">
 <div id="za-items" class="absolute inset-0 z-[6]"></div>
+<div id="za-hint" class="absolute inset-x-0 bottom-3 z-30 flex justify-center pointer-events-none"><span class="bg-[#3a3538]/85 text-white text-[11px] tracking-wider px-4 py-2.5 rounded-sm backdrop-blur-sm flex items-center gap-2"><span class="material-symbols-outlined text-[15px]">touch_app</span>Click any ring below to start building your stack</span></div>
 </div>
 <div class="absolute top-3 left-3 z-20 flex rounded-sm overflow-hidden shadow-sm" role="group" aria-label="Preview mode">
 <button id="za-view-model" class="za-wired bg-primary text-on-primary px-3 py-1.5 font-label-caps text-[10px] tracking-widest uppercase">On Model</button>
 <button id="za-view-product" class="za-wired bg-white/90 text-primary px-3 py-1.5 font-label-caps text-[10px] tracking-widest uppercase">Product View</button>
 </div>
 <button id="za-mirror" class="za-wired absolute top-3 right-3 z-20 h-8 px-3 rounded-sm bg-white/90 backdrop-blur text-primary font-label-caps text-[10px] tracking-widest uppercase shadow-sm flex items-center gap-1" style="display:none"><span class="material-symbols-outlined text-[15px]">flip</span><span>Switch Ear</span></button>
-<div class="mt-2 flex items-center justify-between text-[11px] font-label-caps tracking-widest uppercase text-secondary"><span id="za-count">3 of 5 bands</span><span class="flex items-center gap-1"><span class="material-symbols-outlined text-[13px] text-[#8aa2bc]">visibility</span>Live preview</span></div>
+<div class="mt-2 flex items-center justify-between text-[11px] font-label-caps tracking-widest uppercase text-secondary"><span id="za-count">3 of 5 bands</span><span class="flex items-center gap-3"><button id="za-open-drawer" class="za-wired flex items-center gap-1 px-3 py-1.5 bg-primary text-on-primary rounded-sm hover:bg-[#4d0f31] transition-colors"><span class="material-symbols-outlined text-[14px]">collections</span>My Stack</button><span class="hidden sm:flex items-center gap-1"><span class="material-symbols-outlined text-[13px] text-[#8aa2bc]">visibility</span>Live preview</span></span></div>
 </section>
 <aside class="flex flex-col gap-5">
 <section class="bg-white rounded-sm border border-[#e8e2df] p-4">
