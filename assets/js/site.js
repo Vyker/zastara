@@ -628,9 +628,9 @@
       } else if (/^tune$/.test(t) && !/apply filters/i.test(t)) {
         b.classList.add('za-wired'); b.addEventListener('click', function () { toast('Preferences — coming soon to the client portal'); });
       } else if (/book fitting/.test(t)) {
-        b.classList.add('za-wired'); b.addEventListener('click', function () { toast('Fitting request sent — concierge will contact you'); });
+        b.classList.add('za-wired'); b.addEventListener('click', function () { toast('Fitting request sent — we will contact you'); });
       } else if (/whatsapp stylist/.test(t)) {
-        b.classList.add('za-wired'); b.addEventListener('click', function () { toast('Concierge line: +971 4 555 0100'); });
+        b.classList.add('za-wired'); b.addEventListener('click', function () { toast('Contact line: +971 4 555 0100'); });
       } else if (/^configured$/.test(t)) {
         b.classList.add('za-wired'); b.addEventListener('click', function () { toast('Configuration saved'); });
       } else if (iconOf(b) === 'bookmark_border' || iconOf(b) === 'bookmark') {
@@ -804,7 +804,7 @@
         return;
       }
       b.addEventListener('click', function () {
-        toast('Concierge — ' + t.replace(/\s+/g, ' '));
+        toast('Contact — ' + t.replace(/\s+/g, ' '));
       });
     });
   }

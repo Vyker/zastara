@@ -92,9 +92,9 @@
 </div>
 <!-- Quick Action Buttons -->
 <div class="grid grid-cols-2 gap-space-sm">
-<button class="h-10 bg-surface-container-high text-primary font-label-caps text-label-caps uppercase flex items-center justify-center gap-1.5 active:scale-[0.98] transition-transform" onclick="handleConcierge(this)" type="button">
+<button class="h-10 bg-surface-container-high text-primary font-label-caps text-label-caps uppercase flex items-center justify-center gap-1.5 active:scale-[0.98] transition-transform" onclick="handleContact(this)" type="button">
 <span class="material-symbols-outlined text-[16px]">chat</span>
-<span>WHATSAPP CONCIERGE</span>
+<span>WHATSAPP CONTACT</span>
 </button>
 <button class="h-10 bg-secondary-container text-on-secondary-container font-label-caps text-label-caps uppercase flex items-center justify-center gap-1.5 active:scale-[0.98] transition-transform" onclick="copyTracking(this)" type="button">
 <span class="material-symbols-outlined text-[16px]">content_copy</span>
@@ -199,7 +199,7 @@
     }
   }
 
-  function handleConcierge(btn) {
+  function handleContact(btn) {
     const span = btn.querySelector('span:last-child');
     if (span) {
       const original = span.textContent;
