@@ -21,7 +21,8 @@
 .za-sprite.za-pick{filter:drop-shadow(0 0 5px rgba(56,6,34,.9)) drop-shadow(0 0 12px rgba(250,249,246,.9))}
 .za-zone{position:absolute;transform:translate(-50%,-50%);z-index:6;background:transparent;border:0;padding:0;cursor:pointer;display:flex;align-items:center;gap:6px}
 .za-zone::before{content:'';position:absolute;inset:-14px}
-.za-zone i{width:10px;height:10px;border-radius:50%;border:1.5px solid #380622;background:rgba(250,249,246,.9);display:block;box-shadow:0 0 0 3px rgba(56,6,34,.10)}
+.za-zone i{width:10px;height:10px;border-radius:50%;border:1.5px solid #380622;background:rgba(250,249,246,.9);display:block;box-shadow:0 0 0 3px rgba(56,6,34,.10);opacity:0;transition:opacity .18s}
+body.za-aim .za-zone i,.za-zone:hover i,.za-zone:focus-visible i{opacity:1}
 .za-zone span{font:600 9px/1 Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#380622;background:rgba(250,249,246,.92);padding:4px 7px;border-radius:2px;white-space:nowrap;box-shadow:0 1px 4px rgba(42,22,32,.12);opacity:0;transition:opacity .18s;position:absolute;left:20px;top:50%;transform:translateY(-50%)}
 .za-zone:hover span,.za-zone:focus-visible span,body.za-aim .za-zone span{opacity:1}
 .za-zone.za-zone-l span{left:auto;right:20px}
