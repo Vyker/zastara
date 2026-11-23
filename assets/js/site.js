@@ -228,7 +228,7 @@
     var t = checkoutTotals();
     // reflect real totals in the sticky bar
     var due = $all('span').find(function (s) { return /due at confirmation/i.test(s.textContent); });
-    if (due && t.count) { var v = due.nextElementSibling; if (v) v.textContent = money(t.total); }
+    if (due && t.count) { var v = due.nextElementSibling; if (v) v.textContent = money(t.total); } var cur = $all('span').find(function (x) { return /uae express courier/i.test(x.textContent); }); if (cur && t.count) { var cv = cur.nextElementSibling; if (cv) cv.textContent = t.ship ? 'AED 25' : 'Complimentary'; }
     var amtSpan = Array.prototype.slice.call(btn.querySelectorAll('span')).find(function (s) { return /·\s*AED [\d,]+|AED [\d,]+/.test(s.textContent) && !/material-symbols/.test(s.className); });
     if (amtSpan && t.count) {
       if (/·/.test(amtSpan.textContent)) amtSpan.textContent = amtSpan.textContent.replace(/·\s*AED [\d,.]+/, '· ' + moneyShort(t.total));
@@ -246,7 +246,7 @@
         when: new Date().toISOString(),
         email: email,
         items: getCart(),
-        total: t.count ? t.total : 1360
+        total: t.count ? t.total : 858.5
       };
       localStorage.setItem(LS.order, JSON.stringify(order));
       setCart([]);
@@ -257,7 +257,9 @@
     var items = getCart();
     var sub = items.reduce(function (s, i) { return s + i.price * i.qty; }, 0);
     var count = items.reduce(function (s, i) { return s + i.qty; }, 0);
-    return { sub: sub, total: count >= 3 ? sub * 0.85 : sub, count: count };
+    var disc = count >= 3 ? sub * 0.15 : 0;
+    var ship = count ? (sub >= 899 ? 0 : 25) : 0;
+    return { sub: sub, count: count, disc: disc, ship: ship, total: sub - disc + ship };
   }
 
   /* ---------- confirmation page: inject real order ---------- */
