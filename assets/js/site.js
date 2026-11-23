@@ -137,7 +137,7 @@
         list.innerHTML = '<div class="py-16 flex flex-col items-center justify-center text-center bg-surface-container-lowest">' +
           '<span class="material-symbols-outlined text-[40px] text-outline-variant">shopping_bag</span>' +
           '<p class="font-headline-sm text-headline-sm text-primary mt-4 tracking-widest">Your bag is empty</p>' +
-          '<p class="font-body-sm text-secondary mt-1">Curated stacks await in the atelier.</p>' +
+          '<p class="font-body-sm text-secondary mt-1">Curated stacks await you.</p>' +
           '<button id="za-empty-cta" class="mt-6 h-11 px-6 bg-primary text-on-primary font-label-caps text-label-caps tracking-[0.2em] uppercase">Explore the Collection</button></div>';
         var cta = $('#za-empty-cta');
         if (cta) cta.addEventListener('click', function () { location.href = 'collection.html'; });
@@ -605,9 +605,9 @@
         b.classList.add('za-wired');
         b.addEventListener('click', function () {
           var input = b.closest('section,div,form') && b.closest('section,div,form').querySelector('input[type="email"],input[type="text"]');
-          if (input && /.+@.+\..+/.test(input.value)) { toast('Welcome to the atelier — check your inbox'); input.value = ''; }
+          if (input && /.+@.+\..+/.test(input.value)) { toast('Welcome — check your inbox'); input.value = ''; }
           else if (input) { input.focus(); toast('Enter a valid email address'); }
-          else toast('Welcome to the atelier');
+          else toast('Welcome to ZASTARA — check your inbox');
         });
       } else if (/sizing guide/.test(t)) {
         b.classList.add('za-wired');
@@ -798,7 +798,7 @@
       if (/sign me up|subscribe/.test(t)) {
         b.addEventListener('click', function () {
           var i = document.querySelector('.za-news-email');
-          if (i && i.value && /.+@.+\..+/.test(i.value)) { toast('Welcome to the Atelier Circle'); i.value = ''; }
+          if (i && i.value && /.+@.+\..+/.test(i.value)) { toast('Welcome to ZASTARA — check your inbox'); i.value = ''; }
           else toast('Please enter a valid email address');
         });
         return;
