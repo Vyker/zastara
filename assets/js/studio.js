@@ -15,11 +15,11 @@
   }
 
   var RINGS = [
-    { id: 'flat',    name: 'The Flat Edge Band',       sub: '2.4mm · Comfort-Fit',        price: 88,  cut: 'ring-5a2779b762f2d5c6.png', thumb: '5a2779b762f2d5c6.webp', ar: 0.604 },
-    { id: 'marquise',name: 'The Marquise Eternity',    sub: 'Marquise Moissanite',        price: 242, cut: 'ring-6dd96a90f0605e5a.png', thumb: '6dd96a90f0605e5a.webp', ar: 0.987 },
-    { id: 'bloom',   name: 'Marquise Bloom Eternity',  sub: 'Open Marquise Set',          price: 280, cut: 'ring-60fdf730eee34d01.png', thumb: '60fdf730eee34d01.webp', ar: 0.812 },
-    { id: 'baguette',name: 'Emerald Baguette Eternity',sub: 'Baguette Moissanite',        price: 280, cut: 'ring-ff34151e96c86cbd.png', thumb: 'ff34151e96c86cbd.webp', ar: 0.899 },
-    { id: 'pear',    name: 'Pear Cluster Eternity',    sub: 'Pear & Round Cluster',       price: 340, cut: 'ring-ca30676073a93fec.png', thumb: 'ca30676073a93fec.webp', ar: 0.878 }
+    { id: 'flat',worn: 'ring-worn-flat.png',     name: 'The Flat Edge Band',       sub: '2.4mm · Comfort-Fit',        price: 88,  cut: 'ring-5a2779b762f2d5c6.png', thumb: '5a2779b762f2d5c6.webp', ar: 0.604 },
+    { id: 'marquise',worn: 'ring-worn-marquise.png', name: 'The Marquise Eternity',    sub: 'Marquise Moissanite',        price: 242, cut: 'ring-6dd96a90f0605e5a.png', thumb: '6dd96a90f0605e5a.webp', ar: 0.987 },
+    { id: 'bloom',worn: 'ring-worn-bloom.png',    name: 'Marquise Bloom Eternity',  sub: 'Open Marquise Set',          price: 280, cut: 'ring-60fdf730eee34d01.png', thumb: '60fdf730eee34d01.webp', ar: 0.812 },
+    { id: 'baguette',worn: 'ring-worn-baguette.png', name: 'Emerald Baguette Eternity',sub: 'Baguette Moissanite',        price: 280, cut: 'ring-ff34151e96c86cbd.png', thumb: 'ff34151e96c86cbd.webp', ar: 0.899 },
+    { id: 'pear',worn: 'ring-worn-pear.png',     name: 'Pear Cluster Eternity',    sub: 'Pear & Round Cluster',       price: 340, cut: 'ring-ca30676073a93fec.png', thumb: 'ca30676073a93fec.webp', ar: 0.878 }
   ];
   var NECKLACES = [ /* awaiting product photography — transparent PNGs, see ASSETS NEEDED */ ];
   var NECK_PLACE = ['The Petit Tennis 40cm', 'The Station Necklace 45cm', 'The Ravenna Pendant 50cm', 'The Rivière 40cm'];
@@ -30,7 +30,7 @@
     { id: 'crawler', name: 'Marquise Illusion Crawler',price: 380, cut: 'cut-crawler.png',     w: 0.105, slot: 'helix', rot: 12, dy: 0.01 }
   ];
   var GEO = {
-    ring:      { base: 'assets/img/studio-hand-clean.webp', alt: 'Hand preview', cx: 0.556, cy: 0.435, kx: 0.003, ky: 0.038, rot: 87, rw: 0.095, max: 5, ratio: '6 / 7', squash: 0.45 },
+    ring:      { base: 'assets/img/studio-hand-clean.webp', alt: 'Hand preview', cx: 0.502, cy: 0.44,  kx: 0.0094, ky: 0.044, rot: 11, rw: 0.127, max: 5, ratio: '6 / 7', squash: 0.42 },
     necklace:  { base: 'assets/img/studio-neck-clean.webp',   alt: 'Neck preview',         cx: 0.475, cy: 0.715, kx: 0.004, ky: 0.075, rot: 0,   rw: 0.52,  max: 4, ratio: '4 / 5' },
     ear:       { base: 'assets/img/studio-ear-clean.webp',    alt: 'Ear preview',          slots: {
         lobe1:   { x: 0.632, y: 0.78,  rot: 0,   w: 0.05,  label: 'First Lobe' },
@@ -122,6 +122,15 @@
   });
   var baseImg = document.getElementById('za-base');
   var itemsLayer = document.getElementById('za-items');
+  (function () {
+    var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('width', '0'); svg.setAttribute('height', '0');
+    svg.style.position = 'absolute';
+    svg.innerHTML = '<defs><filter id="za-band" x="-20%" y="-20%" width="140%" height="140%">' +
+      '<feMorphology operator="dilate" radius="2" in="SourceGraphic" result="th"/>' +
+      '<feGaussianBlur in="th" stdDeviation="0.35"/></filter></defs>';
+    document.body.appendChild(svg);
+  })();
   var slotsLayer = document.getElementById('za-slots-ui');
 
   function cfg() { return GEO[state.cat]; }
@@ -140,11 +149,11 @@
   function mirrorX(x) { return cat().mirrored ? 1 - x : x; }
 
   /* ---------- renderers ---------- */
-  function itemHtml(p, px, py, wpx, rot, zi, extra) {
-    return '<img src="assets/img/' + p.cut + '" alt="' + p.name + '" style="position:absolute;left:' +
+  function itemHtml(p, px, py, wpx, rot, zi, extra, clip, img, filt) {
+    return '<img src="assets/img/' + (img || p.cut) + '" alt="' + p.name + '" style="position:absolute;left:' +
       px.toFixed(1) + 'px;top:' + py.toFixed(1) + 'px;width:' + wpx.toFixed(1) +
-      'px;transform:translate(-50%,-50%) rotate(' + rot.toFixed(1) + 'deg)' + (extra || '') + ';filter:drop-shadow(0 8px 12px rgba(30,4,20,.4));z-index:' +
-      zi + ';transition:left .35s ease,top .35s ease;cursor:pointer" title="' + p.name + '" draggable="false">';
+      'px;transform:translate(-50%,-50%) rotate(' + rot.toFixed(1) + 'deg)' + (extra || '') + ';filter:' + (filt || 'url(#za-band) drop-shadow(0 6px 9px rgba(30,4,20,.45))') + ';z-index:' +
+      zi + ';' + (clip || '') + 'transition:left .35s ease,top .35s ease;cursor:pointer" title="' + p.name + '" draggable="false">';
   }
   function renderStacked() {
     var g = geom(), c = cfg(), n = cat().items.length, html = '', half = (n - 1) / 2;
@@ -155,14 +164,19 @@
       var cy = c.cy - k * c.ky;
       var wFrac = c.rw;
       if (state.cat === 'necklace') wFrac = c.rw * (1 + (half - i) * 0.14);
-      var rot = 0, extra = '';
+      var rot = 0, extra = '', clip = '', py = g.y + cy * g.h, img = '', filt = '';
       if (state.cat === 'ring') {
-        rot = c.rot - k * 1.5;              /* finger tilts: each band follows the axis */
+        /* Horseshoe sprite: the product ring flattened to a worn ellipse with the
+           top window cut out — the finger passes through the opening and the band
+           wraps around in front and at the sides (occlusion baked into the sprite). */
         var sc = 1 + 0.04 * k;              /* knuckle side slightly larger */
-        wFrac = c.rw;                       /* band spans the finger width */
-        extra = ' scale(' + sc.toFixed(3) + ') scaleX(' + (c.squash || 0.62) + ')'; /* foreshorten: hole faces viewer, finger passes through */
+        wFrac = c.rw;                       /* band spans ~1.2 finger widths */
+        extra = ' scale(' + sc.toFixed(3) + ')';
+        img = p.worn || '';
+        filt = 'drop-shadow(0 5px 5px rgba(50,25,15,.4))';
+        rot = c.rot + k * 1.2;              /* bands tilt with the finger, slight fan */
       }
-      html += itemHtml(p, g.x + cx * g.w, g.y + cy * g.h, wFrac * g.w, rot, 10 + i, extra);
+      html += itemHtml(p, g.x + cx * g.w, py, wFrac * g.w, rot, 10 + i, extra, clip, img, filt);
     });
     itemsLayer.innerHTML = html;
   }
