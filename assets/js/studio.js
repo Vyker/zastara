@@ -19,7 +19,7 @@
     { id: 'marquise',worn: 'ring-worn-marquise.png', name: 'The Marquise Eternity',    sub: 'Marquise Moissanite',        price: 242, cut: 'ring-6dd96a90f0605e5a.png', thumb: '6dd96a90f0605e5a.webp', ar: 0.987 },
     { id: 'bloom',worn: 'ring-worn-bloom.png',    name: 'Marquise Bloom Eternity',  sub: 'Open Marquise Set',          price: 280, cut: 'ring-60fdf730eee34d01.png', thumb: '60fdf730eee34d01.webp', ar: 0.812 },
     { id: 'baguette',worn: 'ring-worn-baguette.png', name: 'Emerald Baguette Eternity',sub: 'Baguette Moissanite',        price: 280, cut: 'ring-ff34151e96c86cbd.png', thumb: 'ff34151e96c86cbd.webp', ar: 0.899 },
-    { id: 'pear',worn: 'ring-worn-pear.png',     name: 'Pear Cluster Eternity',    sub: 'Pear & Round Cluster',       price: 340, cut: 'ring-ca30676073a93fec.png', thumb: 'ca30676073a93fec.webp', ar: 0.878 }
+    { id: 'pear',worn: 'ring-worn-pear.png',     name: 'The Eternity Stack',       sub: 'Pear & Round Cluster',       price: 680, cut: 'ring-ca30676073a93fec.png', thumb: 'ca30676073a93fec.webp', ar: 0.878 }
   ];
   var NECKLACES = [ /* awaiting product photography — transparent PNGs, see ASSETS NEEDED */ ];
   var NECK_PLACE = ['The Petit Tennis 40cm', 'The Station Necklace 45cm', 'The Ravenna Pendant 50cm', 'The Rivière 40cm'];
