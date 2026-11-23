@@ -42,7 +42,7 @@
   var SIZES = [5, 6, 7, 8, 9];
   var PRESETS = [
     { name: 'Minimal Duo',      ids: ['flat', 'marquise'] },
-    { name: 'The Everyday Three', ids: ['flat', 'marquise', 'bloom'] },
+    { name: 'The Infinite Stack', ids: ['flat', 'marquise', 'bloom'] },
     { name: 'Statement Stack',  ids: ['bloom', 'baguette', 'pear'] }
   ];
 
