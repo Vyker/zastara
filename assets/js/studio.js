@@ -30,7 +30,7 @@
     { id: 'crawler', name: 'Marquise Illusion Crawler',price: 380, cut: 'cut-crawler.png',     w: 0.105, slot: 'helix', rot: 12, dy: 0.01 }
   ];
   var GEO = {
-    ring:      { base: 'assets/img/studio-finger-clean.webp', alt: 'Index finger preview', cx: 0.515, cy: 0.47,  kx: 0.042, ky: 0.085, rot: -56, rw: 0.115,  max: 5, ratio: '4 / 3' },
+    ring:      { base: 'assets/img/studio-hand-clean.webp', alt: 'Hand preview', cx: 0.556, cy: 0.435, kx: 0.003, ky: 0.038, rot: 87, rw: 0.095, max: 5, ratio: '6 / 7', squash: 0.45 },
     necklace:  { base: 'assets/img/studio-neck-clean.webp',   alt: 'Neck preview',         cx: 0.475, cy: 0.715, kx: 0.004, ky: 0.075, rot: 0,   rw: 0.52,  max: 4, ratio: '4 / 5' },
     ear:       { base: 'assets/img/studio-ear-clean.webp',    alt: 'Ear preview',          slots: {
         lobe1:   { x: 0.632, y: 0.78,  rot: 0,   w: 0.05,  label: 'First Lobe' },
@@ -157,10 +157,10 @@
       if (state.cat === 'necklace') wFrac = c.rw * (1 + (half - i) * 0.14);
       var rot = 0, extra = '';
       if (state.cat === 'ring') {
-        rot = c.rot - k * 3;                /* finger curves: band angle follows it */
-        var sc = 1 + 0.045 * k;             /* knuckle side slightly larger */
-        wFrac = c.rw * (p.ar || 0.95);      /* normalize so band spans ~finger width */
-        extra = ' scale(' + sc.toFixed(3) + ') scaleX(0.52)'; /* flatten along finger = wraps around */
+        rot = c.rot - k * 1.5;              /* finger tilts: each band follows the axis */
+        var sc = 1 + 0.04 * k;              /* knuckle side slightly larger */
+        wFrac = c.rw;                       /* band spans the finger width */
+        extra = ' scale(' + sc.toFixed(3) + ') scaleX(' + (c.squash || 0.62) + ')'; /* foreshorten: hole faces viewer, finger passes through */
       }
       html += itemHtml(p, g.x + cx * g.w, g.y + cy * g.h, wFrac * g.w, rot, 10 + i, extra);
     });
