@@ -214,7 +214,23 @@
     });
     itemsLayer.innerHTML = html + '</div>';
   }
+  function syncPanels() {
+    var ep = document.getElementById('ear-panel'), rp = document.getElementById('ring-panel');
+    if (!ep || !rp) return;
+    var ear = state.cat === 'ear';
+    ep.style.display = ear ? '' : 'none';
+    rp.style.display = ear ? 'none' : '';
+    document.querySelectorAll('.za-cat').forEach(function (o) {
+      var on = o.getAttribute('data-cat') === state.cat;
+      o.classList.toggle('bg-primary', on); o.classList.toggle('text-on-primary', on);
+      o.classList.toggle('bg-surface-container', !on); o.classList.toggle('text-secondary', !on);
+      o.classList.toggle('hover:text-primary', !on);
+      o.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+  }
   function render() {
+    syncPanels();
+    if (state.cat === 'ear') return;
     var c = cfg();
     stage.style.aspectRatio = c.ratio;
     if (cat().view === 'product') {
@@ -474,6 +490,7 @@
         var on = o.getAttribute('data-cat') === 'ring';
         o.classList.toggle('bg-primary', on); o.classList.toggle('text-on-primary', on);
         o.classList.toggle('bg-surface-container', !on); o.classList.toggle('text-secondary', !on);
+      o.classList.toggle('hover:text-primary', !on);
       });
       document.getElementById('za-mirror').style.display = 'none';
       document.getElementById('za-sizes').style.display = '';
@@ -491,6 +508,7 @@
   }
 
   loadFromUrl();
+  if (location.hash === '#ears') state.cat = 'ear';
   bind();
   render();
 })();

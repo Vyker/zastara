@@ -40,7 +40,7 @@
   var PATH_BY_KEY = {
     'home': 'index.html', 'collection-catalogue': 'collection.html', 'piece-detail': 'piece.html',
     'stack-studio': 'stack-studio.html', 'shopping-bag': 'bag.html', 'client-account': 'account.html',
-    'checkout': 'checkout.html', 'ear-piercing': 'ear-studio.html'
+    'checkout': 'checkout.html', 'ear-piercing': 'stack-studio.html#ears'
   };
   var CTA_MAP = [
     [/^build your stack|^start your stack|^build.*stack|customize.*stack|^edit in studio/, 'stack-studio.html'],
@@ -48,7 +48,7 @@
     [/^proceed to secure checkout/, 'checkout.html'],
     [/^continue shopping|^back to collection|^continue browsing|^discover the collection/, 'collection.html'],
     [/^view saved stacks|^saved stacks/, 'account.html'],
-    [/^ear piercing|^ear stack|^build.*ear|^ear & piercing/, 'ear-studio.html'],
+    [/^ear piercing|^ear stack|^build.*ear|^ear & piercing/, 'stack-studio.html#ears'],
     [/^continue to boutique|^back to home|^back to boutique/, 'index.html']
   ];
   function wireNav() {
@@ -345,7 +345,7 @@
       '<nav class="absolute left-0 top-0 bottom-0 w-[78%] max-w-[300px] bg-surface shadow-2xl flex flex-col pt-16 translate-x-0 transition-transform duration-300">' +
       '<span class="font-title-editorial text-title-editorial text-primary uppercase tracking-[0.3em] px-6">ZASTARA</span>' +
       '<div class="mt-6 flex flex-col">' +
-      ['index.html|Home', 'collection.html|Collection', 'stack-studio.html|Stack Studio', 'ear-studio.html|Ear Studio', 'account.html|Account', 'bag.html|Shopping Bag'].map(function (l) {
+      ['index.html|Home', 'collection.html|Collection', 'stack-studio.html|Stack Studio', 'account.html|Account', 'bag.html|Shopping Bag'].map(function (l) {
         var parts = l.split('|');
         return '<a href="' + parts[0] + '" class="px-6 py-3.5 font-label-caps text-label-caps uppercase tracking-[0.2em] ' +
           (parts[0] === PAGE ? 'text-primary font-semibold bg-surface-container-low' : 'text-secondary') + '">' + parts[1] + '</a>';

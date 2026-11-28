@@ -35,6 +35,7 @@
 <button class="za-cat za-wired bg-surface-container text-secondary hover:text-primary px-4 py-2 font-label-caps text-label-caps tracking-widest uppercase rounded-sm" data-cat="ear" role="tab" aria-selected="false">Ear Stack</button>
 </div>
 </div>
+<div id="ring-panel">
 <div class="px-margin max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-[1.12fr_1fr] gap-6 items-start mt-4">
 <section class="relative">
 <div id="za-stage" class="relative overflow-hidden rounded-sm bg-[#d7e3ef]/30 shadow-[0_2px_24px_rgba(56,6,34,0.10)]" style="aspect-ratio:4/3">
@@ -88,6 +89,390 @@
 <button class="za-wired za-preset" data-i="2" style="background:#fff;border:1px solid #e8e2df;border-radius:2px;padding:16px;text-align:left;transition:.15s" onmouseover="this.style.borderColor='#380622'" onmouseout="this.style.borderColor='#e8e2df'"><p class="font-display text-lg text-primary">Statement Stack</p><p class="font-body-sm text-[12px] text-secondary mt-1">Bloom + Baguette + Eternity Stack · AED 1,240</p></button>
 </div>
 </section>
+</div><!-- /ring-panel -->
+<!-- EARPANEL:START -->
+<div id="ear-panel" style="display:none">
+
+<style>
+.ze-stage-wrap{position:relative;-webkit-user-select:none;user-select:none}
+.ze-sprite{transition:left .4s ease, top .4s ease;cursor:grab;touch-action:none}
+.ze-sprite.ze-drag{transition:none;z-index:9 !important;cursor:grabbing}
+.ze-stage-wrap{touch-action:pan-y}
+.ze-zone.ze-near i{transform:scale(1.6);background:#380622;opacity:1 !important}
+body.ze-dragmode .ze-zone i,body.ze-dragmode .ze-zone span{opacity:1}
+body.ze-aim .ze-zone i{width:14px;height:14px;border-width:2px}
+body.ze-aim .ze-zone::before{inset:-20px}
+.ze-stage-hint{position:absolute;top:10px;left:50%;transform:translateX(-50%);background:rgba(56,6,34,.92);color:#faf9f6;font:600 9px/1 Inter,sans-serif;letter-spacing:.16em;text-transform:uppercase;padding:8px 13px;border-radius:2px;z-index:10;opacity:0;transition:opacity .2s;pointer-events:none;white-space:nowrap}
+body.ze-aim .ze-stage-hint{opacity:1}
+.ze-sprite.za-pick{filter:drop-shadow(0 0 5px rgba(56,6,34,.9)) drop-shadow(0 0 12px rgba(250,249,246,.9))}
+.ze-zone{position:absolute;transform:translate(-50%,-50%);z-index:7;background:transparent;border:0;padding:0;display:flex;align-items:center;gap:6px;pointer-events:none}
+body.ze-aim .ze-zone{pointer-events:auto;cursor:pointer}
+.ze-zone::before{content:'';position:absolute;inset:-14px}
+.ze-zone i{width:10px;height:10px;border-radius:50%;border:1.5px solid #380622;background:rgba(250,249,246,.9);display:block;box-shadow:0 0 0 3px rgba(56,6,34,.10);opacity:0;transition:opacity .18s}
+body.ze-aim .ze-zone i,.ze-zone:hover i,.ze-zone:focus-visible i{opacity:1}
+.ze-zone span{font:600 9px/1 Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#380622;background:rgba(250,249,246,.92);padding:4px 7px;border-radius:2px;white-space:nowrap;box-shadow:0 1px 4px rgba(42,22,32,.12);opacity:0;transition:opacity .18s;position:absolute;left:20px;top:50%;transform:translateY(-50%)}
+.ze-zone:hover span,.ze-zone:focus-visible span,body.ze-aim .ze-zone span{opacity:1}
+.ze-zone.ze-zone-l span{left:auto;right:20px}
+.ze-zone.ze-zone-u span{top:auto;bottom:calc(50% + 9px);transform:none}
+.ze-zone.ze-zone-d span{top:calc(50% + 9px);transform:none}
+.ze-zone.ze-bad i{background:#b0413e;border-color:#7c2422}
+.ze-zone:not(.ze-bad):hover i,.ze-zone:focus-visible i{background:#380622}
+body.ze-aim .ze-zone:not(.ze-bad) i{animation:za-pulse 1.1s ease-in-out infinite}
+@keyframes za-pulse{0%,100%{box-shadow:0 0 0 3px rgba(56,6,34,.10)}50%{box-shadow:0 0 0 7px rgba(56,6,34,.22)}}
+.ze-preset{border:1px solid rgba(56,6,34,.45);color:#380622;background:transparent}
+.ze-preset:hover{background:#380622;color:#faf9f6}
+</style>
+<div class="px-margin max-w-[1080px] mx-auto w-full pt-8 pb-20">
+<div class="text-center mb-6">
+<span class="font-label-caps text-label-caps text-secondary uppercase tracking-[0.3em]">ZASTARA · EAR STUDIO</span>
+<h1 class="font-headline text-headline text-primary mt-3 tracking-[0.12em] uppercase">Build Your Ear Stack</h1>
+<p class="font-body-sm text-secondary mt-3 max-w-[540px] mx-auto leading-relaxed">One ear, nine pieces — yours to compose. Drag an earring to any piercing zone, or tap a piece then a zone. Every piece is real; what you see on the ear is exactly what ships.</p>
+</div>
+<div class="flex flex-wrap items-center justify-center gap-2 mb-5">
+<span class="font-label-caps text-[10px] uppercase tracking-[0.2em] text-secondary mr-1">Curated looks</span>
+<button class="ze-preset px-4 py-2 font-label-caps text-[10px] uppercase tracking-[0.2em] transition-colors" data-preset="trio">Lobe Story</button>
+<button class="ze-preset px-4 py-2 font-label-caps text-[10px] uppercase tracking-[0.2em] transition-colors" data-preset="helixline">Helix Line</button>
+<button class="ze-preset px-4 py-2 font-label-caps text-[10px] uppercase tracking-[0.2em] transition-colors" data-preset="full">Full Curation</button>
+<button id="ze-reset" class="px-4 py-2 font-label-caps text-[10px] uppercase tracking-[0.2em] border border-transparent text-secondary hover:text-primary underline underline-offset-4 transition-colors">Reset</button>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+<div class="ze-stage-wrap select-none" id="ear-stage">
+<img src="assets/img/ear2-base.webp" alt="Bare ear profile used as the try-on base" class="w-full rounded-xl">
+<div class="ze-stage-hint" id="stage-hint"></div>
+<img id="sp-marquise" class="ze-sprite absolute" data-anc="41,46" style="left:59.8086%;top:42.7432%;width:6.3796%;z-index:4" src="assets/img/ear2-marquise.webp" alt="Marquise Stud worn">
+<img id="sp-petit" class="ze-sprite absolute" data-anc="37,82" style="left:75.3589%;top:27.9107%;width:12.7592%;z-index:5" src="assets/img/ear2-petit.webp" alt="Petit Round Stud worn">
+<img id="sp-cascade" class="ze-sprite absolute" data-anc="82,55" style="left:61.244%;top:44.2584%;width:14.1148%;z-index:6" src="assets/img/ear2-cascade.webp" alt="Princess Cascade Drop worn">
+<img id="sp-baguette" class="ze-sprite absolute" data-anc="23,11" style="left:72.9665%;top:50.1595%;width:11.9617%;z-index:5" src="assets/img/ear2-baguette.webp" alt="Baguette Huggie worn">
+<img id="sp-pear" class="ze-sprite absolute" data-anc="33,54" style="left:59.1707%;top:20.0159%;width:5.2632%;z-index:5;display:none" src="assets/img/ear2-pear.webp" alt="Pear Stud worn">
+<img id="sp-princess" class="ze-sprite absolute" data-anc="31,37" style="left:63.7161%;top:25.1196%;width:4.9442%;z-index:5;display:none" src="assets/img/ear2-princess.webp" alt="Princess Stud worn">
+<img id="sp-emerald" class="ze-sprite absolute" data-anc="40,63" style="left:65.0718%;top:29.1069%;width:6.3796%;z-index:5;display:none" src="assets/img/ear2-emerald.webp" alt="Emerald Stud worn">
+<img id="sp-solitaire" class="ze-sprite absolute" data-anc="32,39" style="left:72.2488%;top:47.9266%;width:5.1037%;z-index:5;display:none" src="assets/img/ear2-solitaire.webp" alt="Solitaire Stud worn">
+<img id="sp-pavedrop" class="ze-sprite absolute" data-anc="43,37" style="left:64.3541%;top:45.6938%;width:6.8581%;z-index:6;display:none" src="assets/img/ear2-pavedrop.webp" alt="Pavé Pear Drop Hoop worn">
+<button class="ze-zone " data-zone="helix" style="left:61.8022%;top:24.3222%" aria-label="Move selected piece to Helix zone"><i></i><span>Helix</span></button>
+<button class="ze-zone ze-zone-l" data-zone="forward-helix" style="left:66.1882%;top:28.0702%" aria-label="Move selected piece to Forward Helix zone"><i></i><span>Forward Helix</span></button>
+<button class="ze-zone ze-zone-l" data-zone="flat" style="left:55.6619%;top:33.8915%" aria-label="Move selected piece to Flat zone"><i></i><span>Flat</span></button>
+<button class="ze-zone ze-zone-d" data-zone="daith" style="left:68.2616%;top:34.1308%" aria-label="Move selected piece to Daith zone"><i></i><span>Daith</span></button>
+<button class="ze-zone ze-zone-l ze-zone-u" data-zone="conch" style="left:63.0781%;top:46.4115%" aria-label="Move selected piece to Conch zone"><i></i><span>Conch</span></button>
+<button class="ze-zone " data-zone="tragus" style="left:78.3094%;top:34.4498%" aria-label="Move selected piece to Tragus zone"><i></i><span>Tragus</span></button>
+<button class="ze-zone ze-zone-l ze-zone-d" data-zone="upper-lobe" style="left:67.7831%;top:48.6443%" aria-label="Move selected piece to Upper Lobe zone"><i></i><span>Upper Lobe</span></button>
+<button class="ze-zone ze-zone-d" data-zone="lobe" style="left:74.8006%;top:51.0367%" aria-label="Move selected piece to Lobe zone"><i></i><span>Lobe</span></button>
+</div>
+<div class="flex flex-col gap-4">
+<article class="border border-[#e8e2df] bg-white p-4 flex gap-4 items-center" data-piece="marquise">
+<img src="assets/img/ear2-card-marquise.webp" alt="Marquise Stud" class="w-20 h-20 object-contain shrink-0 ze-card cursor-pointer">
+<div class="flex-1 min-w-0">
+<h3 class="font-title-editorial text-title-editorial text-primary uppercase tracking-wider">Marquise Stud</h3>
+<p class="font-label-specs text-label-specs text-secondary uppercase mt-1">Marquise cut · Conch</p>
+<p class="font-body-md text-body-md text-primary font-medium mt-1">AED 280</p>
+</div>
+<div class="flex flex-col gap-2 shrink-0">
+<button class="ze-toggle border border-primary/50 hover:bg-primary hover:text-on-primary text-primary px-3 py-1.5 font-label-caps text-[10px] uppercase tracking-[0.2em] transition-colors za-wired" data-piece="marquise">On</button>
+<button class="bg-primary hover:bg-primary-container text-on-primary px-3 py-1.5 font-label-caps text-[10px] uppercase tracking-[0.2em] transition-colors">Add to Bag</button>
+</div>
+</article>
+<article class="border border-[#e8e2df] bg-white p-4 flex gap-4 items-center" data-piece="petit">
+<img src="assets/img/ear2-card-petit.webp" alt="Petit Round Stud" class="w-20 h-20 object-contain shrink-0 ze-card cursor-pointer">
+<div class="flex-1 min-w-0">
+<h3 class="font-title-editorial text-title-editorial text-primary uppercase tracking-wider">Petit Round Stud</h3>
+<p class="font-label-specs text-label-specs text-secondary uppercase mt-1">Round brilliant · Tragus or lobe</p>
+<p class="font-body-md text-body-md text-primary font-medium mt-1">AED 240</p>
+</div>
+<div class="flex flex-col gap-2 shrink-0">
+<button class="ze-toggle border border-primary/50 hover:bg-primary hover:text-on-primary text-primary px-3 py-1.5 font-label-caps text-[10px] uppercase tracking-[0.2em] transition-colors za-wired" data-piece="petit">On</button>
+<button class="bg-primary hover:bg-primary-container text-on-primary px-3 py-1.5 font-label-caps text-[10px] uppercase tracking-[0.2em] transition-colors">Add to Bag</button>
+</div>
+</article>
+<article class="border border-[#e8e2df] bg-white p-4 flex gap-4 items-center" data-piece="cascade">
+<img src="assets/img/ear2-card-cascade.webp" alt="Princess Cascade Drop" class="w-20 h-20 object-contain shrink-0 ze-card cursor-pointer">
+<div class="flex-1 min-w-0">
+<h3 class="font-title-editorial text-title-editorial text-primary uppercase tracking-wider">Princess Cascade Drop</h3>
+<p class="font-label-specs text-label-specs text-secondary uppercase mt-1">Pavé huggie · Princess chain · Pear</p>
+<p class="font-body-md text-body-md text-primary font-medium mt-1">AED 420</p>
+</div>
+<div class="flex flex-col gap-2 shrink-0">
+<button class="ze-toggle border border-primary/50 hover:bg-primary hover:text-on-primary text-primary px-3 py-1.5 font-label-caps text-[10px] uppercase tracking-[0.2em] transition-colors za-wired" data-piece="cascade">On</button>
+<button class="bg-primary hover:bg-primary-container text-on-primary px-3 py-1.5 font-label-caps text-[10px] uppercase tracking-[0.2em] transition-colors">Add to Bag</button>
+</div>
+</article>
+<article class="border border-[#e8e2df] bg-white p-4 flex gap-4 items-center" data-piece="baguette">
+<img src="assets/img/ear2-card-baguette.webp" alt="Baguette Huggie" class="w-20 h-20 object-contain shrink-0 ze-card cursor-pointer">
+<div class="flex-1 min-w-0">
+<h3 class="font-title-editorial text-title-editorial text-primary uppercase tracking-wider">Baguette Huggie</h3>
+<p class="font-label-specs text-label-specs text-secondary uppercase mt-1">Baguette pavé · Lobe</p>
+<p class="font-body-md text-body-md text-primary font-medium mt-1">AED 360</p>
+</div>
+<div class="flex flex-col gap-2 shrink-0">
+<button class="ze-toggle border border-primary/50 hover:bg-primary hover:text-on-primary text-primary px-3 py-1.5 font-label-caps text-[10px] uppercase tracking-[0.2em] transition-colors za-wired" data-piece="baguette">On</button>
+<button class="bg-primary hover:bg-primary-container text-on-primary px-3 py-1.5 font-label-caps text-[10px] uppercase tracking-[0.2em] transition-colors">Add to Bag</button>
+</div>
+</article>
+<article class="border border-[#e8e2df] bg-white p-4 flex gap-4 items-center" data-piece="pear">
+<img src="assets/img/ear2-card-pear.webp" alt="Pear Stud" class="w-20 h-20 object-contain shrink-0 ze-card cursor-pointer">
+<div class="flex-1 min-w-0">
+<h3 class="font-title-editorial text-title-editorial text-primary uppercase tracking-wider">Pear Stud</h3>
+<p class="font-label-specs text-label-specs text-secondary uppercase mt-1">Pear cut · Prong set</p>
+<p class="font-body-md text-body-md text-primary font-medium mt-1">AED 270</p>
+</div>
+<div class="flex flex-col gap-2 shrink-0">
+<button class="ze-toggle border border-primary/50 hover:bg-primary hover:text-on-primary text-primary px-3 py-1.5 font-label-caps text-[10px] uppercase tracking-[0.2em] transition-colors za-wired" data-piece="pear">Try on</button>
+<button class="bg-primary hover:bg-primary-container text-on-primary px-3 py-1.5 font-label-caps text-[10px] uppercase tracking-[0.2em] transition-colors">Add to Bag</button>
+</div>
+</article>
+<article class="border border-[#e8e2df] bg-white p-4 flex gap-4 items-center" data-piece="princess">
+<img src="assets/img/ear2-card-princess.webp" alt="Princess Stud" class="w-20 h-20 object-contain shrink-0 ze-card cursor-pointer">
+<div class="flex-1 min-w-0">
+<h3 class="font-title-editorial text-title-editorial text-primary uppercase tracking-wider">Princess Stud</h3>
+<p class="font-label-specs text-label-specs text-secondary uppercase mt-1">Square cut · Prong set</p>
+<p class="font-body-md text-body-md text-primary font-medium mt-1">AED 280</p>
+</div>
+<div class="flex flex-col gap-2 shrink-0">
+<button class="ze-toggle border border-primary/50 hover:bg-primary hover:text-on-primary text-primary px-3 py-1.5 font-label-caps text-[10px] uppercase tracking-[0.2em] transition-colors za-wired" data-piece="princess">Try on</button>
+<button class="bg-primary hover:bg-primary-container text-on-primary px-3 py-1.5 font-label-caps text-[10px] uppercase tracking-[0.2em] transition-colors">Add to Bag</button>
+</div>
+</article>
+<article class="border border-[#e8e2df] bg-white p-4 flex gap-4 items-center" data-piece="emerald">
+<img src="assets/img/ear2-card-emerald.webp" alt="Emerald Stud" class="w-20 h-20 object-contain shrink-0 ze-card cursor-pointer">
+<div class="flex-1 min-w-0">
+<h3 class="font-title-editorial text-title-editorial text-primary uppercase tracking-wider">Emerald Stud</h3>
+<p class="font-label-specs text-label-specs text-secondary uppercase mt-1">Emerald cut · Line setting</p>
+<p class="font-body-md text-body-md text-primary font-medium mt-1">AED 300</p>
+</div>
+<div class="flex flex-col gap-2 shrink-0">
+<button class="ze-toggle border border-primary/50 hover:bg-primary hover:text-on-primary text-primary px-3 py-1.5 font-label-caps text-[10px] uppercase tracking-[0.2em] transition-colors za-wired" data-piece="emerald">Try on</button>
+<button class="bg-primary hover:bg-primary-container text-on-primary px-3 py-1.5 font-label-caps text-[10px] uppercase tracking-[0.2em] transition-colors">Add to Bag</button>
+</div>
+</article>
+<article class="border border-[#e8e2df] bg-white p-4 flex gap-4 items-center" data-piece="solitaire">
+<img src="assets/img/ear2-card-solitaire.webp" alt="Solitaire Stud" class="w-20 h-20 object-contain shrink-0 ze-card cursor-pointer">
+<div class="flex-1 min-w-0">
+<h3 class="font-title-editorial text-title-editorial text-primary uppercase tracking-wider">Solitaire Stud</h3>
+<p class="font-label-specs text-label-specs text-secondary uppercase mt-1">Round brilliant · Prong set</p>
+<p class="font-body-md text-body-md text-primary font-medium mt-1">AED 250</p>
+</div>
+<div class="flex flex-col gap-2 shrink-0">
+<button class="ze-toggle border border-primary/50 hover:bg-primary hover:text-on-primary text-primary px-3 py-1.5 font-label-caps text-[10px] uppercase tracking-[0.2em] transition-colors za-wired" data-piece="solitaire">Try on</button>
+<button class="bg-primary hover:bg-primary-container text-on-primary px-3 py-1.5 font-label-caps text-[10px] uppercase tracking-[0.2em] transition-colors">Add to Bag</button>
+</div>
+</article>
+<article class="border border-[#e8e2df] bg-white p-4 flex gap-4 items-center" data-piece="pavedrop">
+<img src="assets/img/ear2-card-pavedrop.webp" alt="Pavé Pear Drop Hoop" class="w-20 h-20 object-contain shrink-0 ze-card cursor-pointer">
+<div class="flex-1 min-w-0">
+<h3 class="font-title-editorial text-title-editorial text-primary uppercase tracking-wider">Pavé Pear Drop Hoop</h3>
+<p class="font-label-specs text-label-specs text-secondary uppercase mt-1">Pavé huggie · Pear drop</p>
+<p class="font-body-md text-body-md text-primary font-medium mt-1">AED 400</p>
+</div>
+<div class="flex flex-col gap-2 shrink-0">
+<button class="ze-toggle border border-primary/50 hover:bg-primary hover:text-on-primary text-primary px-3 py-1.5 font-label-caps text-[10px] uppercase tracking-[0.2em] transition-colors za-wired" data-piece="pavedrop">Try on</button>
+<button class="bg-primary hover:bg-primary-container text-on-primary px-3 py-1.5 font-label-caps text-[10px] uppercase tracking-[0.2em] transition-colors">Add to Bag</button>
+</div>
+</article>
+<p class="font-label-specs text-[10px] uppercase tracking-[0.2em] text-secondary mt-1" id="aim-note">Tap a piece photo or the earring on the ear, then a zone</p>
+<div class="flex items-center justify-between border-t border-[#e8e2df] pt-4 mt-2">
+<span class="font-label-caps text-label-caps text-secondary uppercase tracking-wider" id="sel-note">4 on · AED 1,300</span>
+<button id="add-all" class="border border-primary text-primary hover:bg-primary hover:text-on-primary px-5 py-2 font-label-caps text-[10px] uppercase tracking-[0.25em] transition-colors">Add selection to bag</button>
+</div>
+</div>
+</div>
+<div class="border-t border-[#e8e2df] mt-14 pt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-[12px] font-body text-on-surface-variant">
+<div class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-primary">diamond</span> Certified moissanite D-F VVS1</div>
+<div class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-primary">inventory_2</span> 925 sterling silver, rhodium plated</div>
+<div class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-primary">local_shipping</span> Complimentary UAE delivery</div>
+<div class="flex items-center gap-2"><span class="material-symbols-outlined text-[16px] text-primary">autorenew</span> 14-day returns</div>
+</div>
+</div>
+<script>
+(function () {
+  var K = ['zastara', 'cart', 'v1'].join('_');
+  var W = 1254;
+  var PIECES = {
+    'marquise': { name: 'Marquise Stud', price: 280, img: 'assets/img/ear2-card-marquise.webp', home: 'conch', zones: null },
+    'petit': { name: 'Petit Round Stud', price: 240, img: 'assets/img/ear2-card-petit.webp', home: 'tragus', zones: null },
+    'cascade': { name: 'Princess Cascade Drop', price: 420, img: 'assets/img/ear2-card-cascade.webp', home: 'upper-lobe', zones: ['upper-lobe','lobe'] },
+    'baguette': { name: 'Baguette Huggie', price: 360, img: 'assets/img/ear2-card-baguette.webp', home: 'lobe', zones: ['upper-lobe','lobe'] },
+    'pear': { name: 'Pear Stud', price: 270, img: 'assets/img/ear2-card-pear.webp', home: 'helix', zones: null },
+    'princess': { name: 'Princess Stud', price: 280, img: 'assets/img/ear2-card-princess.webp', home: 'forward-helix', zones: null },
+    'emerald': { name: 'Emerald Stud', price: 300, img: 'assets/img/ear2-card-emerald.webp', home: 'daith', zones: null },
+    'solitaire': { name: 'Solitaire Stud', price: 250, img: 'assets/img/ear2-card-solitaire.webp', home: 'lobe', zones: null },
+    'pavedrop': { name: 'Pavé Pear Drop Hoop', price: 400, img: 'assets/img/ear2-card-pavedrop.webp', home: 'upper-lobe', zones: ['upper-lobe','lobe'] }
+  };
+  var ZONES = { 'helix': [775, 305], 'forward-helix': [830, 352], 'flat': [698, 425], 'daith': [856, 428], 'conch': [791, 582], 'tragus': [982, 432], 'upper-lobe': [850, 610], 'lobe': [938, 640] };
+  var ORDER = ['marquise','petit','cascade','baguette','pear','princess','emerald','solitaire','pavedrop'];
+  var on = { 'marquise': 1, 'petit': 1, 'cascade': 1, 'baguette': 1, 'pear': 0, 'princess': 0, 'emerald': 0, 'solitaire': 0, 'pavedrop': 0 };
+  var place = {};
+  var sel = null;
+  var note = document.getElementById('sel-note');
+  var aimNote = document.getElementById('aim-note');
+  var toastT = null;
+  function toast(msg) {
+    var t = document.getElementById('za-toast');
+    if (!t) { t = document.createElement('div'); t.id = 'za-toast'; t.className = 'za-toast'; t.setAttribute('style', 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#380622;color:#faf9f6;padding:10px 22px;font:500 11px/1.4 Inter,sans-serif;letter-spacing:.18em;text-transform:uppercase;z-index:120;border-radius:2px;transition:opacity .3s;pointer-events:none'); document.body.appendChild(t); }
+    t.textContent = msg; t.style.opacity = '1';
+    clearTimeout(toastT); toastT = setTimeout(function () { t.style.opacity = '0'; }, 1900);
+  }
+  function money(n) { return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+  function slug(t) { return t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
+  function cart() { try { return JSON.parse(localStorage.getItem(K)) || []; } catch (e) { return []; } }
+  function saveCart(c) { localStorage.setItem(K, JSON.stringify(c)); var n = c.reduce(function (s, i) { return s + i.qty; }, 0); document.querySelectorAll('header button[aria-label*="Cart" i] span.absolute').forEach(function (b) { b.textContent = n > 9 ? '9+' : String(n); b.style.display = n ? '' : 'none'; }); }
+  function apply(k) {
+    var p = PIECES[k], sp = document.getElementById('sp-' + k);
+    if (!sp) return;
+    sp.style.display = on[k] ? '' : 'none';
+    var z = ZONES[place[k] || p.home];
+    // position = (zone px - anchor) as % of stage; anchor from data-anc
+    var a = (sp.getAttribute('data-anc') || '').split(',').map(Number);
+    if (a.length === 2 && !isNaN(a[0])) {
+      sp.style.left = ((z[0] - a[0]) / W * 100) + '%';
+      sp.style.top = ((z[1] - a[1]) / W * 100) + '%';
+    }
+    sp.classList.toggle('za-pick', sel === k);
+  }
+  function refresh() {
+    var sum = 0, n = 0;
+    ORDER.forEach(function (k) { apply(k); if (on[k]) { sum += PIECES[k].price; n++; } });
+    if (note) note.textContent = n === 0 ? 'Nothing selected' : n + ' on · AED ' + money(sum);
+    document.body.classList.toggle('ze-aim', !!sel);
+    document.querySelectorAll('.ze-zone').forEach(function (z) {
+      var zk = z.getAttribute('data-zone');
+      var bad = !!sel && PIECES[sel].zones && PIECES[sel].zones.indexOf(zk) < 0;
+      z.classList.toggle('ze-bad', bad);
+    });
+    if (aimNote) aimNote.textContent = sel ? 'Placing: ' + PIECES[sel].name + ' — tap a zone (Esc to cancel)' : 'Tap a piece photo or the earring on the ear, then a zone — or just drag it';
+    var sh = document.getElementById('stage-hint');
+    if (sh) sh.textContent = sel ? 'Placing ' + PIECES[sel].name + ' — drop on a zone' : '';
+  }
+  function select(k) { sel = (sel === k) ? null : k; refresh(); if (sel && window.matchMedia('(max-width:1023px)').matches) { document.getElementById('ear-stage').scrollIntoView({ behavior: 'smooth', block: 'center' }); } }
+  function nearestZone(x, y, k) {
+    var best = null, bd = 70;
+    document.querySelectorAll('.ze-zone').forEach(function (z) {
+      var zk = z.getAttribute('data-zone'), p = PIECES[k];
+      if (p.zones && p.zones.indexOf(zk) < 0) return;
+      var b = z.getBoundingClientRect();
+      var d = Math.hypot(x - (b.left + b.width / 2), y - (b.top + b.height / 2));
+      if (d < bd) { bd = d; best = z; }
+    });
+    return best;
+  }
+  function bindSprite(k) {
+    var sp = document.getElementById('sp-' + k);
+    if (!sp) return;
+    sp.setAttribute('draggable', 'false');
+    sp.addEventListener('pointerdown', function (e) {
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      e.preventDefault(); e.stopPropagation();
+      var stw = document.getElementById('ear-stage').getBoundingClientRect().width;
+      var x0 = e.clientX, y0 = e.clientY;
+      var l0 = parseFloat(sp.style.left), t0 = parseFloat(sp.style.top);
+      var moved = false;
+      try { sp.setPointerCapture(e.pointerId); } catch (err) {}
+      function mv(ev) {
+        var dx = ev.clientX - x0, dy = ev.clientY - y0;
+        if (!moved && Math.hypot(dx, dy) > 6) { moved = true; sp.classList.add('ze-drag'); document.body.classList.add('ze-dragmode'); }
+        if (!moved) return;
+        sp.style.left = (l0 + dx / stw * 100) + '%';
+        sp.style.top = (t0 + dy / stw * 100) + '%';
+        var near = nearestZone(ev.clientX, ev.clientY, k);
+        document.querySelectorAll('.ze-zone.ze-near').forEach(function (z) { if (z !== near) z.classList.remove('ze-near'); });
+        if (near) near.classList.add('ze-near');
+      }
+      function up(ev) {
+        sp.removeEventListener('pointermove', mv);
+        sp.removeEventListener('pointerup', up);
+        sp.removeEventListener('pointercancel', up);
+        sp.classList.remove('ze-drag');
+        document.body.classList.remove('ze-dragmode');
+        document.querySelectorAll('.ze-zone.ze-near').forEach(function (z) { z.classList.remove('ze-near'); });
+        if (!moved) { select(k); return; }
+        var near = nearestZone(ev.clientX, ev.clientY, k);
+        if (near) {
+          place[k] = near.getAttribute('data-zone'); on[k] = 1; sel = null;
+          syncToggles(); refresh();
+          toast(PIECES[k].name + ' placed');
+        } else {
+          refresh();
+        }
+      }
+      sp.addEventListener('pointermove', mv);
+      sp.addEventListener('pointerup', up);
+      sp.addEventListener('pointercancel', up);
+    });
+  }
+  ORDER.forEach(bindSprite);
+  document.querySelectorAll('.ze-card').forEach(function (img) {
+    var art = img.closest('article'); var k = art && art.getAttribute('data-piece');
+    if (k) img.addEventListener('click', function () { select(k); });
+  });
+  document.querySelectorAll('.ze-zone').forEach(function (z) {
+    z.classList.add('za-wired');
+    z.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var zk = z.getAttribute('data-zone');
+      if (!sel) { toast('Tap an earring first'); return; }
+      var p = PIECES[sel];
+      if (p.zones && p.zones.indexOf(zk) < 0) { toast('Huggies and drops need the lobe'); return; }
+      place[sel] = zk; on[sel] = 1; sel = null; refresh(); syncToggles();
+    });
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { sel = null; refresh(); } });
+  var stage = document.getElementById('ear-stage');
+  if (stage) stage.addEventListener('click', function () { if (sel) { sel = null; refresh(); } });
+  document.querySelectorAll('.ze-toggle').forEach(function (b) {
+    b.classList.add('za-wired');
+    b.addEventListener('click', function () {
+      var k = b.getAttribute('data-piece');
+      on[k] = on[k] ? 0 : 1;
+      b.textContent = on[k] ? 'On' : 'Try on';
+      refresh();
+    });
+  });
+  function syncToggles() {
+    document.querySelectorAll('.ze-toggle').forEach(function (b) { b.textContent = on[b.getAttribute('data-piece')] ? 'On' : 'Try on'; });
+  }
+  var PRESETS = {
+    'trio': { on: { marquise: 0, petit: 0, cascade: 1, baguette: 1, pear: 0, princess: 0, emerald: 0, solitaire: 0, pavedrop: 0 }, place: { cascade: 'upper-lobe', baguette: 'lobe' } },
+    'helixline': { on: { marquise: 1, petit: 0, cascade: 0, baguette: 0, pear: 1, princess: 1, emerald: 0, solitaire: 0, pavedrop: 0 }, place: { pear: 'helix', princess: 'forward-helix', marquise: 'conch' } },
+    'full': { on: { marquise: 1, petit: 1, cascade: 1, baguette: 1, pear: 1, princess: 1, emerald: 1, solitaire: 1, pavedrop: 1 }, place: {} }
+  };
+  document.querySelectorAll('.ze-preset').forEach(function (b) {
+    b.classList.add('za-wired');
+    b.addEventListener('click', function () {
+      var pr = PRESETS[b.getAttribute('data-preset')];
+      if (!pr) return;
+      ORDER.forEach(function (k) { on[k] = pr.on[k] ? 1 : 0; place[k] = pr.place[k] || PIECES[k].home; });
+      sel = null; syncToggles(); refresh();
+      toast(b.textContent.trim() + ' look');
+    });
+  });
+  var rs = document.getElementById('ze-reset');
+  if (rs) {
+    rs.classList.add('za-wired');
+    rs.addEventListener('click', function () {
+      ORDER.forEach(function (k) { on[k] = (k === 'pear' || k === 'princess' || k === 'emerald' || k === 'solitaire' || k === 'pavedrop') ? 0 : 1; place[k] = PIECES[k].home; });
+      sel = null; syncToggles(); refresh(); toast('Placement reset');
+    });
+  }
+  var aa = document.getElementById('add-all');
+  if (aa) {
+    aa.classList.add('za-wired');
+    aa.addEventListener('click', function () {
+      var c = cart();
+      ORDER.forEach(function (k) {
+        if (!on[k]) return;
+        var p = PIECES[k], id = slug(p.name);
+        var hit = c.find(function (i) { return i.id === id; });
+        if (hit) hit.qty += 1; else c.push({ id: id, name: p.name, price: p.price, qty: 1, img: p.img });
+      });
+      saveCart(c);
+      var n = ORDER.filter(function (k) { return on[k]; }).length;
+      var sum = ORDER.reduce(function (s, k) { return s + (on[k] ? PIECES[k].price : 0); }, 0);
+      toast(n + ' piece' + (n > 1 ? 's' : '') + ' added — AED ' + money(sum));
+    });
+  }
+  refresh();
+})();
+</script>
+
+</div>
+<!-- EARPANEL:END -->
 <div class="h-10"></div>
 </main><footer class="za-footer w-full bg-surface border-t border-[#e8e2df] text-on-surface relative overflow-hidden">
 <div class="px-margin pt-14 pb-8 grid grid-cols-2 lg:grid-cols-4 gap-10 max-w-[1280px] mx-auto">
@@ -107,7 +492,7 @@
 <li><a class="hover:text-primary hover:underline underline-offset-4" href="our-story.html">Our Story</a></li>
 <li><a class="hover:text-primary hover:underline underline-offset-4" href="collection.html">The Collection</a></li>
 <li><a class="hover:text-primary hover:underline underline-offset-4" href="stack-studio.html">Stack Studio</a></li>
-<li><a class="hover:text-primary hover:underline underline-offset-4" href="ear-studio.html">Ear Studio</a></li>
+
 <li><a class="hover:text-primary hover:underline underline-offset-4" href="collection.html">Journal</a></li>
 </ul>
 </div>
