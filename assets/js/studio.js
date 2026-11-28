@@ -22,6 +22,7 @@
     { id: 'pear',worn: 'ring-worn-pear.png',     name: 'The Eternity Stack',       sub: 'Pear & Round Cluster',       price: 680, cut: 'ring-ca30676073a93fec.png', thumb: 'ca30676073a93fec.webp', ar: 0.878 }
   ];
   var NECKLACES = [ /* awaiting product photography — transparent PNGs, see ASSETS NEEDED */ ];
+  var BRACELETS = [ /* awaiting product photography — transparent PNGs, see ASSETS NEEDED */ ];
   var NECK_PLACE = ['The Petit Tennis 40cm', 'The Station Necklace 45cm', 'The Ravenna Pendant 50cm', 'The Rivière 40cm'];
   var EARRINGS = [
     { id: 'stud',    name: 'Solstice Ball Stud',       price: 120, cut: 'cut-ballstud.png',    w: 0.045, slot: 'lobe1', rot: 0,  dy: 0 },
@@ -32,6 +33,7 @@
   var GEO = {
     ring:      { base: 'assets/img/studio-hand-clean.webp', alt: 'Hand preview', cx: 0.502, cy: 0.44,  kx: 0.0094, ky: 0.044, rot: 11, rw: 0.127, max: 5, ratio: '6 / 7', squash: 0.42 },
     necklace:  { base: 'assets/img/studio-neck-clean.webp',   alt: 'Neck preview',         cx: 0.475, cy: 0.715, kx: 0.004, ky: 0.075, rot: 0,   rw: 0.52,  max: 4, ratio: '4 / 5' },
+    bracelet:  { base: 'assets/img/bracelet-stack.webp',   alt: 'Wrist preview',          cx: 0.50,  cy: 0.55,  kx: 0.006, ky: 0.06,  rot: 0,   rw: 0.42,  max: 4, ratio: '4 / 5' },
     ear:       { base: 'assets/img/studio-ear-clean.webp',    alt: 'Ear preview',          slots: {
         lobe1:   { x: 0.632, y: 0.78,  rot: 0,   w: 0.05,  label: 'First Lobe' },
         lobe2:   { x: 0.617, y: 0.665, rot: -6,  w: 0.05,  label: 'Second Lobe' },
@@ -50,6 +52,7 @@
     cat: 'ring',
     ring: { items: [{ id: 'marquise' }, { id: 'bloom' }, { id: 'flat' }], size: 7, view: 'model', mirrored: false },
     necklace: { items: [], size: null, view: 'model', mirrored: false },
+    bracelet: { items: [], size: null, view: 'model', mirrored: false },
     ear: { items: {}, view: 'model', mirrored: false } /* slot -> id */
   };
 
@@ -136,7 +139,7 @@
   function cfg() { return GEO[state.cat]; }
   function cat() { return state[state.cat]; }
   function find(id) {
-    var src = state.cat === 'ring' ? RINGS : state.cat === 'ear' ? EARRINGS : NECKLACES;
+    var src = state.cat === 'ring' ? RINGS : state.cat === 'ear' ? EARRINGS : state.cat === 'bracelet' ? BRACELETS : NECKLACES;
     for (var i = 0; i < src.length; i++) if (src[i].id === id) return src[i];
     return null;
   }
@@ -274,7 +277,7 @@
       return;
     }
     var n = cat().items.length;
-    if (!n) { el.innerHTML = '<p class="font-body-sm text-[13px] text-outline italic py-4">Your ' + (state.cat === 'ring' ? 'ring ' : 'necklace ') + 'stack is empty — add pieces below.</p>'; return; }
+    if (!n) { el.innerHTML = '<p class="font-body-sm text-[13px] text-outline italic py-4">Your ' + (state.cat === 'ring' ? 'ring ' : state.cat === 'bracelet' ? 'bracelet ' : 'necklace ') + 'stack is empty — add pieces below.</p>'; return; }
     el.innerHTML = cat().items.map(function (it, i) {
       var p = find(it.id); if (!p) return '';
       return '<div class="flex items-center justify-between gap-2 py-2 border-b border-[#efe9e5]"><div class="flex items-center gap-3 min-w-0">' +
@@ -293,6 +296,10 @@
   /* ---------- shelf ---------- */
   function renderShelf() {
     var el = document.getElementById('za-shelf');
+    if (state.cat === 'bracelet' && !BRACELETS.length) {
+      el.innerHTML = '<p class="col-span-2 font-body-sm text-[12px] text-outline pt-1">Bracelet product photography is being prepared. The stacking system is live — transparent PNGs dropped at <span class="font-medium">assets/img/bracelet-*.png</span> appear here automatically.</p>';
+      return;
+    }
     if (state.cat === 'necklace' && !NECKLACES.length) {
       el.innerHTML = NECK_PLACE.map(function (nm) {
         return '<div class="border border-dashed border-outline-variant rounded-sm p-3 flex flex-col gap-1 bg-[#d7e3ef]/20"><div class="aspect-square rounded-sm bg-[#d7e3ef]/40 flex items-center justify-center mb-1"><span class="material-symbols-outlined text-[22px] text-[#8aa2bc]">link</span></div>' +
@@ -345,7 +352,7 @@
     toast('Stack added to your bag — ' + list.length + ' pieces');
   }
   function saveStack() {
-    if (state.cat === 'necklace') { toast('Necklace pieces are coming soon'); return; }
+    if (state.cat === 'necklace' || state.cat === 'bracelet') { toast(state.cat === 'bracelet' ? 'Bracelet pieces are coming soon' : 'Necklace pieces are coming soon'); return; }
     var saved = [];
     try { saved = JSON.parse(localStorage.getItem(SAVED) || '[]') || []; } catch (e) { saved = []; }
     saved.push({ cat: state.cat, items: state.cat === 'ear' ? cat().items : cat().items.map(function (i) { return i.id; }), size: cat().size, ts: Date.now() });
@@ -468,7 +475,7 @@
       toast('Added to ' + GEO.ear.slots[free].label.toLowerCase()); render(); return;
     }
     var c = cfg();
-    if (cat().items.length >= c.max) { toast(c.max + (state.cat === 'ring' ? ' rings' : ' necklaces') + ' maximum'); return; }
+    if (cat().items.length >= c.max) { toast(c.max + (state.cat === 'ring' ? ' rings' : state.cat === 'bracelet' ? ' bracelets' : ' necklaces') + ' maximum'); return; }
     if (cat().items.some(function (it) { return it.id === id; })) { toast('Already in your stack — tap it in the list to rearrange'); return; }
     cat().items.unshift({ id: id });
     toast(find(id).name + ' added to stack'); render();
