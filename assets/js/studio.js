@@ -260,6 +260,7 @@
   /* ---------- slots list (arrows, remove, replace, size) ---------- */
   function renderSlots() {
     var el = document.getElementById('za-slots');
+    if (!el) return;
     if (state.cat === 'ear') {
       var rows = [];
       Object.keys(GEO.ear.slots).forEach(function (slot) {
@@ -294,31 +295,38 @@
   if (!EARRINGS[0].thumb2) EARRINGS.forEach(function (e) { e.thumb2 = function () { return e.cut; }; });
 
   /* ---------- shelf ---------- */
+  function soonCard(what) {
+    return '<article class="border border-dashed border-[#d8d0cc] bg-white p-4 flex gap-4 items-center">' +
+      '<div class="w-20 h-20 shrink-0 flex items-center justify-center bg-[#faf9f6]"><span class="material-symbols-outlined text-[26px] text-outline">link</span></div>' +
+      '<div class="flex-1 min-w-0"><h3 class="font-title-editorial text-[15px] text-primary uppercase tracking-wider">' + what + ' Pieces</h3>' +
+      '<p class="font-body-sm text-[12px] text-secondary mt-1">Being curated in 925 sterling silver — arriving soon.</p></div>' +
+      '<div class="shrink-0"><button class="za-soon za-wired border border-primary/30 text-secondary px-4 py-2 font-label-caps text-[10px] uppercase tracking-[0.2em]" aria-disabled="true">Coming soon</button></div></article>';
+  }
   function renderShelf() {
     var el = document.getElementById('za-shelf');
-    if (state.cat === 'bracelet' && !BRACELETS.length) {
-      el.innerHTML = '<p class="col-span-2 font-body-sm text-[12px] text-outline pt-1">Bracelet product photography is being prepared. The stacking system is live — transparent PNGs dropped at <span class="font-medium">assets/img/bracelet-*.png</span> appear here automatically.</p>';
-      return;
-    }
-    if (state.cat === 'necklace' && !NECKLACES.length) {
-      el.innerHTML = NECK_PLACE.map(function (nm) {
-        return '<div class="border border-dashed border-outline-variant rounded-sm p-3 flex flex-col gap-1 bg-[#d7e3ef]/20"><div class="aspect-square rounded-sm bg-[#d7e3ef]/40 flex items-center justify-center mb-1"><span class="material-symbols-outlined text-[22px] text-[#8aa2bc]">link</span></div>' +
-          '<p class="font-body-md text-[13px]">' + nm + '</p><p class="font-label-specs text-[10px] uppercase tracking-widest text-secondary">Photo needed — assets/img/necklace-' + nm.split(' ').pop().toLowerCase() + '.png</p></div>';
-      }).join('') + '<p class="col-span-2 font-body-sm text-[12px] text-outline pt-1">Necklace product photography is being prepared. The stacking system is live — transparent PNGs dropped at <span class="font-medium">assets/img/necklace-*.png</span> appear here automatically.</p>';
-      return;
-    }
     var ttl = document.getElementById('za-shelf-title');
-    if (ttl) {
-      var nSel = state.cat === 'ear' ? Object.keys(cat().items).length : cat().items.length;
-      var nMax = cfg().max;
-      ttl.textContent = 'Add Pieces \u00b7 ' + nSel + '/' + nMax;
+    if (state.cat === 'necklace' && !NECKLACES.length) {
+      if (ttl) ttl.textContent = 'Choose Pieces';
+      el.innerHTML = soonCard('Necklace');
+      return;
     }
-    var src = state.cat === 'ring' ? RINGS : EARRINGS;
+    if (state.cat === 'bracelet' && !BRACELETS.length) {
+      if (ttl) ttl.textContent = 'Choose Pieces';
+      el.innerHTML = soonCard('Bracelet');
+      return;
+    }
+    var src = state.cat === 'ring' ? RINGS : state.cat === 'bracelet' ? BRACELETS : NECKLACES;
+    if (ttl) ttl.textContent = 'Choose Pieces · ' + cat().items.length + '/' + cfg().max;
     el.innerHTML = src.map(function (p) {
-      var inStack = state.cat === 'ear' ? Object.keys(cat().items).some(function (k) { return cat().items[k] === p.id; }) : cat().items.some(function (it) { return it.id === p.id; });
-      return '<button class="za-add group border border-[#e8e2df] hover:border-primary bg-white rounded-sm p-3 flex flex-col gap-1 text-left transition-colors' + (inStack ? ' opacity-45' : '') + '" data-id="' + p.id + '"' + (inStack ? ' aria-disabled="true"' : '') + '>' +
-        '<div class="aspect-square rounded-sm bg-[#d7e3ef]/25 overflow-hidden flex items-center justify-center mb-1"><img src="assets/img/' + (state.cat === 'ring' ? p.thumb : p.cut) + '" class="max-h-full max-w-full object-contain" alt=""></div>' +
-        '<p class="font-body-md text-[13px] leading-tight">' + p.name + '</p><p class="font-label-specs text-label-specs text-primary">' + AED(p.price) + '</p></button>';
+      var inStack = cat().items.some(function (it) { return it.id === p.id; });
+      return '<article class="border bg-white p-4 flex gap-4 items-center" style="border-color:' + (inStack ? '#380622' : '#e8e2df') + '">' +
+        '<img src="assets/img/' + (p.thumb || p.cut) + '" alt="' + p.name + '" class="w-20 h-20 shrink-0" style="object-fit:contain">' +
+        '<div class="flex-1 min-w-0"><h3 class="font-title-editorial text-[15px] text-primary uppercase tracking-wider">' + p.name + '</h3>' +
+        '<p class="font-label-specs text-label-specs text-secondary uppercase mt-1">925 Sterling Silver</p>' +
+        '<p class="font-body-md text-[14px] text-primary font-medium mt-1">' + AED(p.price) + '</p></div>' +
+        '<div class="shrink-0"><button class="za-tog-piece za-wired border px-4 py-2 font-label-caps text-[10px] uppercase tracking-[0.2em] transition-colors ' +
+        (inStack ? 'bg-primary text-on-primary border-primary' : 'border-primary/50 text-primary hover:bg-primary hover:text-on-primary') +
+        '" data-id="' + p.id + '">' + (inStack ? 'On' : 'Try on') + '</button></div></article>';
     }).join('');
   }
 
@@ -331,12 +339,11 @@
   function renderSummary() {
     var list = currentList().filter(Boolean);
     var total = list.reduce(function (s, l) { return s + l.p.price; }, 0);
-    var disc = state.cat === 'ring' && list.length >= 3 ? Math.round(total * 0.10) : 0;
-    document.getElementById('za-count').textContent = list.length + (state.cat === 'ring' ? ' of 5 bands' : state.cat === 'necklace' ? ' of 4 chains' : ' pieces');
-    document.getElementById('za-original').textContent = disc ? AED(total) : '';
-    document.getElementById('za-total').textContent = AED(total - disc);
+    var label = list.length + ' on · ' + AED(total);
+    var cnt = document.getElementById('za-count'); if (cnt) cnt.textContent = label;
+    var ons = document.getElementById('za-onsel'); if (ons) ons.textContent = label;
     var btn = document.getElementById('add-stack-to-bag');
-    btn.classList.toggle('opacity-40', !list.length);
+    if (btn) btn.classList.toggle('opacity-40', !list.length);
   }
   function addToBag() {
     var list = currentList().filter(Boolean);
@@ -382,6 +389,8 @@
   function bind() {
     var od = document.getElementById('za-open-drawer');
     if (od) od.addEventListener('click', function () { drawerOpen(true); });
+    var clr = document.getElementById('za-clear');
+    if (clr) clr.addEventListener('click', function () { if (!cat().items.length) { toast('Stack is already empty'); return; } cat().items = []; toast('Stack cleared'); render(); });
     ['za-mirror', 'za-view-model', 'za-view-product', 'za-save', 'za-share', 'add-stack-to-bag'].forEach(function (id) {
       var el = document.getElementById(id); if (el) el.classList.add('za-wired');
     });
@@ -395,28 +404,25 @@
           o.className = o.className.replace(/bg-primary text-on-primary|bg-\[#d7e3ef\]\/\[0\.35\] text-primary/g, '').trim();
           if (on) o.classList.add('bg-primary', 'text-on-primary'); else o.classList.add('bg-surface-container', 'text-secondary');
         });
-        document.getElementById('za-mirror').style.display = state.cat === 'ear' ? '' : 'none';
-        document.getElementById('za-sizes').style.display = state.cat === 'ring' ? '' : 'none';
+        var mir0 = document.getElementById('za-mirror'); if (mir0) mir0.style.display = 'none';
+        var sz0 = document.getElementById('za-sizes'); if (sz0) sz0.style.display = state.cat === 'ring' ? '' : 'none';
         render();
       });
     });
-    document.getElementById('za-view-model').addEventListener('click', function () { setView('model'); });
-    document.getElementById('za-view-product').addEventListener('click', function () { setView('product'); });
+    var vmb = document.getElementById('za-view-model'), vpb = document.getElementById('za-view-product');
+    if (vmb) vmb.addEventListener('click', function () { setView('model'); });
+    if (vpb) vpb.addEventListener('click', function () { setView('product'); });
     function setView(v) {
       if (cat().view === v) { toast(v === 'model' ? 'Already on model preview' : 'Already in product view'); return; }
       cat().view = v;
-      document.getElementById('za-view-model').classList.toggle('bg-primary', v === 'model');
-      document.getElementById('za-view-model').classList.toggle('text-on-primary', v === 'model');
-      document.getElementById('za-view-product').classList.toggle('bg-primary', v === 'product');
-      document.getElementById('za-view-product').classList.toggle('text-on-primary', v === 'product');
+      if (vmb) vmb.classList.toggle('bg-primary', v === 'model');
+      if (vmb) vmb.classList.toggle('text-on-primary', v === 'model');
+      if (vpb) vpb.classList.toggle('bg-primary', v === 'product');
+      if (vpb) vpb.classList.toggle('text-on-primary', v === 'product');
       render();
     }
-    document.getElementById('za-mirror').addEventListener('click', function () {
-      cat().mirrored = !cat().mirrored;
-      toast(cat().mirrored ? 'Right ear' : 'Left ear');
-      render();
-    });
-    document.getElementById('za-slots').addEventListener('click', function (e) {
+    var slotsEl = document.getElementById('za-slots');
+    if (slotsEl) slotsEl.addEventListener('click', function (e) {
       var mv = e.target.closest && e.target.closest('.za-move');
       var rm = e.target.closest && e.target.closest('.za-remove');
       var ed = e.target.closest && e.target.closest('.za-slot-edit');
@@ -462,6 +468,19 @@
     if (im) { drawerOpen(true); toast('Editing: ' + (im.alt || 'piece')); }
   });
   document.getElementById('za-shelf').addEventListener('click', function (e) {
+    var soon = e.target.closest && e.target.closest('.za-soon');
+    if (soon) { toast('Coming soon — launching at 25% off'); return; }
+    var tg = e.target.closest && e.target.closest('.za-tog-piece');
+    if (tg) {
+      var tid = tg.getAttribute('data-id');
+      var ti = -1;
+      cat().items.forEach(function (it, k) { if (it.id === tid) ti = k; });
+      if (ti >= 0) { cat().items.splice(ti, 1); toast('Removed from stack'); render(); return; }
+      if (cat().items.length >= cfg().max) { toast(cfg().max + ' pieces maximum'); return; }
+      cat().items.unshift({ id: tid, size: cat().size });
+      toast('Added to your stack');
+      render(); return;
+    }
     var b = e.target.closest && e.target.closest('.za-add');
     if (!b) return;
     var id = b.getAttribute('data-id');
@@ -499,8 +518,8 @@
         o.classList.toggle('bg-surface-container', !on); o.classList.toggle('text-secondary', !on);
       o.classList.toggle('hover:text-primary', !on);
       });
-      document.getElementById('za-mirror').style.display = 'none';
-      document.getElementById('za-sizes').style.display = '';
+      var mir2 = document.getElementById('za-mirror'); if (mir2) mir2.style.display = 'none';
+      var sz2 = document.getElementById('za-sizes'); if (sz2) sz2.style.display = '';
       cat().items = pr.ids.map(function (id) { return { id: id }; });
       cat().view = 'model';
       toast(pr.name + ' loaded — make it yours');
@@ -508,8 +527,8 @@
     });
   });
   document.getElementById('add-stack-to-bag').addEventListener('click', addToBag);
-  document.getElementById('za-save').addEventListener('click', saveStack);
-  document.getElementById('za-share').addEventListener('click', shareStack);
+  var sv = document.getElementById('za-save'); if (sv) sv.addEventListener('click', saveStack);
+  var sh = document.getElementById('za-share'); if (sh) sh.addEventListener('click', shareStack);
   window.addEventListener('resize', render);
   baseImg.addEventListener('load', render);
   }

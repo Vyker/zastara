@@ -39,23 +39,14 @@
 <div id="ring-panel">
 <div class="px-margin max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-[1.12fr_1fr] gap-6 items-start mt-4">
 <section class="relative">
-<div id="za-stage" class="relative overflow-hidden rounded-sm bg-[#d7e3ef]/30 shadow-[0_2px_24px_rgba(56,6,34,0.10)]" style="aspect-ratio:4/3">
-<img id="za-base" src="assets/img/studio-finger-clean.webp" alt="Live styling preview" class="absolute inset-0 w-full h-full object-cover select-none" draggable="false">
-<div id="za-items" class="absolute inset-0 z-[6]"></div>
-<div id="za-hint" class="absolute inset-x-0 bottom-3 z-30 flex justify-center pointer-events-none"><span class="bg-[#3a3538]/85 text-white text-[11px] tracking-wider px-4 py-2.5 rounded-sm backdrop-blur-sm flex items-center gap-2"><span class="material-symbols-outlined text-[15px]">touch_app</span>Click any ring below to start building your stack</span></div>
+<div id="za-stage" class="relative w-full overflow-hidden rounded-sm border border-[#e8e2df] bg-[#d7e3ef]/30 select-none" style="aspect-ratio:3/4;">
+<img id="za-base" src="assets/img/studio-hand-clean.webp" alt="Hand preview" class="absolute inset-0 w-full h-full object-contain">
+<div id="za-items" class="absolute inset-0" style="pointer-events:none;"></div>
+<div id="za-hint" class="absolute inset-x-0 bottom-0 top-0 flex items-center justify-center pointer-events-none"><span class="bg-primary/85 text-on-primary font-label-caps text-[10px] tracking-[0.2em] uppercase px-4 py-2 rounded-sm">Tap a piece to build your stack</span></div>
 </div>
-<div class="absolute top-3 left-3 z-20 flex rounded-sm overflow-hidden shadow-sm" role="group" aria-label="Preview mode">
-<button id="za-view-model" class="za-wired bg-primary text-on-primary px-3 py-1.5 font-label-caps text-[10px] tracking-widest uppercase">On Model</button>
-<button id="za-view-product" class="za-wired bg-white/90 text-primary px-3 py-1.5 font-label-caps text-[10px] tracking-widest uppercase">Product View</button>
-</div>
-<button id="za-mirror" class="za-wired absolute top-3 right-3 z-20 h-8 px-3 rounded-sm bg-white/90 backdrop-blur text-primary font-label-caps text-[10px] tracking-widest uppercase shadow-sm flex items-center gap-1" style="display:none"><span class="material-symbols-outlined text-[15px]">flip</span><span>Switch Ear</span></button>
-<div class="mt-2 flex items-center justify-between text-[11px] font-label-caps tracking-widest uppercase text-secondary"><span id="za-count">3 of 5 bands</span><span class="flex items-center gap-3"><button id="za-open-drawer" class="za-wired flex items-center gap-1 px-3 py-1.5 bg-primary text-on-primary rounded-sm hover:bg-[#4d0f31] transition-colors"><span class="material-symbols-outlined text-[14px]">collections</span>My Stack</button><span class="hidden sm:flex items-center gap-1"><span class="material-symbols-outlined text-[13px] text-[#8aa2bc]">visibility</span>Live preview</span></span></div>
+<div class="mt-2 flex items-center justify-between text-[11px] font-label-caps tracking-widest uppercase text-secondary"><span id="za-count">3 on &middot; AED 610</span><span class="flex items-center gap-1"><span class="material-symbols-outlined text-[13px] text-[#8aa2bc]">visibility</span>Live preview</span></div>
 </section>
-<aside class="flex flex-col gap-5">
-<section class="bg-white rounded-sm border border-[#e8e2df] p-4">
-<div class="flex items-center justify-between mb-1"><h2 class="font-label-caps text-label-caps tracking-widest uppercase text-primary">Your Stack</h2><span class="font-label-specs text-label-specs text-outline">L1 = top</span></div>
-<div id="za-slots"></div>
-</section>
+<aside class="flex flex-col gap-4">
 <section id="za-sizes" class="bg-white rounded-sm border border-[#e8e2df] p-4">
 <h2 class="font-label-caps text-label-caps tracking-widest uppercase text-primary mb-2">Ring Size</h2>
 <div class="flex gap-2 flex-wrap">
@@ -66,19 +57,14 @@
 <button data-size="9" class="w-10 h-10 rounded-full border border-[#d8d0cc] font-body-md text-[13px] text-primary hover:border-primary">9</button>
 </div>
 </section>
-<section class="bg-white rounded-sm border border-[#e8e2df] p-4">
-<h2 class="font-label-caps text-label-caps tracking-widest uppercase text-primary mb-2" id="za-shelf-title">Add Pieces</h2>
-<div id="za-shelf" class="grid grid-cols-2 gap-2"></div>
-</section>
-<section class="bg-white rounded-sm border border-[#e8e2df] p-4">
-<div class="flex items-center justify-end gap-2 text-[13px] text-secondary mb-1"><span class="font-label-caps text-label-caps tracking-widest uppercase">Stack Total</span><span id="za-original" class="line-through text-outline"></span></div>
-<p class="text-right font-display text-3xl text-primary" id="za-total">AED 0</p>
-<p class="text-right font-label-specs text-label-specs text-secondary mb-3">Incl. 5% UAE VAT · 10% privilege on 3+</p>
-<button id="add-stack-to-bag" class="za-wired w-full py-3.5 bg-primary text-on-primary font-label-caps text-label-caps tracking-[0.2em] uppercase hover:bg-[#4d0f31] active:scale-[0.99] transition-all">Add Entire Stack to Bag</button>
-<div class="grid grid-cols-2 gap-2 mt-2">
-<button id="za-save" class="za-wired py-2.5 border border-primary/40 text-primary font-label-caps text-[11px] tracking-widest uppercase rounded-sm hover:bg-[#d7e3ef]/40 flex items-center justify-center gap-1"><span class="material-symbols-outlined text-[15px]">bookmark</span>Save Stack</button>
-<button id="za-share" class="za-wired py-2.5 border border-primary/40 text-primary font-label-caps text-[11px] tracking-widest uppercase rounded-sm hover:bg-[#d7e3ef]/40 flex items-center justify-center gap-1"><span class="material-symbols-outlined text-[15px]">ios_share</span>Share Link</button>
+<div>
+<h2 class="font-label-caps text-label-caps tracking-widest uppercase text-primary mb-2" id="za-shelf-title">Choose Pieces</h2>
+<div id="za-shelf" class="flex flex-col gap-3"></div>
 </div>
+<section class="bg-white rounded-sm border border-[#e8e2df] p-4">
+<div class="flex items-center justify-between gap-2 mb-3"><span class="font-label-caps text-label-caps tracking-widest uppercase text-primary">Your Stack</span><span class="font-display text-2xl text-primary" id="za-onsel">3 on &middot; AED 610</span></div>
+<button id="add-stack-to-bag" class="za-wired w-full py-3.5 bg-primary text-on-primary font-label-caps text-label-caps tracking-[0.2em] uppercase hover:bg-[#4d0f31] active:scale-[0.99] transition-all">Add Selection to Bag</button>
+<button id="za-clear" class="za-wired w-full mt-2 py-2.5 border border-primary/40 text-primary font-label-caps text-[11px] tracking-widest uppercase rounded-sm hover:bg-[#d7e3ef]/40">Reset</button>
 </section>
 </aside>
 </div>
